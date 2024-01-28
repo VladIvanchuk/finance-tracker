@@ -6,9 +6,9 @@ import {
   Animated,
 } from "react-native";
 import React, { useRef, useState } from "react";
-import { AntDesign } from "@expo/vector-icons";
 import TabBarButton from "./TabBarButton";
 import { palette } from "@/constants/Colors";
+import { ExpenseIcon, IncomeIcon, TransferIcon } from ".";
 
 const { width } = Dimensions.get("window");
 
@@ -98,21 +98,21 @@ const TabBarMenu = () => {
           style={[styles.button, styles.left_button, leftButtonStyle]}
         >
           <Pressable onPress={() => console.log("Кнопка 1 натиснута")}>
-            <AntDesign name="arrowdown" color="white" size={30} />
+            <IncomeIcon />
           </Pressable>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.middle_button, middleButtonStyle]}
         >
           <Pressable onPress={() => console.log("Кнопка 2 натиснута")}>
-            <AntDesign name="swap" color="white" size={30} />
+            <TransferIcon />
           </Pressable>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.right_button, rightButtonStyle]}
         >
           <Pressable onPress={() => console.log("Кнопка 3 натиснута")}>
-            <AntDesign name="arrowup" color="white" size={30} />
+            <ExpenseIcon />
           </Pressable>
         </Animated.View>
       </View>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
   },
   middle_button: {
     position: "absolute",
-    backgroundColor: palette.violet[100],
+    backgroundColor: palette.yellow[80],
   },
   right_button: {
     position: "absolute",

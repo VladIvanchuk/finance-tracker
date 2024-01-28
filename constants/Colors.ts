@@ -54,7 +54,7 @@ export default {
   text: palette.dark[80],
   background: palette.dark[20],
   tint: palette.blue[80],
-  tabBarColor: palette.light[60],
+  tabBarColor: "#1d1d41",
   tabIconDefault: palette.dark[20],
-  tabIconSelected: palette.blue[80],
+  tabIconSelected: palette.blue[100],
 };
