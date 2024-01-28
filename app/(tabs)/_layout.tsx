@@ -1,59 +1,96 @@
-import React from 'react';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Link, Tabs } from 'expo-router';
-import { Pressable } from 'react-native';
+import React from "react";
+import { Ionicons } from "@expo/vector-icons";
+import { Tabs } from "expo-router";
+import { StyleSheet, View } from "react-native";
 
-import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
-import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+import Colors from "@/constants/Colors";
+import TabBarMenu from "@/components/TabBarMenu";
 
-// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
+  name: React.ComponentProps<typeof Ionicons>["name"];
   color: string;
 }) {
-  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+  return <Ionicons size={28} style={{ marginBottom: -3 }} {...props} />;
 }
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        // Disable the static render of the header on web
-        // to prevent a hydration error in React Navigation v6.
-        headerShown: useClientOnlyValue(false, true),
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Tab One',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Link href="/modal" asChild>
-              <Pressable>
-                {({ pressed }) => (
-                  <FontAwesome
-                    name="info-circle"
-                    size={25}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-                  />
-                )}
-              </Pressable>
-            </Link>
-          ),
+    <View style={{ flex: 1, paddingTop: 50 }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: Colors.tabIconSelected,
+          tabBarInactiveTintColor: Colors.tabIconDefault,
+          headerShown: false,
+          tabBarShowLabel: false,
+          tabBarStyle: styles.tabBar,
+          headerStyle: styles.header,
         }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: 'Tab Two',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Home",
+            tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+            // headerRight: () => (
+            //   <Link href="/modal" asChild>
+            //     <Pressable>
+            //       {({ pressed }) => (
+            //         <Ionicons
+            //           name="notifications"
+            //           size={25}
+            //           color={Colors.text}
+            //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+            //         />
+            //       )}
+            //     </Pressable>
+            //   </Link>
+            // ),
+          }}
+        />
+        <Tabs.Screen
+          name="stats"
+          options={{
+            title: "Statistics",
+            tabBarIcon: ({ color }) => (
+              <View style={{ marginRight: 35 }}>
+                <TabBarIcon name="stats-chart" color={color} />
+              </View>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="wallet"
+          options={{
+            title: "Wallet",
+            tabBarIcon: ({ color }) => (
+              <View style={{ marginLeft: 35 }}>
+                <TabBarIcon name="wallet" color={color} />
+              </View>
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="profile"
+          options={{
+            title: "Profile",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="person" color={color} />
+            ),
+          }}
+        />
+      </Tabs>
+      <TabBarMenu />
+    </View>
   );
 }
+const styles = StyleSheet.create({
+  tabBar: {
+    borderTopStartRadius: 20,
+    borderTopEndRadius: 20,
+    height: 65,
+    backgroundColor: Colors.tabBarColor,
+  },
+  header: {
+    backgroundColor: Colors.tabBarColor,
+  },
+});

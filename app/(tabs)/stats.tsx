@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View } from "react-native";
 import React from "react";
 
-const ModalScreen = () => {
+const Statistics = () => {
   return (
     <View>
-      <Text>ModalScreen</Text>
+      <Text>Statistics</Text>
     </View>
   );
 };
 
-export default ModalScreen;
+export default Statistics;
 
 const styles = StyleSheet.create({});
