@@ -3,6 +3,11 @@ export interface OperationType {
   category: string;
   description: string;
   accountId: number;
-  currency: "USD" | "UAH" | "EUR";
+  currency: "USD" | "UAH" | "UAH";
   repeat: boolean;
+}
+export interface OperationItem {
+  id: string;
+  type: keyof OperationType;
+  items: { label: string; value: string }[];
 }

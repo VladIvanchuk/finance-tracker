@@ -6,6 +6,8 @@ import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 import { StatusBar } from "react-native";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { config } from "@gluestack-ui/config";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -46,45 +48,47 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider value={DarkTheme}>
-      <StatusBar barStyle="light-content" />
-      <Stack
-        screenOptions={{
-          animation: "slide_from_bottom",
-          headerBackButtonMenuEnabled: true,
-          headerShadowVisible: false,
-          headerTitleAlign: "center",
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="income"
-          options={{
-            title: "Income",
-            headerStyle: {
-              backgroundColor: palette.green[100],
-            },
+    <GluestackUIProvider config={config} colorMode="dark">
+      <ThemeProvider value={DarkTheme}>
+        <StatusBar barStyle="light-content" />
+        <Stack
+          screenOptions={{
+            animation: "slide_from_bottom",
+            headerBackButtonMenuEnabled: true,
+            headerShadowVisible: false,
+            headerTitleAlign: "center",
           }}
-        />
-        <Stack.Screen
-          name="transfer"
-          options={{
-            title: "Transfer",
-            headerStyle: {
-              backgroundColor: palette.yellow[100],
-            },
-          }}
-        />
-        <Stack.Screen
-          name="expense"
-          options={{
-            title: "Expense",
-            headerStyle: {
-              backgroundColor: palette.red[100],
-            },
-          }}
-        />
-      </Stack>
-    </ThemeProvider>
+        >
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="income"
+            options={{
+              title: "Income",
+              headerStyle: {
+                backgroundColor: palette.green[100],
+              },
+            }}
+          />
+          <Stack.Screen
+            name="transfer"
+            options={{
+              title: "Transfer",
+              headerStyle: {
+                backgroundColor: palette.yellow[100],
+              },
+            }}
+          />
+          <Stack.Screen
+            name="expense"
+            options={{
+              title: "Expense",
+              headerStyle: {
+                backgroundColor: palette.red[100],
+              },
+            }}
+          />
+        </Stack>
+      </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
