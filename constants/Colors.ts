@@ -51,8 +51,8 @@ export const palette = {
 };
 
 export default {
-  text: palette.dark[80],
-  background: palette.dark[20],
+  text: palette.light[20],
+  background: "rgb(20, 19, 50)",
   tint: palette.blue[80],
   tabBarColor: "#1d1d41",
   tabIconDefault: palette.dark[20],

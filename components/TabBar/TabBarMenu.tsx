@@ -8,14 +8,21 @@ import {
 import React, { useRef, useState } from "react";
 import TabBarButton from "./TabBarButton";
 import { palette } from "@/constants/Colors";
-import { ExpenseIcon, IncomeIcon, TransferIcon } from ".";
+import { ExpenseIcon, IncomeIcon, TransferIcon } from "..";
+import { Link, useNavigation } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
 const TabBarMenu = () => {
   const [isMenuVisible, setMenuVisible] = useState(false);
+  const navigation = useNavigation();
+
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
+    animateButtons(!isMenuVisible);
+  };
+  const handleOverlayPress = () => {
+    setMenuVisible(false);
     animateButtons(!isMenuVisible);
   };
 
@@ -93,30 +100,33 @@ const TabBarMenu = () => {
 
   return (
     <>
+      {isMenuVisible && (
+        <Pressable style={styles.overlay} onPress={handleOverlayPress} />
+      )}
       <View style={styles.menu}>
         <Animated.View
           style={[styles.button, styles.left_button, leftButtonStyle]}
         >
-          <Pressable onPress={() => console.log("Кнопка 1 натиснута")}>
+          <Link href="/income">
             <IncomeIcon />
-          </Pressable>
+          </Link>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.middle_button, middleButtonStyle]}
         >
-          <Pressable onPress={() => console.log("Кнопка 2 натиснута")}>
+          <Link href="/transfer">
             <TransferIcon />
-          </Pressable>
+          </Link>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.right_button, rightButtonStyle]}
         >
-          <Pressable onPress={() => console.log("Кнопка 3 натиснута")}>
+          <Link href="/expense">
             <ExpenseIcon />
-          </Pressable>
+          </Link>
         </Animated.View>
       </View>
-      <TabBarButton onToggle={toggleMenu} />
+      <TabBarButton onToggle={toggleMenu} isMenuVisible={isMenuVisible} />
     </>
   );
 };
@@ -124,6 +134,13 @@ const TabBarMenu = () => {
 export default TabBarMenu;
 
 const styles = StyleSheet.create({
+  overlay: {
+    position: "absolute",
+    width: "100%",
+    height: "100%",
+    backgroundColor: "transparent", // You can set a background color with opacity if you want
+    zIndex: 1, // Make sure this zIndex is lower than the menu's zIndex
+  },
   menu: {
     position: "absolute",
     left: width / 2 - 25,
@@ -131,6 +148,7 @@ const styles = StyleSheet.create({
     width: 50,
     flexDirection: "row",
     justifyContent: "space-between",
+    zIndex: 2, // Ensure this zIndex is higher than the overlay's zIndex
   },
   button: {
     width: 50,

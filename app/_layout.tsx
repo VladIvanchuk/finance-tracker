@@ -1,9 +1,11 @@
+import { palette } from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { DarkTheme, ThemeProvider } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
+import { StatusBar } from "react-native";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -45,9 +47,43 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <ThemeProvider value={DarkTheme}>
-      <Stack>
+      <StatusBar barStyle="light-content" />
+      <Stack
+        screenOptions={{
+          animation: "slide_from_bottom",
+          headerBackButtonMenuEnabled: true,
+          headerShadowVisible: false,
+          headerTitleAlign: "center",
+        }}
+      >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen
+          name="income"
+          options={{
+            title: "Income",
+            headerStyle: {
+              backgroundColor: palette.green[100],
+            },
+          }}
+        />
+        <Stack.Screen
+          name="transfer"
+          options={{
+            title: "Transfer",
+            headerStyle: {
+              backgroundColor: palette.yellow[100],
+            },
+          }}
+        />
+        <Stack.Screen
+          name="expense"
+          options={{
+            title: "Expense",
+            headerStyle: {
+              backgroundColor: palette.red[100],
+            },
+          }}
+        />
       </Stack>
     </ThemeProvider>
   );

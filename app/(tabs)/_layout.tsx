@@ -4,7 +4,7 @@ import { Tabs } from "expo-router";
 import { StyleSheet, View } from "react-native";
 
 import Colors from "@/constants/Colors";
-import TabBarMenu from "@/components/TabBarMenu";
+import TabBarMenu from "@/components/TabBar/TabBarMenu";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>["name"];
@@ -15,7 +15,7 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   return (
-    <View style={{ flex: 1, paddingTop: 50 }}>
+    <View style={{ flex: 1 }}>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors.tabIconSelected,

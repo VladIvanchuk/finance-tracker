@@ -1,11 +1,17 @@
 import { StyleSheet, Pressable, Dimensions, Animated } from "react-native";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { palette } from "@/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
-const TabBarButton = ({ onToggle }: { onToggle: () => void }) => {
+const TabBarButton = ({
+  onToggle,
+  isMenuVisible,
+}: {
+  onToggle: () => void;
+  isMenuVisible: boolean;
+}) => {
   const rotateAnim = useRef(new Animated.Value(0)).current;
   const [isRotated, setIsRotated] = useState(false);
 
@@ -13,14 +19,10 @@ const TabBarButton = ({ onToggle }: { onToggle: () => void }) => {
     setIsRotated(!isRotated);
 
     Animated.timing(rotateAnim, {
-      toValue: isRotated ? 0 : 1,
+      toValue: isRotated ? 1 : 0,
       duration: 100,
       useNativeDriver: true,
     }).start();
-
-    if (onToggle) {
-      onToggle();
-    }
   };
 
   const rotation = rotateAnim.interpolate({
@@ -31,8 +33,13 @@ const TabBarButton = ({ onToggle }: { onToggle: () => void }) => {
   const iconStyle = {
     transform: [{ rotate: rotation }],
   };
+
+  useEffect(() => {
+    rotateIcon();
+  }, [isMenuVisible]);
+
   return (
-    <Pressable onPress={rotateIcon} style={styles.button}>
+    <Pressable onPress={onToggle} style={styles.button}>
       <Animated.View style={iconStyle}>
         <Ionicons name="add" color="white" size={30} />
       </Animated.View>
@@ -53,5 +60,6 @@ const styles = StyleSheet.create({
     alignItems: "center",
     backgroundColor: palette.blue[100],
     borderRadius: 100,
+    zIndex: 10,
   },
 });
