@@ -8,6 +8,12 @@ export interface OperationType {
 }
 export interface OperationItem {
   id: string;
-  type: keyof OperationType;
-  items: { label: string; value: string }[];
+  type:
+    | "category"
+    | "currency"
+    | "account"
+    | "description"
+    | "attachment"
+    | "repeat";
+  items?: { label: string; value: string }[];
 }

@@ -3,11 +3,20 @@ import React from "react";
 import Colors from "@/constants/Colors";
 import ThemedSelect from "../ui/ThemedSelect";
 import { OperationType } from "@/types/Operations";
+import ThemedInput from "../ui/ThemedInput";
+import Attachment from "./Attachment";
+import Repeat from "./Repeat";
 
 interface NewOperationBodyItemProps {
   id: string;
-  type: keyof OperationType;
-  items: { label: string; value: string }[];
+  type:
+    | "category"
+    | "currency"
+    | "account"
+    | "description"
+    | "attachment"
+    | "repeat";
+  items?: { label: string; value: string }[];
   onChange: (value: string) => void;
 }
 
@@ -19,7 +28,7 @@ const NewOperationBodyItem = ({
   switch (type) {
     case "category":
     case "currency":
-    case "accountId":
+    case "account":
       return (
         <ThemedSelect
           placeholder={`Select ${type}`}
@@ -27,12 +36,12 @@ const NewOperationBodyItem = ({
           onChange={onChange}
         />
       );
-    default:
-      return (
-        <View style={styles.body_item}>
-          <Text>ModalScreen</Text>
-        </View>
-      );
+    case "description":
+      return <ThemedInput placeholder={`Description`} onChange={onChange} />;
+    case "attachment":
+      return <Attachment placeholder={`Description`} onChange={onChange} />;
+    case "repeat":
+      return <Repeat onChange={onChange} />;
   }
 };
 

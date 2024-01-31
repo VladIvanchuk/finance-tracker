@@ -21,9 +21,19 @@ const accountItems = [
 
 const operationItems: OperationItem[] = [
   {
+    id: "Description",
+    type: "description",
+  },
+  {
     id: "category",
     type: "category",
     items: expenseCategoryItems,
+  },
+
+  {
+    id: "account",
+    type: "account",
+    items: accountItems,
   },
   {
     id: "currency",
@@ -31,9 +41,12 @@ const operationItems: OperationItem[] = [
     items: currencyItems,
   },
   {
-    id: "account",
-    type: "accountId",
-    items: accountItems,
+    id: "attachment",
+    type: "attachment",
+  },
+  {
+    id: "repeat",
+    type: "repeat",
   },
 ];
 

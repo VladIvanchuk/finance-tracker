@@ -9,7 +9,16 @@ const NewOperationBody = ({
 }: {
   setOperation: React.Dispatch<React.SetStateAction<OperationType>>;
 }) => {
-  const handleValueChange = (type: keyof OperationType, value: string) => {
+  const handleValueChange = (
+    type:
+      | "category"
+      | "currency"
+      | "account"
+      | "description"
+      | "attachment"
+      | "repeat",
+    value: string
+  ) => {
     setOperation((prev) => ({ ...prev, [type]: value }));
   };
 
@@ -38,15 +47,15 @@ export default NewOperationBody;
 
 const styles = StyleSheet.create({
   body_container: {
-    flex: 3,
     backgroundColor: Colors.background,
     borderTopLeftRadius: 32,
     borderTopRightRadius: 32,
-    paddingHorizontal: 24,
-    paddingVertical: 28,
+    paddingHorizontal: 4,
+    paddingTop: 28,
+    flex: 3,
   },
   body_item_container: {
-    gap: 16,
-    flex: 1,
+    gap: 20,
+    paddingHorizontal: 20,
   },
 });
