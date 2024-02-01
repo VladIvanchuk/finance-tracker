@@ -4,7 +4,7 @@ import Colors from "@/constants/Colors";
 
 interface ThemedTextProps {
   children: React.ReactNode;
-  style?: TextStyle;
+  style?: TextStyle | TextStyle[];
 }
 
 const ThemedText: React.FC<ThemedTextProps> = ({ children, style }) => {

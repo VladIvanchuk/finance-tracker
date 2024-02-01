@@ -53,7 +53,7 @@ export default function TabLayout() {
             title: "Statistics",
             tabBarIcon: ({ color }) => (
               <View style={{ marginRight: 35 }}>
-                <TabBarIcon name="stats-chart" color={color} />
+                <TabBarIcon name="pie-chart" color={color} />
               </View>
             ),
           }}

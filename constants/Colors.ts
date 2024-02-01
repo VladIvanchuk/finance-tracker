@@ -55,6 +55,7 @@ export default {
   background: "rgb(20, 19, 50)",
   border: palette.light[20],
   tint: palette.blue[80],
+  tintDark: "#20205C",
   tabBarColor: "#1d1d41",
   tabIconDefault: palette.dark[20],
   tabIconSelected: palette.blue[100],

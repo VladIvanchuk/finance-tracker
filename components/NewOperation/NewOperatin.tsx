@@ -1,14 +1,15 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { BackHandler, StyleSheet, View } from "react-native";
 import { IOperation, OperationType } from "@/types/Operations";
 import { useToast } from "@gluestack-ui/themed";
 import ThemedToast from "@/components/ui/ThemedToast";
-import { useNavigation } from "expo-router";
+import { useFocusEffect, useNavigation } from "expo-router";
 import { StackActions } from "@react-navigation/native";
 import NewOperationBody from "./NewOperationBody";
 import NewOperationFooter from "./NewOperationFooter";
 import NewOperationHeader from "./NewOperationHeader";
 import { getOperationColor } from "@/utils/defineOperationColor";
+import ThemedAlert from "../ui/ThemedAlert";
 
 const OperationForm = ({
   operationType,
@@ -19,6 +20,7 @@ const OperationForm = ({
   operation: IOperation;
   setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
 }) => {
+  const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
   const navigation = useNavigation();
   const toast = useToast();
@@ -26,10 +28,6 @@ const OperationForm = ({
   const handlePopToTop = () => {
     navigation.dispatch(StackActions.popToTop());
   };
-
-  useEffect(() => {
-    setIsFormValidated(true);
-  }, [operation]);
 
   const showToast = useCallback(
     (
@@ -107,6 +105,24 @@ const OperationForm = ({
     },
   });
 
+  useEffect(() => {
+    setIsFormValidated(true);
+  }, [operation]);
+
+  useFocusEffect(
+    useCallback(() => {
+      const onBackPress = () => {
+        setAlertVisible(true);
+        return true;
+      };
+
+      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+
+      return () =>
+        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+    }, [])
+  );
+
   return (
     <View style={dynamicStyles.screen_wrapper}>
       <NewOperationHeader setOperation={setOperation} operation={operation} />
@@ -118,6 +134,17 @@ const OperationForm = ({
       <NewOperationFooter
         onPress={handleContinue}
         isDisabled={!isFormValidated}
+      />
+      <ThemedAlert
+        visible={alertVisible}
+        title="Exit?"
+        message="Are you sure you want to exit? Data will not be saved!"
+        onClose={() => setAlertVisible(false)}
+        type="exit"
+        action={() => {
+          setAlertVisible(false);
+          handlePopToTop();
+        }}
       />
     </View>
   );
