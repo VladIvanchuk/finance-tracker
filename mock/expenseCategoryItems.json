@@ -1,0 +1,19 @@
+[
+  { "label": "Subscription", "value": "subscription" },
+  { "label": "Food", "value": "food" },
+  { "label": "Transport", "value": "transport" },
+  { "label": "Housing", "value": "housing" },
+  { "label": "Utilities", "value": "utilities" },
+  { "label": "Healthcare", "value": "healthcare" },
+  { "label": "Entertainment", "value": "Entertainment" },
+  { "label": "Education", "value": "Education" },
+  { "label": "Debt Payments", "value": "Debt Payments" },
+  { "label": "Savings & Investments", "value": "Savings & Investments" },
+  { "label": "Gifts & Donations", "value": "Gifts & Donations" },
+  { "label": "Travel", "value": "Travel" },
+  {
+    "label": "Subscriptions & Memberships",
+    "value": "Subscriptions & Memberships"
+  },
+  { "label": "Taxes", "value": "Taxes" }
+]

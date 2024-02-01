@@ -1,35 +1,24 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { palette } from "@/constants/Colors";
-import NewOperationBody from "@/components/NewOperation/NewOperationBody";
-import NewOperationFooter from "@/components/NewOperation/NewOperationFooter";
-import NewOperationHeader from "@/components/NewOperation/NewOperationHeader";
-import { IOperation, OperationType } from "@/types/Operations";
-import income from "./income";
+import OperationForm from "@/components/NewOperation/NewOperatin";
+import { IOperation } from "@/types/Operations";
+import { useState } from "react";
 
 const AddExpense = () => {
-  const [expense, setExpense] = useState<IOperation>({
+  const [operation, setOperation] = useState<IOperation>({
+    type: "expense",
     value: "",
     category: "",
-    description: "",
     accountId: 0,
+    description: "",
     currency: "UAH",
+    attachment: "",
   });
-
   return (
-    <View style={styles.screen_wrapper}>
-      <NewOperationHeader setOperation={setExpense} operation={expense} />
-      <NewOperationBody setOperation={setExpense} operationType="expense" />
-      <NewOperationFooter />
-    </View>
+    <OperationForm
+      operationType="expense"
+      operation={operation}
+      setOperation={setOperation}
+    />
   );
 };
 
 export default AddExpense;
-
-const styles = StyleSheet.create({
-  screen_wrapper: {
-    flex: 1,
-    backgroundColor: palette.red[100],
-  },
-});

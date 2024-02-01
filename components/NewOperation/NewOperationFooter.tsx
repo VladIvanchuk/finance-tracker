@@ -3,10 +3,20 @@ import React from "react";
 import Colors, { palette } from "@/constants/Colors";
 import ThemedButton from "../ui/ThemedButton";
 
-const NewOperationFooter = () => {
+const NewOperationFooter = ({
+  onPress,
+  isDisabled,
+}: {
+  onPress: () => void;
+  isDisabled: any;
+}) => {
   return (
     <View style={styles.footer_container}>
-      <ThemedButton label="Continue" />
+      <ThemedButton
+        label="Continue"
+        onPress={onPress}
+        isDisabled={isDisabled}
+      />
     </View>
   );
 };

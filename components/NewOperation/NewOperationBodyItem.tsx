@@ -1,33 +1,45 @@
-import { StyleSheet, Text, View } from "react-native";
 import React from "react";
-import Colors from "@/constants/Colors";
 import ThemedSelect from "../ui/ThemedSelect";
-import { OperationType } from "@/types/Operations";
+import { IOperation, OperationItemType } from "@/types/Operations";
 import ThemedInput from "../ui/ThemedInput";
 import Attachment from "./Attachment";
-import Repeat from "./Repeat";
+import TransferAccounts from "./TransferAccounts";
 
 interface NewOperationBodyItemProps {
   id: string;
-  type:
-    | "category"
-    | "currency"
-    | "account"
-    | "description"
-    | "attachment"
-    | "repeat";
+  type: OperationItemType;
   items?: { label: string; value: string }[];
-  onChange: (value: string) => void;
+  onChange: (value: string, type?: OperationItemType) => void;
+  operation: IOperation;
 }
 
 const NewOperationBodyItem = ({
   type,
   onChange,
   items,
+  operation,
 }: NewOperationBodyItemProps) => {
+  if (operation.type === "transfer" && type === "transferAccounts") {
+    return (
+      <TransferAccounts
+        onChange={onChange}
+        items={items}
+        operation={operation}
+      />
+    );
+  }
+
   switch (type) {
-    case "category":
     case "currency":
+      return (
+        <ThemedSelect
+          placeholder={`Select ${type}`}
+          items={items}
+          onChange={onChange}
+          defaultValue={operation.currency}
+        />
+      );
+    case "category":
     case "account":
       return (
         <ThemedSelect
@@ -41,14 +53,7 @@ const NewOperationBodyItem = ({
     case "attachment":
       return <Attachment onChange={onChange} />;
   }
+  return null;
 };
 
 export default NewOperationBodyItem;
-
-const styles = StyleSheet.create({
-  body_item: {
-    height: 56,
-    backgroundColor: "transparent",
-    borderColor: Colors.border,
-  },
-});

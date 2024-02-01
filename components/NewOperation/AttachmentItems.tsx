@@ -66,7 +66,7 @@ const AttachmentItems = ({
       setSelectedImage(result.assets[0].uri);
       handleClose();
     } else {
-      showAlert("Image not selected", ``);
+      showAlert("Image was not selected", ``);
     }
   };
 

@@ -1,4 +1,28 @@
-export type OperationType = "income" | "expense";
+export type OperationType = "income" | "expense" | "transfer";
+
+export type CurrencyType = "USD" | "EUR" | "UAH";
+
+export interface BaseOperation {
+  type: OperationType;
+  value: string;
+  description?: string;
+  currency: CurrencyType;
+  attachment: string;
+}
+
+export interface IncomeExpenseOperation extends BaseOperation {
+  type: "income" | "expense";
+  category: string;
+  accountId: number;
+}
+
+export interface TransferOperation extends BaseOperation {
+  type: "transfer";
+  fromAccountId: number;
+  toAccountId: number;
+}
+
+export type IOperation = IncomeExpenseOperation | TransferOperation;
 
 export type OperationItemType =
   | "category"
@@ -6,15 +30,10 @@ export type OperationItemType =
   | "account"
   | "description"
   | "attachment"
-  | "repeat";
+  | "fromAccountId"
+  | "toAccountId"
+  | "transferAccounts";
 
-export interface IOperation {
-  value: string;
-  category: string;
-  description: string;
-  accountId: number;
-  currency: "USD" | "UAH" | "UAH";
-}
 export interface OperationItem {
   id: string;
   type: OperationItemType;

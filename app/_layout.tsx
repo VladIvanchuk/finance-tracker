@@ -1,13 +1,20 @@
 import { palette } from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { DarkTheme, ThemeProvider } from "@react-navigation/native";
+import {
+  DarkTheme,
+  StackActions,
+  ThemeProvider,
+} from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Stack, useNavigation } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect } from "react";
-import { StatusBar } from "react-native";
+import { useEffect, useState } from "react";
+import { BackHandler, StatusBar } from "react-native";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
+import { HeaderBackButton } from "@react-navigation/elements";
+import ThemedAlert from "@/components/ui/ThemedAlert";
+import { getOperationColor } from "@/utils/defineOperationColor";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -47,6 +54,12 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const [alertVisible, setAlertVisible] = useState(false);
+  const navigation = useNavigation();
+  const handlePopToTop = () => {
+    navigation.dispatch(StackActions.popToTop());
+  };
+
   return (
     <GluestackUIProvider config={config} colorMode="dark">
       <ThemeProvider value={DarkTheme}>
@@ -65,8 +78,14 @@ function RootLayoutNav() {
             options={{
               title: "Income",
               headerStyle: {
-                backgroundColor: palette.green[100],
+                backgroundColor: getOperationColor("income"),
               },
+              headerLeft: (props) => (
+                <HeaderBackButton
+                  {...props}
+                  onPress={() => setAlertVisible(true)}
+                />
+              ),
             }}
           />
           <Stack.Screen
@@ -74,8 +93,14 @@ function RootLayoutNav() {
             options={{
               title: "Transfer",
               headerStyle: {
-                backgroundColor: palette.yellow[100],
+                backgroundColor: getOperationColor("transfer"),
               },
+              headerLeft: (props) => (
+                <HeaderBackButton
+                  {...props}
+                  onPress={() => setAlertVisible(true)}
+                />
+              ),
             }}
           />
           <Stack.Screen
@@ -83,12 +108,26 @@ function RootLayoutNav() {
             options={{
               title: "Expense",
               headerStyle: {
-                backgroundColor: palette.red[100],
+                backgroundColor: getOperationColor("expense"),
               },
+              headerLeft: (props) => (
+                <HeaderBackButton
+                  {...props}
+                  onPress={() => setAlertVisible(true)}
+                />
+              ),
             }}
           />
         </Stack>
       </ThemeProvider>
+      <ThemedAlert
+        visible={alertVisible}
+        title="Exit?"
+        message="Are you sure you want to exit? Data will not be saved!"
+        onClose={() => setAlertVisible(false)}
+        type="exit"
+        action={handlePopToTop}
+      />
     </GluestackUIProvider>
   );
 }

@@ -1,17 +1,19 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import Colors, { palette } from "@/constants/Colors";
 import { Entypo } from "@expo/vector-icons";
 import ThemedActionSheet from "../ui/ThemedActionSheet";
 import AttachmentItems from "./AttachmentItems";
-import { Badge, BadgeIcon, Image } from "@gluestack-ui/themed";
+import { Badge, Image } from "@gluestack-ui/themed";
 import { AntDesign } from "@expo/vector-icons";
+import ThemedAlert from "../ui/ThemedAlert";
 
 interface AttachmentProps {
   onChange: (value: string) => void;
 }
 
 const Attachment = ({ onChange }: AttachmentProps) => {
+  const [alertVisible, setAlertVisible] = useState(false);
   const [showActionSheet, setShowActionSheet] = useState(false);
   const [selectedImage, setSelectedImage] = useState<null | string>(null);
   const handleChange = () => setShowActionSheet(!showActionSheet);
@@ -27,7 +29,7 @@ const Attachment = ({ onChange }: AttachmentProps) => {
       {selectedImage ? (
         <Pressable
           style={styles.image_view}
-          onPress={() => setSelectedImage(null)}
+          onPress={() => setAlertVisible(true)}
         >
           <Badge
             size="md"
@@ -56,6 +58,14 @@ const Attachment = ({ onChange }: AttachmentProps) => {
             setSelectedImage={setSelectedImage}
           />
         }
+      />
+      <ThemedAlert
+        visible={alertVisible}
+        title="Delete Attachment"
+        message="Are you sure you want to delete the attachment?"
+        onClose={() => setAlertVisible(false)}
+        type="delete"
+        action={() => setSelectedImage(null)}
       />
     </>
   );

@@ -7,14 +7,16 @@ import {
   OperationItemType,
 } from "@/types/Operations";
 import NewOperationBodyItem from "./NewOperationBodyItem";
-import { getOperationItems } from "./operationItems";
+import { getOperationItems } from "../../utils/operationItems";
 
 const NewOperationBody = ({
   setOperation,
   operationType,
+  operation,
 }: {
   setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
   operationType: OperationType;
+  operation: IOperation;
 }) => {
   const handleValueChange = (type: OperationItemType, value: string) => {
     setOperation((prev) => {
@@ -28,7 +30,10 @@ const NewOperationBody = ({
       id={item.id}
       type={item.type}
       items={item.items}
-      onChange={(value: string) => handleValueChange(item.type, value)}
+      operation={operation}
+      onChange={(value: string, type?: OperationItemType) =>
+        handleValueChange(type ?? item.type, value)
+      }
     />
   );
 

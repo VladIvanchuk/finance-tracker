@@ -1,0 +1,126 @@
+import React, { useCallback, useEffect, useState } from "react";
+import { StyleSheet, View } from "react-native";
+import { IOperation, OperationType } from "@/types/Operations";
+import { useToast } from "@gluestack-ui/themed";
+import ThemedToast from "@/components/ui/ThemedToast";
+import { useNavigation } from "expo-router";
+import { StackActions } from "@react-navigation/native";
+import NewOperationBody from "./NewOperationBody";
+import NewOperationFooter from "./NewOperationFooter";
+import NewOperationHeader from "./NewOperationHeader";
+import { getOperationColor } from "@/utils/defineOperationColor";
+
+const OperationForm = ({
+  operationType,
+  operation,
+  setOperation,
+}: {
+  operationType: OperationType;
+  operation: IOperation;
+  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
+}) => {
+  const [isFormValidated, setIsFormValidated] = useState(true);
+  const navigation = useNavigation();
+  const toast = useToast();
+
+  const handlePopToTop = () => {
+    navigation.dispatch(StackActions.popToTop());
+  };
+
+  useEffect(() => {
+    setIsFormValidated(true);
+  }, [operation]);
+
+  const showToast = useCallback(
+    (
+      title: string,
+      message: string,
+      action?: "warning" | "error" | "success" | "info" | "attention"
+    ) => {
+      toast.closeAll();
+      toast.show({
+        placement: "top",
+        onCloseComplete: () => setIsFormValidated(true),
+        render: ({ id }) => (
+          <ThemedToast
+            id={id}
+            title={title}
+            message={message}
+            action={action}
+          />
+        ),
+      });
+    },
+    [toast]
+  );
+
+  const handleContinue = () => {
+    if (
+      !operation.value ||
+      isNaN(Number(operation.value)) ||
+      Number(operation.value) <= 0
+    ) {
+      showToast(
+        "Invalid data",
+        `Please enter a valid ${operationType} value.`,
+        "error"
+      );
+      setIsFormValidated(false);
+      return;
+    }
+    if (operation.type === "transfer") {
+      if (operation.fromAccountId === 0 || operation.toAccountId === 0) {
+        showToast(
+          "Invalid data",
+          "Please select both source and destination accounts.",
+          "error"
+        );
+        setIsFormValidated(false);
+        return;
+      }
+    } else {
+      if (!operation.category) {
+        showToast("Invalid data", "Please select a category.", "error");
+        setIsFormValidated(false);
+        return;
+      }
+      if (operation.accountId === 0) {
+        showToast("Invalid data", "Please select an account.", "error");
+        setIsFormValidated(false);
+        return;
+      }
+    }
+    handlePopToTop();
+    showToast(
+      "Success",
+      `${
+        operationType.charAt(0).toUpperCase() + operationType.slice(1)
+      } added successfully`,
+      "success"
+    );
+  };
+
+  const dynamicStyles = StyleSheet.create({
+    screen_wrapper: {
+      flex: 1,
+      backgroundColor: getOperationColor(operationType),
+    },
+  });
+
+  return (
+    <View style={dynamicStyles.screen_wrapper}>
+      <NewOperationHeader setOperation={setOperation} operation={operation} />
+      <NewOperationBody
+        setOperation={setOperation}
+        operationType={operationType}
+        operation={operation}
+      />
+      <NewOperationFooter
+        onPress={handleContinue}
+        isDisabled={!isFormValidated}
+      />
+    </View>
+  );
+};
+
+export default OperationForm;

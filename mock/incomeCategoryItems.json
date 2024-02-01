@@ -1,0 +1,6 @@
+[
+  { "label": "Salary", "value": "salary" },
+  { "label": "Passive Income", "value": "passiveIncome" },
+  { "label": "Bonuses", "value": "bonuses" },
+  { "label": "Gifts", "value": "gifts" }
+]

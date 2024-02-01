@@ -15,7 +15,7 @@ import {
   SelectPortal,
   SelectTrigger,
 } from "@gluestack-ui/themed";
-import Colors, { palette } from "@/constants/Colors";
+import Colors from "@/constants/Colors";
 import ThemedButton from "./ThemedButton";
 interface ThemedSelectProps {
   placeholder?: string;
@@ -26,6 +26,8 @@ interface ThemedSelectProps {
   onChange: (value: string) => void;
   isAddButton?: boolean;
   addButtonAction?: () => void;
+  defaultValue?: any;
+  disabled?: string;
 }
 
 const ThemedSelect = ({
@@ -34,9 +36,15 @@ const ThemedSelect = ({
   onChange,
   isAddButton = true,
   addButtonAction,
+  defaultValue,
+  disabled,
 }: ThemedSelectProps) => {
   return (
-    <Select onValueChange={onChange}>
+    <Select
+      onValueChange={onChange}
+      defaultValue={defaultValue}
+      style={{ flex: 1 }}
+    >
       <SelectTrigger variant="outline" size="xl" style={styles.input_container}>
         <SelectInput placeholder={placeholder} style={styles.input} />
         <SelectIcon>
@@ -55,6 +63,8 @@ const ThemedSelect = ({
                 key={item.value}
                 label={item.label}
                 value={item.value}
+                disabled={item.value === disabled}
+                style={item.value === disabled && { opacity: 0.1 }}
               />
             ))}
           </ScrollView>

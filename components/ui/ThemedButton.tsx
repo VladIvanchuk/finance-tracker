@@ -7,6 +7,7 @@ interface ThemedButtonProps {
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   bg?: string;
   onPress?: () => void;
+  isDisabled?: boolean;
 }
 
 const ThemedButton = ({
@@ -15,6 +16,7 @@ const ThemedButton = ({
   size,
   bg,
   onPress,
+  isDisabled,
 }: ThemedButtonProps) => {
   return (
     <View style={style}>
@@ -22,7 +24,7 @@ const ThemedButton = ({
         size={size ?? "md"}
         variant="solid"
         action="primary"
-        isDisabled={false}
+        isDisabled={isDisabled}
         isFocusVisible={false}
         bg={bg ?? "$blue600"}
         borderRadius="$xl"
