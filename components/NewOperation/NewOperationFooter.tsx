@@ -6,7 +6,7 @@ import ThemedButton from "../ui/ThemedButton";
 const NewOperationFooter = () => {
   return (
     <View style={styles.footer_container}>
-      <ThemedButton />
+      <ThemedButton label="Continue" />
     </View>
   );
 };

@@ -1,11 +1,30 @@
-import { OperationItem } from "@/types/Operations";
+import { OperationItem, OperationType } from "@/types/Operations";
 
-const incomeCategoryItems = [{ label: "Salary", value: "salary" }];
+const incomeCategoryItems = [
+  { label: "Salary", value: "salary" },
+  { label: "Passive Income", value: "passiveIncome" },
+  { label: "Bonuses", value: "bonuses" },
+  { label: "Gifts", value: "gifts" },
+];
+
 const expenseCategoryItems = [
-  { label: "Shopping", value: "shopping" },
   { label: "Subscription", value: "subscription" },
   { label: "Food", value: "food" },
   { label: "Transport", value: "transport" },
+  { label: "Housing", value: "housing" },
+  { label: "Utilities", value: "utilities" },
+  { label: "Healthcare", value: "healthcare" },
+  { label: "Entertainment", value: "Entertainment" },
+  { label: "Education", value: "Education" },
+  { label: "Debt Payments", value: "Debt Payments" },
+  { label: "Savings & Investments", value: "Savings & Investments" },
+  { label: "Gifts & Donations", value: "Gifts & Donations" },
+  { label: "Travel", value: "Travel" },
+  {
+    label: "Subscriptions & Memberships",
+    value: "Subscriptions & Memberships",
+  },
+  { label: "Taxes", value: "Taxes" },
 ];
 
 const currencyItems = [
@@ -15,8 +34,8 @@ const currencyItems = [
 ];
 
 const accountItems = [
-  { label: "Monobank", value: "768686" },
-  { label: "Cash", value: "cash" },
+  { label: "Cash", value: "0" },
+  { label: "Monobank", value: "9" },
 ];
 
 const operationItems: OperationItem[] = [
@@ -51,3 +70,15 @@ const operationItems: OperationItem[] = [
 ];
 
 export default operationItems;
+
+export const getOperationItems = (operationType: OperationType) => {
+  const categoryItems =
+    operationType === "income" ? incomeCategoryItems : expenseCategoryItems;
+
+  return operationItems.map((item) => {
+    if (item.type === "category") {
+      return { ...item, items: categoryItems };
+    }
+    return item;
+  });
+};

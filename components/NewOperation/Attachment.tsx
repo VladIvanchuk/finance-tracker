@@ -1,19 +1,63 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import React from "react";
-import Colors from "@/constants/Colors";
+import React, { useEffect, useState } from "react";
+import Colors, { palette } from "@/constants/Colors";
 import { Entypo } from "@expo/vector-icons";
+import ThemedActionSheet from "../ui/ThemedActionSheet";
+import AttachmentItems from "./AttachmentItems";
+import { Badge, BadgeIcon, Image } from "@gluestack-ui/themed";
+import { AntDesign } from "@expo/vector-icons";
 
 interface AttachmentProps {
-  placeholder?: string;
   onChange: (value: string) => void;
 }
 
-const Attachment = ({}: AttachmentProps) => {
+const Attachment = ({ onChange }: AttachmentProps) => {
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<null | string>(null);
+  const handleChange = () => setShowActionSheet(!showActionSheet);
+
+  useEffect(() => {
+    if (selectedImage) {
+      onChange(selectedImage);
+    }
+  }, [selectedImage]);
+
   return (
-    <Pressable style={styles.input_container}>
-      <Entypo name="attachment" size={24} color={Colors.text} />
-      <Text style={styles.text}>Add attachment</Text>
-    </Pressable>
+    <>
+      {selectedImage ? (
+        <Pressable
+          style={styles.image_view}
+          onPress={() => setSelectedImage(null)}
+        >
+          <Badge
+            size="md"
+            variant="solid"
+            borderRadius="$full"
+            action="muted"
+            style={styles.image_view_badge}
+          >
+            <AntDesign name="close" size={20} color={palette.dark[20]} />
+          </Badge>
+          <Image source={selectedImage} alt="Attachment" style={styles.image} />
+        </Pressable>
+      ) : (
+        <Pressable onPress={handleChange} style={styles.input_container}>
+          <Entypo name="attachment" size={24} color={Colors.text} />
+          <Text style={styles.text}>Add attachment</Text>
+        </Pressable>
+      )}
+
+      <ThemedActionSheet
+        handleClose={handleChange}
+        showActionSheet={showActionSheet}
+        actionSheetItems={
+          <AttachmentItems
+            handleClose={handleChange}
+            setSelectedImage={setSelectedImage}
+          />
+        }
+      />
+    </>
   );
 };
 
@@ -35,5 +79,19 @@ const styles = StyleSheet.create({
   text: {
     color: Colors.text,
     fontSize: 16,
+  },
+  image_view: {
+    position: "relative",
+  },
+  image: {
+    borderRadius: 8,
+  },
+  image_view_badge: {
+    position: "absolute",
+    top: -10,
+    left: 60,
+    paddingVertical: 5,
+    paddingHorizontal: 6,
+    zIndex: 10,
   },
 });

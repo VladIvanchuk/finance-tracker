@@ -1,25 +1,26 @@
 import { StyleSheet, View, FlatList } from "react-native";
 import Colors from "@/constants/Colors";
-import { OperationItem, OperationType } from "@/types/Operations";
+import {
+  OperationItem,
+  IOperation,
+  OperationType,
+  OperationItemType,
+} from "@/types/Operations";
 import NewOperationBodyItem from "./NewOperationBodyItem";
-import operationItems from "./operationItems";
+import { getOperationItems } from "./operationItems";
 
 const NewOperationBody = ({
   setOperation,
+  operationType,
 }: {
-  setOperation: React.Dispatch<React.SetStateAction<OperationType>>;
+  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
+  operationType: OperationType;
 }) => {
-  const handleValueChange = (
-    type:
-      | "category"
-      | "currency"
-      | "account"
-      | "description"
-      | "attachment"
-      | "repeat",
-    value: string
-  ) => {
-    setOperation((prev) => ({ ...prev, [type]: value }));
+  const handleValueChange = (type: OperationItemType, value: string) => {
+    setOperation((prev) => {
+      const key = type === "account" ? "accountId" : type;
+      return { ...prev, [key]: value };
+    });
   };
 
   const renderItem = ({ item }: { item: OperationItem }) => (
@@ -31,10 +32,12 @@ const NewOperationBody = ({
     />
   );
 
+  const currentOperationItems = getOperationItems(operationType);
+
   return (
     <View style={styles.body_container}>
       <FlatList
-        data={operationItems}
+        data={currentOperationItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.body_item_container}

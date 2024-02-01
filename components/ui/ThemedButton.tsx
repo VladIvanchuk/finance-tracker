@@ -1,23 +1,37 @@
-import { StyleSheet } from "react-native";
 import React from "react";
-import { ButtonText, Button } from "@gluestack-ui/themed";
+import { ButtonText, Button, View } from "@gluestack-ui/themed";
 
-const ThemedButton = () => {
+interface ThemedButtonProps {
+  label: string;
+  style?: {};
+  size?: "xs" | "sm" | "md" | "lg" | "xl";
+  bg?: string;
+  onPress?: () => void;
+}
+
+const ThemedButton = ({
+  label,
+  style,
+  size,
+  bg,
+  onPress,
+}: ThemedButtonProps) => {
   return (
-    <Button
-      size="md"
-      variant="solid"
-      action="primary"
-      isDisabled={false}
-      isFocusVisible={false}
-      bg="$cyan900"
-      borderRadius="$xl"
-    >
-      <ButtonText>Continue</ButtonText>
-    </Button>
+    <View style={style}>
+      <Button
+        size={size ?? "md"}
+        variant="solid"
+        action="primary"
+        isDisabled={false}
+        isFocusVisible={false}
+        bg={bg ?? "$blue600"}
+        borderRadius="$xl"
+        onPress={onPress}
+      >
+        <ButtonText>{label}</ButtonText>
+      </Button>
+    </View>
   );
 };
 
 export default ThemedButton;
-
-const styles = StyleSheet.create({});

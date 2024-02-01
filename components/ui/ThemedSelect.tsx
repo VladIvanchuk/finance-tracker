@@ -15,7 +15,8 @@ import {
   SelectPortal,
   SelectTrigger,
 } from "@gluestack-ui/themed";
-import Colors from "@/constants/Colors";
+import Colors, { palette } from "@/constants/Colors";
+import ThemedButton from "./ThemedButton";
 interface ThemedSelectProps {
   placeholder?: string;
   items?: Array<{
@@ -23,9 +24,17 @@ interface ThemedSelectProps {
     value: string;
   }>;
   onChange: (value: string) => void;
+  isAddButton?: boolean;
+  addButtonAction?: () => void;
 }
 
-const ThemedSelect = ({ placeholder, items, onChange }: ThemedSelectProps) => {
+const ThemedSelect = ({
+  placeholder,
+  items,
+  onChange,
+  isAddButton = true,
+  addButtonAction,
+}: ThemedSelectProps) => {
   return (
     <Select onValueChange={onChange}>
       <SelectTrigger variant="outline" size="xl" style={styles.input_container}>
@@ -36,17 +45,27 @@ const ThemedSelect = ({ placeholder, items, onChange }: ThemedSelectProps) => {
       </SelectTrigger>
       <SelectPortal>
         <SelectBackdrop />
-        <SelectContent>
+        <SelectContent style={styles.selectContent}>
           <SelectDragIndicatorWrapper>
             <SelectDragIndicator />
           </SelectDragIndicatorWrapper>
-          {items?.map((item) => (
-            <SelectItem
-              key={item.value}
-              label={item.label}
-              value={item.value}
+          <ScrollView style={styles.scrollView}>
+            {items?.map((item) => (
+              <SelectItem
+                key={item.value}
+                label={item.label}
+                value={item.value}
+              />
+            ))}
+          </ScrollView>
+          {isAddButton && (
+            <ThemedButton
+              label="Add new"
+              style={styles.addButton}
+              bg="$secondary600"
+              onPress={addButtonAction}
             />
-          ))}
+          )}
         </SelectContent>
       </SelectPortal>
     </Select>
@@ -65,7 +84,15 @@ const styles = StyleSheet.create({
   input: {
     fontSize: 18,
   },
-  select_Icon: {
-    marginTop: 5,
+  selectContent: {
+    maxHeight: 550,
+  },
+  scrollView: {
+    width: "100%",
+  },
+  addButton: {
+    marginTop: 10,
+    marginBottom: 4,
+    width: "100%",
   },
 });

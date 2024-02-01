@@ -2,15 +2,15 @@ import { StyleSheet, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import ThemedText from "../ui/ThemedText";
 import Colors from "@/constants/Colors";
-import { OperationType } from "@/types/Operations";
+import { IOperation, OperationType } from "@/types/Operations";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 
 const NewOperationHeader = ({
   setOperation,
   operation,
 }: {
-  operation: OperationType;
-  setOperation: React.Dispatch<React.SetStateAction<OperationType>>;
+  operation: IOperation;
+  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
 }) => {
   const [number, onChangeNumber] = useState("");
 

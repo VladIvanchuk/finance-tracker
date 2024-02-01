@@ -39,9 +39,7 @@ const NewOperationBodyItem = ({
     case "description":
       return <ThemedInput placeholder={`Description`} onChange={onChange} />;
     case "attachment":
-      return <Attachment placeholder={`Description`} onChange={onChange} />;
-    case "repeat":
-      return <Repeat onChange={onChange} />;
+      return <Attachment onChange={onChange} />;
   }
 };
 

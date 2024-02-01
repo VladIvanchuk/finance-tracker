@@ -4,23 +4,22 @@ import { palette } from "@/constants/Colors";
 import NewOperationBody from "@/components/NewOperation/NewOperationBody";
 import NewOperationFooter from "@/components/NewOperation/NewOperationFooter";
 import NewOperationHeader from "@/components/NewOperation/NewOperationHeader";
-import { OperationType } from "@/types/Operations";
+import { IOperation, OperationType } from "@/types/Operations";
 import income from "./income";
 
 const AddExpense = () => {
-  const [expense, setExpense] = useState<OperationType>({
+  const [expense, setExpense] = useState<IOperation>({
     value: "",
     category: "",
     description: "",
     accountId: 0,
     currency: "UAH",
-    repeat: false,
   });
 
   return (
     <View style={styles.screen_wrapper}>
       <NewOperationHeader setOperation={setExpense} operation={expense} />
-      <NewOperationBody setOperation={setExpense} />
+      <NewOperationBody setOperation={setExpense} operationType="expense" />
       <NewOperationFooter />
     </View>
   );

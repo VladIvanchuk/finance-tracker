@@ -18,7 +18,11 @@ const ThemedInput = ({ placeholder, onChange }: ThemedInputProps) => {
       isReadOnly={false}
       style={styles.input_container}
     >
-      <InputField placeholder={placeholder} style={styles.input} />
+      <InputField
+        placeholder={placeholder}
+        style={styles.input}
+        onChangeText={onChange}
+      />
     </Input>
   );
 };
