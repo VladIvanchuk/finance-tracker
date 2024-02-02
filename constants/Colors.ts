@@ -52,6 +52,7 @@ export const palette = {
 
 export default {
   text: palette.light[80],
+  textSecondary: palette.light[20],
   background: "rgb(20, 19, 50)",
   border: palette.light[20],
   tint: palette.blue[80],

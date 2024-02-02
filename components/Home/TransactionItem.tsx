@@ -3,8 +3,18 @@ import React from "react";
 import Colors, { palette } from "@/constants/Colors";
 import ThemedText from "../ui/ThemedText";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { ITransaction } from "@/types/Transactions";
+import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { getOperationColor } from "@/utils/defineOperationColor";
 
-const TransactionItem = () => {
+const TransactionItem = ({
+  name,
+  description,
+  sum,
+  currency,
+  accountName,
+  type,
+}: ITransaction) => {
   return (
     <View style={styles.container}>
       <View style={[styles.icon, { backgroundColor: palette.blue[20] }]}>
@@ -16,12 +26,16 @@ const TransactionItem = () => {
       </View>
       <View style={styles.info_container}>
         <View style={styles.text_container}>
-          <ThemedText style={styles.name}>Shopping</ThemedText>
-          <ThemedText style={styles.desc}>Buy some grocery</ThemedText>
+          <ThemedText style={styles.name}>{name}</ThemedText>
+          <ThemedText style={styles.desc}>{description}</ThemedText>
         </View>
         <View style={styles.text_container}>
-          <ThemedText style={styles.price}>120.34 $</ThemedText>
-          <ThemedText style={styles.account}>Mono</ThemedText>
+          <ThemedText
+            style={[styles.price, { color: getOperationColor(type) }]}
+          >
+            {sum.toFixed(2)} {getCurrencySymbol(currency)}
+          </ThemedText>
+          <ThemedText style={styles.account}>{accountName}</ThemedText>
         </View>
       </View>
     </View>

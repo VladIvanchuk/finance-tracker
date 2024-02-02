@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
   },
   number: { color: Colors.text, fontWeight: "600", fontSize: 32 },
   text: {
-    color: Colors.text,
+    color: Colors.textSecondary,
     fontWeight: "500",
     fontSize: 20,
     paddingBottom: 4,

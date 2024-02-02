@@ -1,0 +1,188 @@
+[
+  {
+    "id": 1,
+    "date": "2024-02-02T14:30:00.000Z",
+    "type": "income",
+    "sum": 300,
+    "currency": "USD",
+    "name": "Salary",
+    "description": "Salary for February",
+    "category": "salary",
+    "accountName": "Mono"
+  },
+  {
+    "id": 2,
+    "date": "2024-02-02T14:30:00.000Z",
+    "type": "transfer",
+    "sum": 12000,
+    "currency": "UAH",
+    "name": "Transfer",
+    "description": "Transfer to Mono",
+    "accountName": "Privat"
+  },
+  {
+    "id": 16,
+    "date": "2024-02-02T14:30:00.000Z",
+    "type": "expense",
+    "sum": 500,
+    "currency": "UAH",
+    "name": "Taxes",
+    "description": "Taxes for January",
+    "category": "taxes",
+    "accountName": "Mono"
+  },
+  {
+    "id": 3,
+    "date": "2024-02-02T14:30:00.000Z",
+    "type": "expense",
+    "sum": 10.3,
+    "currency": "EUR",
+    "name": "Shopping",
+    "description": "Buy T-shirt",
+    "category": "shopping",
+    "accountName": "Cash"
+  },
+  {
+    "id": 4,
+    "date": "2024-02-01T14:30:00.000Z",
+    "type": "expense",
+    "sum": 345,
+    "currency": "UAH",
+    "name": "Subscription",
+    "description": "Spotify",
+    "category": "subscription",
+    "accountName": "Mono"
+  },
+  {
+    "id": 5,
+    "date": "2024-02-01T14:30:00.000Z",
+    "type": "expense",
+    "sum": 479.87,
+    "currency": "UAH",
+    "name": "Food",
+    "description": "Buy a ramen",
+    "category": "food",
+    "accountName": "Mono"
+  },
+  {
+    "id": 6,
+    "date": "2024-02-01T14:30:00.000Z",
+    "type": "expense",
+    "sum": 8,
+    "currency": "UAH",
+    "name": "Transport",
+    "description": "Metro",
+    "category": "transport",
+    "accountName": "Mono"
+  },
+  {
+    "id": 7,
+    "date": "2024-01-29T14:30:00.000Z",
+    "type": "income",
+    "sum": 2000,
+    "currency": "UAH",
+    "name": "Gift",
+    "description": "Gift from Jane",
+    "category": "gift",
+    "accountName": "Cash"
+  },
+  {
+    "id": 8,
+    "date": "2024-01-29T14:30:00.000Z",
+    "type": "income",
+    "sum": 100.89,
+    "currency": "UAH",
+    "name": "Bonuses",
+    "description": "Cashback",
+    "category": "bonuses",
+    "accountName": "Mono"
+  },
+  {
+    "id": 9,
+    "date": "2024-01-28T14:30:00.000Z",
+    "type": "expense",
+    "sum": 10000,
+    "currency": "UAH",
+    "name": "Housing",
+    "description": "Rent",
+    "category": "housing",
+    "accountName": "Mono"
+  },
+  {
+    "id": 10,
+    "date": "2024-01-28T14:30:00.000Z",
+    "type": "expense",
+    "sum": 345,
+    "currency": "UAH",
+    "name": "Utilities",
+    "description": "Water",
+    "category": "utilities",
+    "accountName": "Mono"
+  },
+  {
+    "id": 11,
+    "date": "2024-01-28T14:30:00.000Z",
+    "type": "expense",
+    "sum": 209.54,
+    "currency": "UAH",
+    "name": "Healthcare",
+    "description": "Analgin",
+    "category": "Healthcare",
+    "accountName": "Mono"
+  },
+  {
+    "id": 12,
+    "date": "2024-01-27T14:30:00.000Z",
+    "type": "expense",
+    "sum": 503.54,
+    "currency": "UAH",
+    "name": "Entertainment",
+    "description": "Cinema",
+    "category": "entertainment",
+    "accountName": "Mono"
+  },
+  {
+    "id": 13,
+    "date": "2024-01-26T14:30:00.000Z",
+    "type": "expense",
+    "sum": 12432.54,
+    "currency": "UAH",
+    "name": "Education",
+    "description": "Courses",
+    "category": "education",
+    "accountName": "Mono"
+  },
+  {
+    "id": 14,
+    "date": "2024-01-26T14:30:00.000Z",
+    "type": "expense",
+    "sum": 300,
+    "currency": "UAH",
+    "name": "Debt Payments",
+    "description": "Debt for John",
+    "category": "debt",
+    "accountName": "Mono"
+  },
+  {
+    "id": 15,
+    "date": "2024-01-26T14:30:00.000Z",
+    "type": "expense",
+    "sum": 3000,
+    "currency": "USD",
+    "name": "Savings & Investments",
+    "description": "Investments in Apple",
+    "category": "savingsAndInvestments",
+    "accountName": "Mono"
+  },
+  {
+    "id": 16,
+    "date": "2024-01-26T14:30:00.000Z",
+    "type": "expense",
+    "sum": 5000,
+    "currency": "UAH",
+    "name": "Gifts & Donations",
+    "description": "Donation for ZSU",
+    "category": "giftsAndDonations",
+    "accountName": "Mono"
+  }
+]
