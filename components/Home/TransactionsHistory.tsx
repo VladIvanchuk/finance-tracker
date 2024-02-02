@@ -14,10 +14,10 @@ const TransactionsHistory = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.headerGradient}>
+      <View style={styles.items_container}>
         <ThemedText style={styles.header}>Transactions history</ThemedText>
       </View>
-      <ScrollView style={styles.items_container}>
+      <View style={styles.items_container}>
         {Object.keys(groupedTransactions).map((date) => (
           <View key={date} style={styles.items_group}>
             <ThemedText style={styles.items_header}>
@@ -28,7 +28,7 @@ const TransactionsHistory = () => {
             ))}
           </View>
         ))}
-      </ScrollView>
+      </View>
     </View>
   );
 };
@@ -42,15 +42,10 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 18,
     fontWeight: "500",
-  },
-  headerGradient: {
-    paddingBottom: 8,
-    paddingHorizontal: 10,
+    marginBottom: 24,
   },
   items_container: {
-    marginBottom: 446,
     borderRadius: 8,
-    paddingHorizontal: 10,
   },
   items_group: {
     gap: 8,

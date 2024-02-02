@@ -8,7 +8,8 @@
     "name": "Salary",
     "description": "Salary for February",
     "category": "salary",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "cash"
   },
   {
     "id": 2,
@@ -18,7 +19,8 @@
     "currency": "UAH",
     "name": "Transfer",
     "description": "Transfer to Mono",
-    "accountName": "Privat"
+    "accountName": "Privat",
+    "iconName": "money-bill-transfer"
   },
   {
     "id": 16,
@@ -29,7 +31,8 @@
     "name": "Taxes",
     "description": "Taxes for January",
     "category": "taxes",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "bank"
   },
   {
     "id": 3,
@@ -40,7 +43,8 @@
     "name": "Shopping",
     "description": "Buy T-shirt",
     "category": "shopping",
-    "accountName": "Cash"
+    "accountName": "Cash",
+    "iconName": "shopping"
   },
   {
     "id": 4,
@@ -51,7 +55,8 @@
     "name": "Subscription",
     "description": "Spotify",
     "category": "subscription",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "subscriptions"
   },
   {
     "id": 5,
@@ -62,7 +67,8 @@
     "name": "Food",
     "description": "Buy a ramen",
     "category": "food",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "food"
   },
   {
     "id": 6,
@@ -73,7 +79,8 @@
     "name": "Transport",
     "description": "Metro",
     "category": "transport",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "car"
   },
   {
     "id": 7,
@@ -84,7 +91,8 @@
     "name": "Gift",
     "description": "Gift from Jane",
     "category": "gift",
-    "accountName": "Cash"
+    "accountName": "Cash",
+    "iconName": "gift"
   },
   {
     "id": 8,
@@ -95,7 +103,8 @@
     "name": "Bonuses",
     "description": "Cashback",
     "category": "bonuses",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "sack"
   },
   {
     "id": 9,
@@ -106,7 +115,8 @@
     "name": "Housing",
     "description": "Rent",
     "category": "housing",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "house"
   },
   {
     "id": 10,
@@ -117,7 +127,8 @@
     "name": "Utilities",
     "description": "Water",
     "category": "utilities",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "house-signal"
   },
   {
     "id": 11,
@@ -128,7 +139,8 @@
     "name": "Healthcare",
     "description": "Analgin",
     "category": "Healthcare",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "heart"
   },
   {
     "id": 12,
@@ -139,7 +151,8 @@
     "name": "Entertainment",
     "description": "Cinema",
     "category": "entertainment",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "masks-theater"
   },
   {
     "id": 13,
@@ -150,7 +163,8 @@
     "name": "Education",
     "description": "Courses",
     "category": "education",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "school"
   },
   {
     "id": 14,
@@ -161,7 +175,8 @@
     "name": "Debt Payments",
     "description": "Debt for John",
     "category": "debt",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "sack-dollar"
   },
   {
     "id": 15,
@@ -172,7 +187,8 @@
     "name": "Savings & Investments",
     "description": "Investments in Apple",
     "category": "savingsAndInvestments",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "piggy-bank"
   },
   {
     "id": 16,
@@ -183,6 +199,7 @@
     "name": "Gifts & Donations",
     "description": "Donation for ZSU",
     "category": "giftsAndDonations",
-    "accountName": "Mono"
+    "accountName": "Mono",
+    "iconName": "donate"
   }
 ]

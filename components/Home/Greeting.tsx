@@ -1,19 +1,19 @@
 import { StyleSheet, View } from "react-native";
-import React from "react";
-import ThemedText from "../ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
 import { AntDesign } from "@expo/vector-icons";
 import { Fontisto } from "@expo/vector-icons";
+
+import MonthPicker from "./MonthPicker";
 
 const Greeting = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.container}>
         <AntDesign name="dingding-o" size={34} color={Colors.tint} />
-        <ThemedText style={styles.text}>Hey George!</ThemedText>
-      </View>
-      <View style={styles.icon}>
-        <Fontisto name="bell-alt" size={20} color={Colors.background} />
+        <MonthPicker />
+        <View style={styles.icon}>
+          <Fontisto name="bell-alt" size={20} color={Colors.background} />
+        </View>
       </View>
     </View>
   );
@@ -26,9 +26,15 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: 32,
+    paddingHorizontal: 14,
   },
-  container: { flexDirection: "row", alignItems: "center", gap: 8 },
+  container: {
+    flex: 1,
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
+    justifyContent: "space-between",
+  },
   text: { fontSize: 24, fontWeight: "800" },
   icon: {
     backgroundColor: palette.light[20],

@@ -17,7 +17,7 @@ interface ThemedToastProps {
 const ThemedToast = ({ title, message, action, id }: ThemedToastProps) => {
   const toastId = "toast-" + id;
   return (
-    <Toast nativeID={toastId} action={action} variant="accent" mt="$10" onClose>
+    <Toast nativeID={toastId} action={action} variant="accent" mt="$10">
       <VStack space="xs">
         <ToastTitle>{title}</ToastTitle>
         <ToastDescription>{message}</ToastDescription>

@@ -2,11 +2,12 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import Colors, { palette } from "@/constants/Colors";
 import { Entypo } from "@expo/vector-icons";
-import ThemedActionSheet from "../ui/ThemedActionSheet";
+import ThemedActionSheet from "../ui/ThemedActionSheet"; 
 import AttachmentItems from "./AttachmentItems";
 import { Badge, Image } from "@gluestack-ui/themed";
 import { AntDesign } from "@expo/vector-icons";
 import ThemedAlert from "../ui/ThemedAlert";
+import { Feather } from "@expo/vector-icons";
 
 interface AttachmentProps {
   onChange: (value: string) => void;
@@ -14,8 +15,8 @@ interface AttachmentProps {
 
 const Attachment = ({ onChange }: AttachmentProps) => {
   const [alertVisible, setAlertVisible] = useState(false);
-  const [showActionSheet, setShowActionSheet] = useState(false);
   const [selectedImage, setSelectedImage] = useState<null | string>(null);
+  const [showActionSheet, setShowActionSheet] = useState(false);
   const handleChange = () => setShowActionSheet(!showActionSheet);
 
   useEffect(() => {
@@ -44,7 +45,7 @@ const Attachment = ({ onChange }: AttachmentProps) => {
         </Pressable>
       ) : (
         <Pressable onPress={handleChange} style={styles.input_container}>
-          <Entypo name="attachment" size={24} color={Colors.text} />
+          <Feather name="paperclip" size={24} color={Colors.text} />
           <Text style={styles.text}>Add attachment</Text>
         </Pressable>
       )}

@@ -13,8 +13,6 @@ const AddTransfer = () => {
     attachment: "",
   });
 
-  console.log(operation);
-
   return (
     <OperationForm
       operationType="transfer"

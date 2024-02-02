@@ -1,4 +1,3 @@
-import { palette } from "@/constants/Colors";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import {
   DarkTheme,
@@ -9,24 +8,19 @@ import { useFonts } from "expo-font";
 import { Stack, useNavigation } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect, useState } from "react";
-import { BackHandler, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { config } from "@gluestack-ui/config";
 import { HeaderBackButton } from "@react-navigation/elements";
 import ThemedAlert from "@/components/ui/ThemedAlert";
 import { getOperationColor } from "@/utils/defineOperationColor";
 
-export {
-  // Catch any errors thrown by the Layout component.
-  ErrorBoundary,
-} from "expo-router";
+export { ErrorBoundary } from "expo-router";
 
 export const unstable_settings = {
-  // Ensure that reloading on `/modal` keeps a back button present.
   initialRouteName: "(tabs)",
 };
 
-// Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
@@ -35,7 +29,6 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  // Expo Router uses Error Boundaries to catch errors in the navigation tree.
   useEffect(() => {
     if (error) throw error;
   }, [error]);

@@ -14,5 +14,6 @@ export const groupTransactionsByDate = (
     }
     groups[date].push(transaction);
     return groups;
-  }, {} as TransactionGroups); // Cast the initial value to TransactionGroups
+  }, {} as TransactionGroups);
 };
+
