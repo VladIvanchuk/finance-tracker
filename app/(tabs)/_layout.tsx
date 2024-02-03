@@ -5,6 +5,8 @@ import { StyleSheet, View } from "react-native";
 
 import Colors from "@/constants/Colors";
 import TabBarMenu from "@/components/TabBar/TabBarMenu";
+import Header from "@/components/ui/Header";
+import MonthPicker from "@/components/Home/MonthPicker";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>["name"];
@@ -20,7 +22,6 @@ export default function TabLayout() {
         screenOptions={{
           tabBarActiveTintColor: Colors.tabIconSelected,
           tabBarInactiveTintColor: Colors.tabIconDefault,
-          headerShown: false,
           tabBarShowLabel: false,
           tabBarStyle: styles.tabBar,
           headerStyle: styles.header,
@@ -29,53 +30,43 @@ export default function TabLayout() {
         <Tabs.Screen
           name="index"
           options={{
-            title: "Home",
             tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-            // headerRight: () => (
-            //   <Link href="/modal" asChild>
-            //     <Pressable>
-            //       {({ pressed }) => (
-            //         <Ionicons
-            //           name="notifications"
-            //           size={25}
-            //           color={Colors.text}
-            //           style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
-            //         />
-            //       )}
-            //     </Pressable>
-            //   </Link>
-            // ),
+            header: () => (
+              <Header>
+                <MonthPicker />
+              </Header>
+            ),
           }}
         />
         <Tabs.Screen
           name="stats"
           options={{
-            title: "Statistics",
             tabBarIcon: ({ color }) => (
               <View style={{ marginRight: 35 }}>
                 <TabBarIcon name="pie-chart" color={color} />
               </View>
             ),
+            header: () => <Header title="Statistics" />,
           }}
         />
         <Tabs.Screen
-          name="wallet"
+          name="accounts"
           options={{
-            title: "Wallet",
             tabBarIcon: ({ color }) => (
               <View style={{ marginLeft: 35 }}>
                 <TabBarIcon name="wallet" color={color} />
               </View>
             ),
+            header: () => <Header title="Accounts" />,
           }}
         />
         <Tabs.Screen
           name="profile"
           options={{
-            title: "Profile",
             tabBarIcon: ({ color }) => (
               <TabBarIcon name="person" color={color} />
             ),
+            header: () => <Header title="Profile" />,
           }}
         />
       </Tabs>

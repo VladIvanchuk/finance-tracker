@@ -72,7 +72,7 @@ const ThemedSelect = ({
             <ThemedButton
               label="Add new"
               style={styles.addButton}
-              bg="$secondary600"
+              bg="$secondary400"
               onPress={addButtonAction}
             />
           )}

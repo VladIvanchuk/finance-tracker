@@ -20,6 +20,8 @@ const ThemedButton = ({
   isDisabled,
   action,
 }: ThemedButtonProps) => {
+  const backgroundColor = action || bg ? bg : "$blue600";
+
   return (
     <View style={style}>
       <Button
@@ -28,9 +30,9 @@ const ThemedButton = ({
         action={action}
         isDisabled={isDisabled}
         isFocusVisible={false}
-        bg={!action && !bg ? "$blue600" : undefined}
         borderRadius="$xl"
         onPress={onPress}
+        {...(backgroundColor && { bg: backgroundColor })}
       >
         <ButtonText>{label}</ButtonText>
       </Button>

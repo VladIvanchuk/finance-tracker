@@ -1,7 +1,6 @@
 import { StyleSheet } from "react-native";
 import React, { ReactElement } from "react";
 import {
-  Button,
   AlertDialog,
   AlertDialogBackdrop,
   AlertDialogBody,
@@ -16,6 +15,7 @@ import {
   Icon,
   Text,
 } from "@gluestack-ui/themed";
+import ThemedButton from "./ThemedButton";
 
 type ThemedAlertType = "delete" | "exit" | "info";
 
@@ -39,9 +39,7 @@ const ThemedAlert = ({
   action,
 }: ThemedAlertProps) => {
   const handleAction = () => {
-    if (action) {
-      action();
-    }
+    action?.();
     onClose();
   };
   const renderButtons = () => {
@@ -50,31 +48,27 @@ const ThemedAlert = ({
     }
     switch (type) {
       case "info":
-        return (
-          <Button action="secondary" onPress={onClose}>
-            <ButtonText>Ok</ButtonText>
-          </Button>
-        );
+        return <ThemedButton action="secondary" onPress={onClose} label="Ok" />;
       case "exit":
         return (
           <>
-            <Button action="secondary" onPress={onClose}>
-              <ButtonText>Cancel</ButtonText>
-            </Button>
-            <Button action="negative" onPress={handleAction}>
-              <ButtonText>Exit</ButtonText>
-            </Button>
+            <ThemedButton action="secondary" onPress={onClose} label="Cancel" />
+            <ThemedButton
+              action="negative"
+              onPress={handleAction}
+              label="Exit"
+            />
           </>
         );
       case "delete":
         return (
           <>
-            <Button action="secondary" onPress={onClose}>
-              <ButtonText>Cancel</ButtonText>
-            </Button>
-            <Button bg="$error600" action="negative" onPress={handleAction}>
-              <ButtonText>Delete</ButtonText>
-            </Button>
+            <ThemedButton action="secondary" onPress={onClose} label="Cancel" />
+            <ThemedButton
+              action="negative"
+              onPress={handleAction}
+              label="Delete"
+            />
           </>
         );
     }
@@ -82,7 +76,10 @@ const ThemedAlert = ({
   return (
     <AlertDialog isOpen={visible} onClose={onClose}>
       <AlertDialogBackdrop />
-      <AlertDialogContent style={{ shadowColor: "transparent", elevation: 0 }}>
+      <AlertDialogContent
+        style={{ shadowColor: "transparent", elevation: 0 }}
+        borderRadius={14}
+      >
         <AlertDialogHeader>
           <Heading size="lg">{title}</Heading>
           <AlertDialogCloseButton>

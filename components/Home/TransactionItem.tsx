@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Colors from "@/constants/Colors";
 import { ITransaction } from "@/types/Transactions";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
@@ -21,7 +21,7 @@ const TransactionItem = ({
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
 
   return (
-    <View style={styles.container}>
+    <TouchableOpacity style={styles.container}>
       <TransactionIcon iconName={iconName} />
       <View style={styles.infoContainer}>
         <View style={styles.textContainer}>
@@ -41,7 +41,7 @@ const TransactionItem = ({
           <ThemedText style={styles.account}>{accountName}</ThemedText>
         </View>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 };
 

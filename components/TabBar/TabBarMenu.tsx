@@ -9,13 +9,12 @@ import React, { useRef, useState } from "react";
 import TabBarButton from "./TabBarButton";
 import { palette } from "@/constants/Colors";
 import { ExpenseIcon, IncomeIcon, TransferIcon } from "..";
-import { Link, useNavigation } from "expo-router";
+import { Link } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
 const TabBarMenu = () => {
   const [isMenuVisible, setMenuVisible] = useState(false);
-  const navigation = useNavigation();
 
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);

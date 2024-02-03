@@ -38,6 +38,7 @@ export default TransactionsHistory;
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
+    marginBottom: 10,
   },
   header: {
     fontSize: 18,
