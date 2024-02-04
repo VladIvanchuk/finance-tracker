@@ -47,7 +47,7 @@ const AttachmentItems = ({
         "Permission required",
         `Please grant ${
           pickerType === PermissionType.Camera ? "camera" : "camera roll"
-        } permissions to use this feature`
+        } permissions to use this feature`,
       );
       return;
     }

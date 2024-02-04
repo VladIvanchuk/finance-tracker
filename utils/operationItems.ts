@@ -24,7 +24,7 @@ const operationItems: OperationItem[] = [
 export default operationItems;
 
 export const getOperationItems = (
-  operationType: OperationType
+  operationType: OperationType,
 ): OperationItem[] => {
   let items = [...operationItems];
 
@@ -49,7 +49,7 @@ export const getOperationItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      }
+      },
     );
   }
 

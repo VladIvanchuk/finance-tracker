@@ -8,7 +8,7 @@ export const formatDate = (isoDate: string): string => {
   const dateToCompare = new Date(
     date.getFullYear(),
     date.getMonth(),
-    date.getDate()
+    date.getDate(),
   );
 
   if (dateToCompare.getTime() === today.getTime()) {

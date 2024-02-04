@@ -24,7 +24,7 @@ const YearPicker = ({
 }: YearPickerProps) => {
   const years = Array.from(
     { length: endYear - startYear + 1 },
-    (_, i) => endYear - i
+    (_, i) => endYear - i,
   );
 
   return (

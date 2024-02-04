@@ -9,7 +9,7 @@ import { formatDate } from "@/utils/formatdate";
 
 const TransactionsHistory = () => {
   const groupedTransactions = groupTransactionsByDate(
-    transactions as ITransaction[]
+    transactions as ITransaction[],
   );
 
   return (

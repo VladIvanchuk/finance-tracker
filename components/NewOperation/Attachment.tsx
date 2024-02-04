@@ -2,7 +2,7 @@ import { Pressable, StyleSheet, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import Colors, { palette } from "@/constants/Colors";
 import { Entypo } from "@expo/vector-icons";
-import ThemedActionSheet from "../ui/ThemedActionSheet"; 
+import ThemedActionSheet from "../ui/ThemedActionSheet";
 import AttachmentItems from "./AttachmentItems";
 import { Badge, Image } from "@gluestack-ui/themed";
 import { AntDesign } from "@expo/vector-icons";
