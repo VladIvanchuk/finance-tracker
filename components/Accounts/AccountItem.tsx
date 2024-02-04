@@ -1,5 +1,5 @@
 import React from "react";
-import { ScrollView, StyleSheet, View } from "react-native";
+import { Animated, ScrollView, StyleSheet, View } from "react-native";
 import AccountCard from "./AccountCard";
 import ThemedText from "../ui/ThemedText";
 import TransactionItem from "../Home/TransactionItem";
@@ -9,16 +9,21 @@ import { ITransaction } from "@/types/Transactions";
 interface AccountItemProps {
   account: IAccount;
   width: number;
+  marginHorizontal: number;
 }
 
-const AccountItem = ({ account, width }: AccountItemProps) => {
+const AccountItem = ({
+  account,
+  width,
+  marginHorizontal,
+}: AccountItemProps) => {
   return (
-    <View style={[styles.itemContainer, { width }]}>
+    <View style={{ width, marginHorizontal }}>
       <AccountCard {...account} />
       <ThemedText style={styles.transactionsHeader}>
         Transactions history
       </ThemedText>
-      <ScrollView contentContainerStyle={styles.transactionsContainer}>
+      <Animated.ScrollView contentContainerStyle={styles.transactionsContainer}>
         {account.transactions.map((transaction) => (
           <TransactionItem
             key={transaction.id}
@@ -26,7 +31,7 @@ const AccountItem = ({ account, width }: AccountItemProps) => {
             useDate
           />
         ))}
-      </ScrollView>
+      </Animated.ScrollView>
     </View>
   );
 };
@@ -34,17 +39,14 @@ const AccountItem = ({ account, width }: AccountItemProps) => {
 export default AccountItem;
 
 const styles = StyleSheet.create({
-  itemContainer: {
-    paddingHorizontal: 6,
-  },
   transactionsContainer: {
     marginTop: 16,
     paddingBottom: 48,
-    paddingHorizontal: 10,
+    paddingHorizontal: 6,
     gap: 12,
   },
   transactionsHeader: {
-    paddingHorizontal: 10,
+    paddingHorizontal: 6,
     fontSize: 18,
     fontWeight: "500",
     marginTop: 18,
