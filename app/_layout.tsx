@@ -111,6 +111,30 @@ function RootLayoutNav() {
               ),
             }}
           />
+          <Stack.Screen
+            name="editAccount"
+            options={{
+              title: "Edit Account",
+              headerLeft: (props) => (
+                <HeaderBackButton
+                  {...props}
+                  onPress={() => setAlertVisible(true)}
+                />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name="transactionView/[id]"
+            options={{
+              title: "Transaction View",
+              headerLeft: (props) => (
+                <HeaderBackButton
+                  {...props}
+                  onPress={() => setAlertVisible(true)}
+                />
+              ),
+            }}
+          />
         </Stack>
       </ThemeProvider>
       <ThemedAlert

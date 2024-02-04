@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
     gap: 12,
   },
   transactionsHeader: {
-    paddingHorizontal: 6,
+    paddingHorizontal: 10,
     fontSize: 18,
     fontWeight: "500",
     marginTop: 18,

@@ -1,4 +1,4 @@
-import OperationForm from "@/components/NewOperation/NewOperatin";
+import OperationForm from "@/components/NewOperation/OperationForm";
 import { IOperation } from "@/types/Operations";
 import { useState } from "react";
 

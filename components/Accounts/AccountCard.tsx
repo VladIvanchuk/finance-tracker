@@ -1,10 +1,11 @@
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import ThemedText from "../ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
 import { IAccount } from "@/types/Accounts";
-import { Entypo } from "@expo/vector-icons";
+import { Feather } from "@expo/vector-icons";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { Link } from "expo-router";
 
 const AccountCard = ({
   name,
@@ -21,11 +22,9 @@ const AccountCard = ({
           <ThemedText style={styles.card_name}>{name}</ThemedText>
         </View>
         <TouchableOpacity>
-          <Entypo
-            name="dots-three-horizontal"
-            size={24}
-            color={palette.light[100]}
-          />
+          <Link href="/editAccount">
+            <Feather name="edit" size={24} color={palette.light[100]} />
+          </Link>
         </TouchableOpacity>
       </View>
       <View style={styles.card_body}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import OperationForm from "@/components/NewOperation/NewOperatin";
+import OperationForm from "@/components/NewOperation/OperationForm";
 import { IOperation } from "@/types/Operations";
 
 const AddTransfer = () => {

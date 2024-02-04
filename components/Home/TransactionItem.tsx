@@ -6,12 +6,14 @@ import { getOperationColor } from "@/utils/defineOperationColor";
 import ThemedText from "../ui/ThemedText";
 import TransactionIcon from "./TransactionIcon";
 import { formatDate } from "@/utils/formatdate";
+import { Link, useNavigation } from "expo-router";
 
 interface TransactionItemProps {
   useDate?: boolean;
 }
 
 const TransactionItem = ({
+  id,
   name,
   description,
   sum,
@@ -28,29 +30,37 @@ const TransactionItem = ({
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
 
   return (
-    <TouchableOpacity style={styles.container}>
-      <TransactionIcon iconName={iconName} />
-      <View style={styles.infoContainer}>
-        <View style={styles.textContainer}>
-          <ThemedText style={styles.name}>{name}</ThemedText>
-          <ThemedText
-            style={styles.description}
-            numberOfLines={1}
-            ellipsizeMode="tail"
-          >
-            {description}
-          </ThemedText>
+    <Link
+      href={{
+        pathname: "/transactionView/[id]",
+        params: { id: id, type: type },
+      }}
+      asChild
+    >
+      <TouchableOpacity style={styles.container}>
+        <TransactionIcon iconName={iconName} />
+        <View style={styles.infoContainer}>
+          <View style={styles.textContainer}>
+            <ThemedText style={styles.name}>{name}</ThemedText>
+            <ThemedText
+              style={styles.description}
+              numberOfLines={1}
+              ellipsizeMode="tail"
+            >
+              {description}
+            </ThemedText>
+          </View>
+          <View style={[styles.textContainer, styles.alignRight]}>
+            <ThemedText style={[styles.price, { color: operationColor }]}>
+              {formattedSum} {currencySymbol}
+            </ThemedText>
+            <ThemedText style={styles.account}>
+              {useDate ? formatDate(date) : accountName}
+            </ThemedText>
+          </View>
         </View>
-        <View style={[styles.textContainer, styles.alignRight]}>
-          <ThemedText style={[styles.price, { color: operationColor }]}>
-            {formattedSum} {currencySymbol}
-          </ThemedText>
-          <ThemedText style={styles.account}>
-            {useDate ? formatDate(date) : accountName}
-          </ThemedText>
-        </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </Link>
   );
 };
 
