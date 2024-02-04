@@ -1,4 +1,175 @@
 [
-  { "label": "Cash", "value": "1" },
-  { "label": "Monobank", "value": "9" }
+  {
+    "id": 1,
+    "name": "My Cash",
+    "type": "Cash",
+    "balance": 12500,
+    "currency": "UAH",
+    "transactions": [
+      {
+        "id": 2,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "transfer",
+        "sum": 12000,
+        "currency": "UAH",
+        "name": "Transfer",
+        "description": "Transfer to Mono",
+        "accountName": "Privat",
+        "iconName": "money-bill-transfer"
+      },
+      {
+        "id": 16,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "expense",
+        "sum": 500,
+        "currency": "UAH",
+        "name": "Taxes",
+        "description": "Taxes for January",
+        "category": "taxes",
+        "accountName": "Mono",
+        "iconName": "bank"
+      },
+      {
+        "id": 2132,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "transfer",
+        "sum": 12000,
+        "currency": "UAH",
+        "name": "Transfer",
+        "description": "Transfer to Mono",
+        "accountName": "Privat",
+        "iconName": "money-bill-transfer"
+      },
+      {
+        "id": 345616,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "expense",
+        "sum": 500,
+        "currency": "UAH",
+        "name": "Taxes",
+        "description": "Taxes for January",
+        "category": "taxes",
+        "accountName": "Mono",
+        "iconName": "bank"
+      },
+      {
+        "id": 23456,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "transfer",
+        "sum": 12000,
+        "currency": "UAH",
+        "name": "Transfer",
+        "description": "Transfer to Mono",
+        "accountName": "Privat",
+        "iconName": "money-bill-transfer"
+      },
+      {
+        "id": 16432,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "expense",
+        "sum": 500,
+        "currency": "UAH",
+        "name": "Taxes",
+        "description": "Taxes for January",
+        "category": "taxes",
+        "accountName": "Mono",
+        "iconName": "bank"
+      },
+      {
+        "id": 45672,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "transfer",
+        "sum": 12000,
+        "currency": "UAH",
+        "name": "Transfer",
+        "description": "Transfer to Mono",
+        "accountName": "Privat",
+        "iconName": "money-bill-transfer"
+      },
+      {
+        "id": 132136,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "expense",
+        "sum": 500,
+        "currency": "UAH",
+        "name": "Taxes",
+        "description": "Taxes for January",
+        "category": "taxes",
+        "accountName": "Mono",
+        "iconName": "bank"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "Neque porro quisquam est qui",
+    "type": "Debit",
+    "balance": 300,
+    "currency": "USD",
+    "bankName": "Mono Bank",
+    "accountNumber": "0913810239812841",
+    "notes": "Some notes jhj shksjdsjflksjdfks lskdjfl ksjdlfksjd lksdf jslkdjfl skdjfls djlfksjdl kfjsdfjskjlfksdjf",
+    "transactions": [
+      {
+        "id": 1,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "income",
+        "sum": 400,
+        "currency": "USD",
+        "name": "Salary",
+        "description": "Salary for February",
+        "category": "salary",
+        "accountName": "Mono",
+        "iconName": "cash"
+      },
+      {
+        "id": 15,
+        "date": "2024-01-26T14:30:00.000Z",
+        "type": "expense",
+        "sum": 300,
+        "currency": "USD",
+        "name": "Savings & Investments",
+        "description": "Investments in Apple",
+        "category": "savingsAndInvestments",
+        "accountName": "Mono",
+        "iconName": "piggy-bank"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "name": "My card 2",
+    "type": "Credit",
+    "balance": -3000,
+    "currency": "EUR",
+    "bankName": "Privat Bank",
+    "accountNumber": "0913810239819381",
+    "notes": "Some notes jhj shksjdsjflksjdfks lskdjfl ksjdlfksjd lksdf jslkdjfl skdjfls djlfksjdl kfjsdfjskjlfksdjf",
+    "transactions": [
+      {
+        "id": 3,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "expense",
+        "sum": 200.3,
+        "currency": "EUR",
+        "name": "Shopping",
+        "description": "Buy T-shirt",
+        "category": "shopping",
+        "accountName": "Cash",
+        "iconName": "shopping"
+      },
+      {
+        "id": 4,
+        "date": "2024-02-02T14:30:00.000Z",
+        "type": "expense",
+        "sum": 10.3,
+        "currency": "EUR",
+        "name": "Shopping",
+        "description": "Buy T-shirt",
+        "category": "shopping",
+        "accountName": "Cash",
+        "iconName": "shopping"
+      }
+    ]
+  }
 ]

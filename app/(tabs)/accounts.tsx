@@ -1,20 +1,17 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
-import Header from "@/components/ui/Header";
-import ThemedText from "@/components/ui/ThemedText";
+import AccountCards from "@/components/Accounts/AccountCards";
 
-const Wallet = () => {
+const Accounts = () => {
   return (
     <View style={styles.page_container}>
-      <ThemedText>Hi</ThemedText>
+      <AccountCards />
     </View>
   );
 };
 
-export default Wallet;
+export default Accounts;
 
 const styles = StyleSheet.create({
-  page_container: {
-    paddingHorizontal: 4,
-  },
+  page_container: {},
 });

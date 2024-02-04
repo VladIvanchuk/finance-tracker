@@ -2,8 +2,8 @@ import { OperationItem, OperationType } from "@/types/Operations";
 
 import incomeCategoryItems from "@/mock/incomeCategoryItems.json";
 import expenseCategoryItems from "@/mock/expenseCategoryItems.json";
-import currencyItems from "@/mock/currencies.json";
-import accountItems from "@/mock/accounts.json";
+import currencyItems from "@/mock/InputCurrenciesItems.json";
+import accountItems from "@/mock/InputAccountItems.json";
 
 const operationItems: OperationItem[] = [
   {

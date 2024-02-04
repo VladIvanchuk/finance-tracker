@@ -5,6 +5,11 @@ import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import ThemedText from "../ui/ThemedText";
 import TransactionIcon from "./TransactionIcon";
+import { formatDate } from "@/utils/formatdate";
+
+interface TransactionItemProps {
+  useDate?: boolean;
+}
 
 const TransactionItem = ({
   name,
@@ -14,7 +19,9 @@ const TransactionItem = ({
   accountName,
   type,
   iconName,
-}: ITransaction) => {
+  date,
+  useDate,
+}: ITransaction & TransactionItemProps) => {
   const operationColor = getOperationColor(type);
   const currencySymbol = getCurrencySymbol(currency);
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
@@ -38,7 +45,9 @@ const TransactionItem = ({
           <ThemedText style={[styles.price, { color: operationColor }]}>
             {formattedSum} {currencySymbol}
           </ThemedText>
-          <ThemedText style={styles.account}>{accountName}</ThemedText>
+          <ThemedText style={styles.account}>
+            {useDate ? formatDate(date) : accountName}
+          </ThemedText>
         </View>
       </View>
     </TouchableOpacity>
