@@ -1,4 +1,4 @@
-export const formatDate = (isoDate: string): string => {
+export const formatShortDate = (isoDate: string): string => {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const yesterday = new Date(today);

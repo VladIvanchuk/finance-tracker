@@ -5,7 +5,7 @@ import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import ThemedText from "../ui/ThemedText";
 import TransactionIcon from "./TransactionIcon";
-import { formatDate } from "@/utils/formatdate";
+import { formatShortDate } from "@/utils/formatShortDate";
 import { Link, useNavigation } from "expo-router";
 
 interface TransactionItemProps {
@@ -33,7 +33,7 @@ const TransactionItem = ({
     <Link
       href={{
         pathname: "/transactionView/[id]",
-        params: { id: id, type: type },
+        params: { id: id },
       }}
       asChild
     >
@@ -55,7 +55,7 @@ const TransactionItem = ({
               {formattedSum} {currencySymbol}
             </ThemedText>
             <ThemedText style={styles.account}>
-              {useDate ? formatDate(date) : accountName}
+              {useDate ? formatShortDate(date) : accountName}
             </ThemedText>
           </View>
         </View>

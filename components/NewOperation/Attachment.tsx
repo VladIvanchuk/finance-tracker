@@ -1,7 +1,6 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 import React, { useEffect, useState } from "react";
 import Colors, { palette } from "@/constants/Colors";
-import { Entypo } from "@expo/vector-icons";
 import ThemedActionSheet from "../ui/ThemedActionSheet";
 import AttachmentItems from "./AttachmentItems";
 import { Badge, Image } from "@gluestack-ui/themed";
@@ -18,6 +17,7 @@ const Attachment = ({ onChange }: AttachmentProps) => {
   const [selectedImage, setSelectedImage] = useState<null | string>(null);
   const [showActionSheet, setShowActionSheet] = useState(false);
   const handleChange = () => setShowActionSheet(!showActionSheet);
+  console.log(selectedImage);
 
   useEffect(() => {
     if (selectedImage) {

@@ -22,11 +22,12 @@ export interface ITransaction {
   id: number;
   date: string;
   type: OperationType;
-  sum: 120.23;
+  sum: number;
   currency: CurrencyType;
   name: string;
   description: string;
   category: string;
   iconName: IconNameType;
   accountName: string;
+  attachment: string;
 }

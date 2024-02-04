@@ -5,7 +5,7 @@ import TransactionItem from "./TransactionItem";
 import { groupTransactionsByDate } from "@/utils/transactionsUtils";
 import transactions from "@/mock/transactions.json";
 import { ITransaction } from "@/types/Transactions";
-import { formatDate } from "@/utils/formatdate";
+import { formatShortDate } from "@/utils/formatShortDate";
 
 const TransactionsHistory = () => {
   const groupedTransactions = groupTransactionsByDate(
@@ -21,7 +21,7 @@ const TransactionsHistory = () => {
         {Object.keys(groupedTransactions).map((date) => (
           <View key={date} style={styles.items_group}>
             <ThemedText style={styles.items_header}>
-              {formatDate(date)}
+              {formatShortDate(date)}
             </ThemedText>
             {groupedTransactions[date].map((transaction) => (
               <TransactionItem key={transaction.id} {...transaction} />

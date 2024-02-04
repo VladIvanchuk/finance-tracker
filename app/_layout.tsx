@@ -14,6 +14,7 @@ import { config } from "@gluestack-ui/config";
 import { HeaderBackButton } from "@react-navigation/elements";
 import ThemedAlert from "@/components/ui/ThemedAlert";
 import { getOperationColor } from "@/utils/defineOperationColor";
+import Colors from "@/constants/Colors";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -63,6 +64,7 @@ function RootLayoutNav() {
             headerBackButtonMenuEnabled: true,
             headerShadowVisible: false,
             headerTitleAlign: "center",
+            headerTintColor: Colors.text,
           }}
         >
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -126,12 +128,9 @@ function RootLayoutNav() {
           <Stack.Screen
             name="transactionView/[id]"
             options={{
-              title: "Transaction View",
+              title: "Transaction Details",
               headerLeft: (props) => (
-                <HeaderBackButton
-                  {...props}
-                  onPress={() => setAlertVisible(true)}
-                />
+                <HeaderBackButton {...props} onPress={handlePopToTop} />
               ),
             }}
           />

@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import { Animated, Dimensions, StyleSheet, View } from "react-native";
 import TransactionsHistory from "@/components/Home/TransactionsHistory";
-import Header from "@/components/ui/Header";
 import Colors from "@/constants/Colors";
 import ThemedText from "@/components/ui/ThemedText";
 import Activity from "@/components/Home/Activity";

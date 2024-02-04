@@ -87,7 +87,7 @@ const ThemedAlert = ({
           </AlertDialogCloseButton>
         </AlertDialogHeader>
         {message && (
-          <AlertDialogBody>
+          <AlertDialogBody mt={-10} mb={10}>
             <Text size="sm">{message}</Text>
           </AlertDialogBody>
         )}
