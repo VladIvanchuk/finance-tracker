@@ -10,7 +10,7 @@
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "rgb(20, 19, 50)"
+      "backgroundColor": "#141332"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
@@ -19,8 +19,9 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "rgb(20, 19, 50)"
-      }
+        "backgroundColor": "#141332"
+      },
+      "package": "com.anonymous.financetracker"
     },
     "web": {
       "bundler": "metro",

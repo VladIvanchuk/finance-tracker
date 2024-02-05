@@ -2,7 +2,7 @@ import React from "react";
 import Svg, { Path } from "react-native-svg";
 
 const TransferIcon = () => (
-  <Svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+  <Svg width="32" height="32" viewBox="0 0 32 32">
     <Path
       d="M10 28C13.3137 28 16 25.3137 16 22C16 18.6863 13.3137 16 10 16C6.68629 16 4 18.6863 4 22C4 25.3137 6.68629 28 10 28Z"
       fill="#FCFCFC"

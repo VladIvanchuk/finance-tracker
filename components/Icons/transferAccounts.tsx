@@ -2,7 +2,7 @@ import React from "react";
 import Svg, { Path, Rect } from "react-native-svg";
 
 const TransferAccountsIcon = () => (
-  <Svg width="42" height="42" viewBox="0 0 42 42" fill="none">
+  <Svg width="42" height="42" viewBox="0 0 42 42">
     <Rect x="1" y="1" width="40" height="40" rx="20" fill="#FCFCFC" />
     <Rect x="1" y="1" width="40" height="40" rx="20" stroke="#F1F1FA" />
     <Path
