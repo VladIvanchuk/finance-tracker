@@ -17,7 +17,6 @@ const Attachment = ({ onChange }: AttachmentProps) => {
   const [selectedImage, setSelectedImage] = useState<null | string>(null);
   const [showActionSheet, setShowActionSheet] = useState(false);
   const handleChange = () => setShowActionSheet(!showActionSheet);
-  console.log(selectedImage);
 
   useEffect(() => {
     if (selectedImage) {

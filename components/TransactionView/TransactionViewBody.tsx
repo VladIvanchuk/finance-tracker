@@ -27,7 +27,6 @@ const TransactionViewBody = ({ description, attachment }: ITransaction) => {
             }}
             alt="Attachment"
             style={styles.image}
-            onError={(e) => console.log(e.nativeEvent.error)}
           />
         </View>
       )}
