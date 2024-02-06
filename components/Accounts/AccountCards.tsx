@@ -3,6 +3,8 @@ import { ScrollView, StyleSheet, Dimensions } from "react-native";
 import accounts from "@/mock/accounts.json";
 import AccountItem from "./AccountItem";
 import { IAccount } from "@/types/Accounts";
+import { useQuery } from "@realm/react";
+import { Account } from "@/models/Account";
 
 const { width: screenWidth } = Dimensions.get("window");
 
@@ -11,6 +13,8 @@ const CARD_WIDTH = screenWidth * 0.88;
 const SIDE_PADDING = (screenWidth - CARD_WIDTH) / 2 - CARD_MARGIN;
 
 const AccountCards = () => {
+  const accounts = useQuery(Account);
+
   return (
     <ScrollView
       horizontal={true}
@@ -21,8 +25,8 @@ const AccountCards = () => {
     >
       {accounts.map((account) => (
         <AccountItem
-          key={account.id}
-          account={account as IAccount}
+          key={account._id.toString()}
+          account={account}
           width={CARD_WIDTH}
           marginHorizontal={CARD_MARGIN}
         />

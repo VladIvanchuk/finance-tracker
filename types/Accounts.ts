@@ -1,3 +1,4 @@
+import { BSON } from "realm";
 import { CurrencyType } from "./Operations";
 import { ITransaction } from "./Transactions";
 
@@ -11,10 +12,10 @@ export type AccountType =
   | string;
 
 export interface IAccount {
-  id?: number;
+  _id: BSON.ObjectId;
   name: string;
   type: AccountType;
-  balance: string;
+  balance: number;
   currency: CurrencyType;
   transactions?: ITransaction[];
   bankName?: string;

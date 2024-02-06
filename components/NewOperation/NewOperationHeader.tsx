@@ -24,7 +24,7 @@ const NewOperationHeader = ({
       setOperation((prev) => ({ ...prev, sum: number }));
     }
     if (setAccountData) {
-      setAccountData((prev) => ({ ...prev, balance: number }));
+      setAccountData((prev) => ({ ...prev, balance: parseFloat(number) }));
     }
   }, [number, setOperation]);
 

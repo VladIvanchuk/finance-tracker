@@ -1,10 +1,9 @@
-import { BackHandler, StyleSheet, Text, View } from "react-native";
+import { BackHandler, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
 import { AccountItemType, IAccount } from "@/types/Accounts";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect, useNavigation } from "expo-router";
 import ThemedAlert from "../ui/ThemedAlert";
-import { getOperationColor } from "@/utils/defineOperationColor";
 import { StackActions } from "@react-navigation/native";
 import NewOperationBody from "../NewOperation/NewOperationBody";
 import NewOperationFooter from "../NewOperation/NewOperationFooter";
@@ -12,6 +11,8 @@ import NewOperationHeader from "../NewOperation/NewOperationHeader";
 import ThemedToast from "../ui/ThemedToast";
 import Colors from "@/constants/Colors";
 import { OperationItemType } from "@/types/Operations";
+import { Account } from "@/models/Account";
+import { useRealm } from "@realm/react";
 
 const AccountForm = ({
   accountData,
@@ -24,6 +25,7 @@ const AccountForm = ({
   const [isFormValidated, setIsFormValidated] = useState(true);
   const navigation = useNavigation();
   const toast = useToast();
+  const realm = useRealm();
 
   const handlePopToTop = () => {
     navigation.dispatch(StackActions.popToTop());
@@ -52,16 +54,23 @@ const AccountForm = ({
     [toast],
   );
 
+  const addAccount = () => {
+    realm.write(() => {
+      realm.create(Account, accountData);
+    });
+  };
+
   const handleContinue = () => {
     if (
       !accountData.balance ||
-      isNaN(Number(accountData.balance)) ||
+      isNaN(accountData.balance) ||
       Number(accountData.balance) <= 0
     ) {
       showToast("Invalid data", `Please enter a valid balance.`, "error");
       setIsFormValidated(false);
       return;
     }
+    addAccount();
     handlePopToTop();
     showToast("Success", `Account added successfully`, "success");
   };
