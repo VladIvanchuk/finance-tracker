@@ -1,15 +1,9 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { StackActions } from "@react-navigation/native";
 import { useFonts } from "expo-font";
-import { Stack, useNavigation } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
-import { useEffect, useState } from "react";
-import { StatusBar } from "react-native";
-import { HeaderBackButton } from "@react-navigation/elements";
-import ThemedAlert from "@/components/ui/ThemedAlert";
-import { getOperationColor } from "@/utils/defineOperationColor";
-import Colors from "@/constants/Colors";
-import Providers from "@/lib/providers";
+import { useEffect } from "react";
+
+import RootLayoutNav from "@/components/Root/RootLayoutNav";
 
 export { ErrorBoundary } from "expo-router";
 
@@ -40,103 +34,4 @@ export default function RootLayout() {
   }
 
   return <RootLayoutNav />;
-}
-
-function RootLayoutNav() {
-  const [alertVisible, setAlertVisible] = useState(false);
-  const navigation = useNavigation();
-  const handlePopToTop = () => {
-    navigation.dispatch(StackActions.popToTop());
-  };
-
-  return (
-    <Providers>
-      <StatusBar barStyle="light-content" />
-      <Stack
-        screenOptions={{
-          animation: "slide_from_bottom",
-          headerBackButtonMenuEnabled: true,
-          headerShadowVisible: false,
-          headerTitleAlign: "center",
-          headerTintColor: Colors.text,
-        }}
-      >
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="income"
-          options={{
-            title: "Income",
-            headerStyle: {
-              backgroundColor: getOperationColor("income"),
-            },
-            headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="transfer"
-          options={{
-            title: "Transfer",
-            headerStyle: {
-              backgroundColor: getOperationColor("transfer"),
-            },
-            headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="expense"
-          options={{
-            title: "Expense",
-            headerStyle: {
-              backgroundColor: getOperationColor("expense"),
-            },
-            headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="editAccount"
-          options={{
-            title: "Edit Account",
-            headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="transactionView/[id]"
-          options={{
-            title: "Transaction Details",
-            headerLeft: (props) => (
-              <HeaderBackButton {...props} onPress={handlePopToTop} />
-            ),
-          }}
-        />
-      </Stack>
-      <ThemedAlert
-        visible={alertVisible}
-        title="Exit?"
-        message="Are you sure you want to exit? Data will not be saved!"
-        onClose={() => setAlertVisible(false)}
-        type="exit"
-        action={handlePopToTop}
-      />
-    </Providers>
-  );
 }

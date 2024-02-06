@@ -4,13 +4,14 @@ import { IOperation, OperationItemType } from "@/types/Operations";
 import ThemedInput from "../ui/ThemedInput";
 import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
+import { AccountItemType, IAccount } from "@/types/Accounts";
 
 interface NewOperationBodyItemProps {
   id: string;
-  type: OperationItemType;
+  type: OperationItemType | AccountItemType;
   items?: { label: string; value: string }[];
   onChange: (value: string, type?: OperationItemType) => void;
-  operation: IOperation;
+  operation: IOperation | IAccount;
 }
 
 const NewOperationBodyItem = ({
@@ -24,7 +25,7 @@ const NewOperationBodyItem = ({
       <TransferAccounts
         onChange={onChange}
         items={items}
-        operation={operation}
+        operation={operation as IOperation}
       />
     );
   }
@@ -41,6 +42,7 @@ const NewOperationBodyItem = ({
       );
     case "category":
     case "account":
+    case "type":
       return (
         <ThemedSelect
           placeholder={`Select ${type}`}
@@ -50,6 +52,20 @@ const NewOperationBodyItem = ({
       );
     case "description":
       return <ThemedInput placeholder={`Description`} onChange={onChange} />;
+    case "name":
+      return (
+        <ThemedInput
+          placeholder={`Account name`}
+          onChange={onChange}
+          keyboardType="numeric"
+        />
+      );
+    case "bankName":
+      return <ThemedInput placeholder={`Bank name`} onChange={onChange} />;
+    case "accountNumber":
+      return <ThemedInput placeholder={`Account number`} onChange={onChange} />;
+    case "notes":
+      return <ThemedInput placeholder={`Notes`} onChange={onChange} />;
     case "attachment":
       return <Attachment onChange={onChange} />;
   }

@@ -7,16 +7,31 @@ export type AccountType =
   | "Credit"
   | "Savings"
   | "Investment"
-  | "Online Card";
+  | "Online Card"
+  | string;
 
 export interface IAccount {
-  id: number;
+  id?: number;
   name: string;
   type: AccountType;
-  balance: number;
+  balance: string;
   currency: CurrencyType;
-  transactions: ITransaction[];
+  transactions?: ITransaction[];
   bankName?: string;
   accountNumber?: number;
   notes?: string;
+}
+
+export type AccountItemType =
+  | "name"
+  | "type"
+  | "currency"
+  | "bankName"
+  | "accountNumber"
+  | "notes";
+
+export interface AccountItem {
+  id: string;
+  type: AccountItemType;
+  items?: { label: string; value: string }[];
 }

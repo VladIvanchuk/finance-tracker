@@ -1,29 +1,24 @@
+import { BackHandler, StyleSheet, Text, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { BackHandler, StyleSheet, View } from "react-native";
-import {
-  IOperation,
-  OperationItemType,
-  OperationType,
-} from "@/types/Operations";
+import { AccountItemType, IAccount } from "@/types/Accounts";
 import { useToast } from "@gluestack-ui/themed";
-import ThemedToast from "@/components/ui/ThemedToast";
 import { useFocusEffect, useNavigation } from "expo-router";
-import { StackActions } from "@react-navigation/native";
-import NewOperationBody from "./NewOperationBody";
-import NewOperationFooter from "./NewOperationFooter";
-import NewOperationHeader from "./NewOperationHeader";
-import { getOperationColor } from "@/utils/defineOperationColor";
 import ThemedAlert from "../ui/ThemedAlert";
-import { AccountItemType } from "@/types/Accounts";
+import { getOperationColor } from "@/utils/defineOperationColor";
+import { StackActions } from "@react-navigation/native";
+import NewOperationBody from "../NewOperation/NewOperationBody";
+import NewOperationFooter from "../NewOperation/NewOperationFooter";
+import NewOperationHeader from "../NewOperation/NewOperationHeader";
+import ThemedToast from "../ui/ThemedToast";
+import Colors from "@/constants/Colors";
+import { OperationItemType } from "@/types/Operations";
 
-const OperationForm = ({
-  operationType,
-  operation,
-  setOperation,
+const AccountForm = ({
+  accountData,
+  setAccountData,
 }: {
-  operationType: OperationType;
-  operation: IOperation;
-  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
+  accountData: IAccount;
+  setAccountData: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
@@ -59,55 +54,23 @@ const OperationForm = ({
 
   const handleContinue = () => {
     if (
-      !operation.value ||
-      isNaN(Number(operation.value)) ||
-      Number(operation.value) <= 0
+      !accountData.balance ||
+      isNaN(Number(accountData.balance)) ||
+      Number(accountData.balance) <= 0
     ) {
-      showToast(
-        "Invalid data",
-        `Please enter a valid ${operationType} value.`,
-        "error"
-      );
+      showToast("Invalid data", `Please enter a valid balance.`, "error");
       setIsFormValidated(false);
       return;
     }
-    if (operation.type === "transfer") {
-      if (operation.fromAccountId === 0 || operation.toAccountId === 0) {
-        showToast(
-          "Invalid data",
-          "Please select both source and destination accounts.",
-          "error"
-        );
-        setIsFormValidated(false);
-        return;
-      }
-    } else {
-      if (!operation.category) {
-        showToast("Invalid data", "Please select a category.", "error");
-        setIsFormValidated(false);
-        return;
-      }
-      if (operation.accountId === 0) {
-        showToast("Invalid data", "Please select an account.", "error");
-        setIsFormValidated(false);
-        return;
-      }
-    }
     handlePopToTop();
-    showToast(
-      "Success",
-      `${
-        operationType.charAt(0).toUpperCase() + operationType.slice(1)
-      } added successfully`,
-      "success"
-    );
+    showToast("Success", `Account added successfully`, "success");
   };
 
   const handleValueChange = (
     type: OperationItemType | AccountItemType,
     value: string
   ) => {
-    setOperation((prev) => {
+    setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;
       return { ...prev, [key]: value };
     });
@@ -116,13 +79,13 @@ const OperationForm = ({
   const dynamicStyles = StyleSheet.create({
     screen_wrapper: {
       flex: 1,
-      backgroundColor: getOperationColor(operationType),
+      backgroundColor: Colors.tintDark,
     },
   });
 
   useEffect(() => {
     setIsFormValidated(true);
-  }, [operation]);
+  }, [accountData]);
 
   useFocusEffect(
     useCallback(() => {
@@ -140,11 +103,14 @@ const OperationForm = ({
 
   return (
     <View style={dynamicStyles.screen_wrapper}>
-      <NewOperationHeader setOperation={setOperation} operation={operation} />
+      <NewOperationHeader
+        accountData={accountData}
+        setAccountData={setAccountData}
+      />
       <NewOperationBody
+        operationType="account"
         handleValueChange={handleValueChange}
-        operationType={operationType}
-        operation={operation}
+        operation={accountData}
       />
       <NewOperationFooter
         onPress={handleContinue}
@@ -164,5 +130,4 @@ const OperationForm = ({
     </View>
   );
 };
-
-export default OperationForm;
+export default AccountForm;

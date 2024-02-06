@@ -4,7 +4,7 @@ export type CurrencyType = "USD" | "EUR" | "UAH";
 
 export interface BaseOperation {
   type: OperationType;
-  value: string;
+  sum: string;
   description?: string;
   currency: CurrencyType;
   attachment: string;

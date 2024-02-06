@@ -4,8 +4,10 @@ import incomeCategoryItems from "@/mock/incomeCategoryItems.json";
 import expenseCategoryItems from "@/mock/expenseCategoryItems.json";
 import currencyItems from "@/mock/InputCurrenciesItems.json";
 import accountItems from "@/mock/InputAccountItems.json";
+import accountTypeItems from "@/mock/accountTypeItems.json";
+import { AccountItem } from "@/types/Accounts";
 
-const operationItems: OperationItem[] = [
+export const operationFields: OperationItem[] = [
   {
     id: "currency",
     type: "currency",
@@ -20,13 +22,40 @@ const operationItems: OperationItem[] = [
     type: "attachment",
   },
 ];
-
-export default operationItems;
+export const accountFields: AccountItem[] = [
+  {
+    id: "name",
+    type: "name",
+  },
+  {
+    id: "currency",
+    type: "currency",
+    items: currencyItems,
+  },
+  {
+    id: "type",
+    type: "type",
+    items: accountTypeItems,
+  },
+  {
+    id: "bankName",
+    type: "bankName",
+  },
+  {
+    id: "accountNumber",
+    type: "accountNumber",
+  },
+  {
+    id: "notes",
+    type: "notes",
+  },
+];
 
 export const getOperationItems = (
-  operationType: OperationType,
-): OperationItem[] => {
-  let items = [...operationItems];
+  operationType: OperationType | "account"
+): OperationItem[] | AccountItem[] => {
+  let items =
+    operationType !== "account" ? [...operationFields] : [...accountFields];
 
   if (operationType === "transfer") {
     items.splice(0, 0, {
@@ -34,6 +63,7 @@ export const getOperationItems = (
       type: "transferAccounts",
       items: accountItems,
     });
+  } else if (operationType === "account") {
   } else {
     const categoryItems =
       operationType === "income" ? incomeCategoryItems : expenseCategoryItems;
@@ -49,7 +79,7 @@ export const getOperationItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      },
+      }
     );
   }
 

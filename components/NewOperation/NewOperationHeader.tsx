@@ -4,24 +4,34 @@ import ThemedText from "../ui/ThemedText";
 import Colors from "@/constants/Colors";
 import { IOperation, OperationType } from "@/types/Operations";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { IAccount } from "@/types/Accounts";
 
 const NewOperationHeader = ({
   setOperation,
   operation,
+  accountData,
+  setAccountData,
 }: {
-  operation: IOperation;
-  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
+  operation?: IOperation;
+  setOperation?: React.Dispatch<React.SetStateAction<IOperation>>;
+  accountData?: IAccount;
+  setAccountData?: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {
   const [number, onChangeNumber] = useState("");
 
   useEffect(() => {
-    setOperation((prev) => ({ ...prev, value: number }));
+    if (setOperation) {
+      setOperation((prev) => ({ ...prev, sum: number }));
+    }
+    if (setAccountData) {
+      setAccountData((prev) => ({ ...prev, balance: number }));
+    }
   }, [number, setOperation]);
 
   return (
     <View style={styles.header_container}>
       <ThemedText style={{ fontWeight: "bold", fontSize: 18, opacity: 0.8 }}>
-        How much?
+        {accountData ? "Enter account balance" : "How much?"}
       </ThemedText>
       <View style={styles.input_container}>
         <TextInput
@@ -33,7 +43,11 @@ const NewOperationHeader = ({
           placeholderTextColor={Colors.text}
         />
         <ThemedText style={{ fontWeight: "bold", fontSize: 64 }}>
-          {getCurrencySymbol(operation.currency)}
+          {operation?.currency
+            ? getCurrencySymbol(operation.currency)
+            : accountData?.currency
+              ? getCurrencySymbol(accountData.currency)
+              : null}
         </ThemedText>
       </View>
     </View>

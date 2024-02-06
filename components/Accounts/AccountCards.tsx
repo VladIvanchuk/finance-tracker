@@ -35,7 +35,6 @@ export default AccountCards;
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingTop: 24,
     alignItems: "center",
     paddingHorizontal: SIDE_PADDING,
   },

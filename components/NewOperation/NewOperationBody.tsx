@@ -8,30 +8,27 @@ import {
 } from "@/types/Operations";
 import NewOperationBodyItem from "./NewOperationBodyItem";
 import { getOperationItems } from "../../utils/operationItems";
+import { AccountItem, AccountItemType, IAccount } from "@/types/Accounts";
 
 const NewOperationBody = ({
-  setOperation,
   operationType,
   operation,
+  handleValueChange,
 }: {
-  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
-  operationType: OperationType;
-  operation: IOperation;
+  handleValueChange: (
+    type: OperationItemType | AccountItemType,
+    value: string
+  ) => void;
+  operationType: OperationType | "account";
+  operation: IOperation | IAccount;
 }) => {
-  const handleValueChange = (type: OperationItemType, value: string) => {
-    setOperation((prev) => {
-      const key = type === "account" ? "accountId" : type;
-      return { ...prev, [key]: value };
-    });
-  };
-
-  const renderItem = ({ item }: { item: OperationItem }) => (
+  const renderItem = ({ item }: { item: OperationItem | AccountItem }) => (
     <NewOperationBodyItem
       id={item.id}
       type={item.type}
       items={item.items}
       operation={operation}
-      onChange={(value: string, type?: OperationItemType) =>
+      onChange={(value: string, type?: OperationItemType | AccountItemType) =>
         handleValueChange(type ?? item.type, value)
       }
     />
@@ -60,7 +57,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     paddingHorizontal: 4,
     paddingVertical: 28,
-    flex: 3,
+    maxHeight: 440,
   },
   body_item_container: {
     gap: 20,

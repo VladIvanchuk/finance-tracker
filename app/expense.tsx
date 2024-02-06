@@ -5,7 +5,7 @@ import { useState } from "react";
 const AddExpense = () => {
   const [operation, setOperation] = useState<IOperation>({
     type: "expense",
-    value: "",
+    sum: "",
     category: "",
     accountId: 0,
     description: "",
