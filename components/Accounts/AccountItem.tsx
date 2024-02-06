@@ -24,13 +24,14 @@ const AccountItem = ({
         Transactions history
       </ThemedText>
       <Animated.ScrollView contentContainerStyle={styles.transactionsContainer}>
-        {account.transactions.map((transaction) => (
-          <TransactionItem
-            key={transaction.id}
-            {...(transaction as ITransaction)}
-            useDate
-          />
-        ))}
+        {account.transactions &&
+          account.transactions.map((transaction) => (
+            <TransactionItem
+              key={transaction.id}
+              {...(transaction as ITransaction)}
+              useDate
+            />
+          ))}
       </Animated.ScrollView>
     </View>
   );

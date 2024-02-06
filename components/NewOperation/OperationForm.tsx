@@ -59,13 +59,13 @@ const OperationForm = ({
 
   const handleContinue = () => {
     if (
-      !operation.value ||
-      isNaN(Number(operation.value)) ||
-      Number(operation.value) <= 0
+      !operation.sum ||
+      isNaN(Number(operation.sum)) ||
+      Number(operation.sum) <= 0
     ) {
       showToast(
         "Invalid data",
-        `Please enter a valid ${operationType} value.`,
+        `Please enter a valid ${operationType} sum.`,
         "error"
       );
       setIsFormValidated(false);

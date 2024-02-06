@@ -1,4 +1,10 @@
-import { KeyboardAvoidingView, KeyboardTypeOptions, StyleSheet, Text, View } from "react-native";
+import {
+  KeyboardAvoidingView,
+  KeyboardTypeOptions,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React from "react";
 import Colors from "@/constants/Colors";
 import { Input, InputField } from "@gluestack-ui/themed";

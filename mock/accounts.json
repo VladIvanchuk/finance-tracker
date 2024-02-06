@@ -3,7 +3,7 @@
     "id": 1,
     "name": "My Cash",
     "type": "Cash",
-    "balance": 12500,
+    "balance": "12500",
     "currency": "UAH",
     "transactions": [
       {
@@ -104,7 +104,7 @@
     "id": 2,
     "name": "Neque porro quisquam est qui",
     "type": "Debit",
-    "balance": 300,
+    "balance": "300",
     "currency": "USD",
     "bankName": "Mono Bank",
     "accountNumber": "0913810239812841",
@@ -140,7 +140,7 @@
     "id": 3,
     "name": "My card 2",
     "type": "Credit",
-    "balance": -3000,
+    "balance": "-3000",
     "currency": "EUR",
     "bankName": "Privat Bank",
     "accountNumber": "0913810239819381",

@@ -17,7 +17,7 @@ const NewOperationBody = ({
 }: {
   handleValueChange: (
     type: OperationItemType | AccountItemType,
-    value: string
+    value: string,
   ) => void;
   operationType: OperationType | "account";
   operation: IOperation | IAccount;

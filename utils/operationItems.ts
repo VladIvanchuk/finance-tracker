@@ -52,7 +52,7 @@ export const accountFields: AccountItem[] = [
 ];
 
 export const getOperationItems = (
-  operationType: OperationType | "account"
+  operationType: OperationType | "account",
 ): OperationItem[] | AccountItem[] => {
   let items =
     operationType !== "account" ? [...operationFields] : [...accountFields];
@@ -79,7 +79,7 @@ export const getOperationItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      }
+      },
     );
   }
 

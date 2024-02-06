@@ -5,7 +5,7 @@ import { IOperation } from "@/types/Operations";
 const AddTransfer = () => {
   const [operation, setOperation] = useState<IOperation>({
     type: "transfer",
-    value: "",
+    sum: "",
     fromAccountId: 0,
     toAccountId: 0,
     description: "",
