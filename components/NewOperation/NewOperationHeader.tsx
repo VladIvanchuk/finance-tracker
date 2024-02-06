@@ -45,7 +45,7 @@ export default NewOperationHeader;
 const styles = StyleSheet.create({
   header_container: {
     justifyContent: "flex-end",
-    flex: 1,
+    flex: 2,
     paddingHorizontal: 24,
     paddingBottom: 16,
     gap: 10,

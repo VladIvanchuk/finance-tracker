@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     paddingHorizontal: 4,
     paddingVertical: 28,
+    flex: 3,
   },
   body_item_container: {
     gap: 20,
