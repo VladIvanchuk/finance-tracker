@@ -2,8 +2,10 @@ import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
 import {
   IOperation,
+  IncomeExpenseOperation,
   OperationItemType,
   OperationType,
+  TransferOperation,
 } from "@/types/Operations";
 import { useToast } from "@gluestack-ui/themed";
 import ThemedToast from "@/components/ui/ThemedToast";
@@ -15,6 +17,9 @@ import NewOperationHeader from "./NewOperationHeader";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import ThemedAlert from "../ui/ThemedAlert";
 import { AccountItemType } from "@/types/Accounts";
+import { useRealm } from "@realm/react";
+import { Transaction } from "@/models/Transaction";
+import { BSON } from "realm";
 
 const OperationForm = ({
   operationType,
@@ -29,6 +34,7 @@ const OperationForm = ({
   const [isFormValidated, setIsFormValidated] = useState(true);
   const navigation = useNavigation();
   const toast = useToast();
+  const realm = useRealm();
 
   const handlePopToTop = () => {
     navigation.dispatch(StackActions.popToTop());
@@ -38,7 +44,7 @@ const OperationForm = ({
     (
       title: string,
       message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
+      action?: "warning" | "error" | "success" | "info" | "attention"
     ) => {
       toast.closeAll();
       toast.show({
@@ -54,8 +60,38 @@ const OperationForm = ({
         ),
       });
     },
-    [toast],
+    [toast]
   );
+
+  const addTransaction = () => {
+    realm.write(() => {
+      let operationToCreate: Partial<Transaction>;
+
+      if (operation.type === "income" || operation.type === "expense") {
+        operationToCreate = {
+          ...operation,
+          accountId: operation.accountId
+            ? new BSON.ObjectId(operation.accountId)
+            : undefined,
+          category: operation.category,
+        };
+      } else if (operation.type === "transfer") {
+        operationToCreate = {
+          ...operation,
+          fromAccountId: operation.fromAccountId
+            ? new BSON.ObjectId(operation.fromAccountId)
+            : undefined,
+          toAccountId: operation.toAccountId
+            ? new BSON.ObjectId(operation.toAccountId)
+            : undefined,
+        };
+      } else {
+        throw new Error("Invalid operation type");
+      }
+
+      realm.create("Transaction", operationToCreate as Partial<Transaction>);
+    });
+  };
 
   const handleContinue = () => {
     if (
@@ -66,17 +102,17 @@ const OperationForm = ({
       showToast(
         "Invalid data",
         `Please enter a valid ${operationType} sum.`,
-        "error",
+        "error"
       );
       setIsFormValidated(false);
       return;
     }
     if (operation.type === "transfer") {
-      if (operation.fromAccountId === 0 || operation.toAccountId === 0) {
+      if (operation.fromAccountId === null || operation.toAccountId === null) {
         showToast(
           "Invalid data",
           "Please select both source and destination accounts.",
-          "error",
+          "error"
         );
         setIsFormValidated(false);
         return;
@@ -87,25 +123,26 @@ const OperationForm = ({
         setIsFormValidated(false);
         return;
       }
-      if (operation.accountId === 0) {
+      if (operation.accountId === null) {
         showToast("Invalid data", "Please select an account.", "error");
         setIsFormValidated(false);
         return;
       }
     }
+    addTransaction();
     handlePopToTop();
     showToast(
       "Success",
       `${
         operationType.charAt(0).toUpperCase() + operationType.slice(1)
       } added successfully`,
-      "success",
+      "success"
     );
   };
 
   const handleValueChange = (
     type: OperationItemType | AccountItemType,
-    value: string,
+    value: string
   ) => {
     setOperation((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -135,7 +172,7 @@ const OperationForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

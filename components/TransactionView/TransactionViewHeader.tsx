@@ -13,11 +13,11 @@ const TransactionViewHeader = ({
   type,
   sum,
   currency,
-  name,
   date,
   category,
-  accountName,
 }: TransactionViewHeaderProps & ITransaction) => {
+  const name = "Name";
+  const accountName = "Account Name";
   return (
     <>
       <View
@@ -38,12 +38,14 @@ const TransactionViewHeader = ({
               {capitalizeFirstLetter(type)}
             </ThemedText>
           </View>
-          <View style={styles.info_item}>
-            <ThemedText style={styles.info_title}>Category</ThemedText>
-            <ThemedText style={styles.info_text}>
-              {capitalizeFirstLetter(category)}
-            </ThemedText>
-          </View>
+          {category && (
+            <View style={styles.info_item}>
+              <ThemedText style={styles.info_title}>Category</ThemedText>
+              <ThemedText style={styles.info_text}>
+                {capitalizeFirstLetter(category)}
+              </ThemedText>
+            </View>
+          )}
           <View style={styles.info_item}>
             <ThemedText style={styles.info_title}>Account</ThemedText>
             <ThemedText style={styles.info_text}>{accountName}</ThemedText>

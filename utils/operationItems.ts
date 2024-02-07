@@ -3,9 +3,10 @@ import { OperationItem, OperationType } from "@/types/Operations";
 import incomeCategoryItems from "@/mock/incomeCategoryItems.json";
 import expenseCategoryItems from "@/mock/expenseCategoryItems.json";
 import currencyItems from "@/mock/InputCurrenciesItems.json";
-import accountItems from "@/mock/InputAccountItems.json";
 import accountTypeItems from "@/mock/accountTypeItems.json";
 import { AccountItem } from "@/types/Accounts";
+import { useQuery } from "@realm/react";
+import { Account } from "@/models/Account";
 
 export const operationFields: OperationItem[] = [
   {
@@ -54,6 +55,13 @@ export const accountFields: AccountItem[] = [
 export const getOperationItems = (
   operationType: OperationType | "account",
 ): OperationItem[] | AccountItem[] => {
+  const accounts = useQuery(Account);
+
+  const accountItems = accounts.map((account) => ({
+    label: account.name,
+    value: account._id.toString(),
+  }));
+
   let items =
     operationType !== "account" ? [...operationFields] : [...accountFields];
 

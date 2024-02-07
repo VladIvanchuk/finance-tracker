@@ -21,7 +21,7 @@ const NewOperationHeader = ({
 
   useEffect(() => {
     if (setOperation) {
-      setOperation((prev) => ({ ...prev, sum: number }));
+      setOperation((prev) => ({ ...prev, sum: parseFloat(number) }));
     }
     if (setAccountData) {
       setAccountData((prev) => ({ ...prev, balance: parseFloat(number) }));

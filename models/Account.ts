@@ -1,7 +1,7 @@
 import { AccountType } from "@/types/Accounts";
 import { CurrencyType } from "@/types/Operations";
 import { ITransaction } from "@/types/Transactions";
-import { BSON, ObjectSchema } from "realm";
+import Realm, { BSON, ObjectSchema } from "realm";
 
 export class Account extends Realm.Object<Account> {
   _id!: BSON.ObjectId;
@@ -19,10 +19,10 @@ export class Account extends Realm.Object<Account> {
     properties: {
       _id: "objectId",
       name: "string",
-      type: "string", // Змініть на відповідний тип для AccountType
+      type: "string",
       balance: "double",
-      currency: "string", // Змініть на відповідний тип для CurrencyType
-      transactions: "Transaction[]", // Зв'язок з транзакціями
+      currency: "string",
+      transactions: "Transaction[]",
       bankName: "string?",
       accountNumber: "int?",
       notes: "string?",

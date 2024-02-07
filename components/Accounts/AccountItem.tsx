@@ -27,7 +27,7 @@ const AccountItem = ({
         {account.transactions &&
           account.transactions.map((transaction) => (
             <TransactionItem
-              key={transaction.id}
+              key={transaction._id.toString()}
               {...(transaction as ITransaction)}
               useDate
             />

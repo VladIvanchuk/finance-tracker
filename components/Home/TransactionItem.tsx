@@ -13,14 +13,11 @@ interface TransactionItemProps {
 }
 
 const TransactionItem = ({
-  id,
-  name,
+  _id,
   description,
   sum,
   currency,
-  accountName,
   type,
-  iconName,
   date,
   useDate,
 }: ITransaction & TransactionItemProps) => {
@@ -29,11 +26,15 @@ const TransactionItem = ({
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
 
+  const iconName = "shopping";
+  const name = "Name";
+  const accountName = "Account Name";
+
   return (
     <Link
       href={{
         pathname: "/transactionView/[id]",
-        params: { id: id },
+        params: { id: _id.toString() },
       }}
       asChild
     >

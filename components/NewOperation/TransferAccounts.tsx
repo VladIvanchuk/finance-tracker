@@ -31,7 +31,7 @@ const TransferAccounts = ({
         onChange={handleFromAccountChange}
         disabled={
           operation.type === "transfer"
-            ? operation.toAccountId.toString()
+            ? operation.toAccountId?.toString()
             : undefined
         }
       />
@@ -44,7 +44,7 @@ const TransferAccounts = ({
         onChange={handleToAccountChange}
         disabled={
           operation.type === "transfer"
-            ? operation.fromAccountId.toString()
+            ? operation.fromAccountId?.toString()
             : undefined
         }
       />

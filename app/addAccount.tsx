@@ -22,5 +22,3 @@ const addAccount = () => {
 };
 
 export default addAccount;
-
-const styles = StyleSheet.create({});

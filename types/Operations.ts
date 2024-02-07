@@ -1,25 +1,29 @@
+import { BSON } from "realm";
+
 export type OperationType = "income" | "expense" | "transfer";
 
 export type CurrencyType = "USD" | "EUR" | "UAH";
 
 export interface BaseOperation {
+  _id: BSON.ObjectId;
   type: OperationType;
-  sum: string;
-  description?: string;
+  sum: number;
   currency: CurrencyType;
-  attachment: string;
+  description?: string;
+  attachment?: string;
+  date: string;
 }
 
 export interface IncomeExpenseOperation extends BaseOperation {
   type: "income" | "expense";
   category: string;
-  accountId: number;
+  accountId: BSON.ObjectId | null;
 }
 
 export interface TransferOperation extends BaseOperation {
   type: "transfer";
-  fromAccountId: number;
-  toAccountId: number;
+  fromAccountId: BSON.ObjectId | null;
+  toAccountId: BSON.ObjectId | null;
 }
 
 export type IOperation = IncomeExpenseOperation | TransferOperation;

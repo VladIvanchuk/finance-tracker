@@ -1,3 +1,4 @@
+import { BSON } from "realm";
 import { CurrencyType, OperationType } from "./Operations";
 
 export type IconNameType =
@@ -19,15 +20,15 @@ export type IconNameType =
   | "donate";
 
 export interface ITransaction {
-  id: number;
-  date: string;
+  _id: BSON.ObjectId;
   type: OperationType;
   sum: number;
   currency: CurrencyType;
-  name: string;
-  description: string;
-  category: string;
-  iconName: IconNameType;
-  accountName: string;
-  attachment: string;
+  description?: string;
+  attachment?: string;
+  date: string;
+  category?: string;
+  accountId?: BSON.ObjectId;
+  fromAccountId?: BSON.ObjectId;
+  toAccountId?: BSON.ObjectId;
 }

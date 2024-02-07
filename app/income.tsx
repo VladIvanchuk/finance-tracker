@@ -1,17 +1,22 @@
 import OperationForm from "@/components/NewOperation/OperationForm";
 import { IOperation } from "@/types/Operations";
 import { useState } from "react";
+import { BSON } from "realm";
 
 const AddIncome = () => {
   const [operation, setOperation] = useState<IOperation>({
+    _id: new BSON.ObjectId(),
     type: "income",
-    sum: "",
+    sum: 0,
     category: "",
-    accountId: 0,
+    accountId: null,
     description: "",
     currency: "UAH",
     attachment: "",
+    date: new Date().toISOString(),
   });
+
+  console.log(operation);
 
   return (
     <OperationForm

@@ -1,16 +1,18 @@
-import { StyleSheet, View, ScrollView } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import ThemedText from "../ui/ThemedText";
 import TransactionItem from "./TransactionItem";
 import { groupTransactionsByDate } from "@/utils/transactionsUtils";
-import transactions from "@/mock/transactions.json";
-import { ITransaction } from "@/types/Transactions";
 import { formatShortDate } from "@/utils/formatShortDate";
+import { Transaction } from "@/models/Transaction";
+import { useQuery } from "@realm/react";
+import { ITransaction } from "@/types/Transactions";
+import transactions from "@/mock/transactions.json";
 
 const TransactionsHistory = () => {
-  const groupedTransactions = groupTransactionsByDate(
-    transactions as ITransaction[],
-  );
+  const transactionsResults = useQuery(Transaction);
+  const transactionsArray: ITransaction[] = Array.from(transactionsResults);
+  const groupedTransactions = groupTransactionsByDate(transactionsArray);
 
   return (
     <View style={styles.container}>
@@ -24,7 +26,10 @@ const TransactionsHistory = () => {
               {formatShortDate(date)}
             </ThemedText>
             {groupedTransactions[date].map((transaction) => (
-              <TransactionItem key={transaction.id} {...transaction} />
+              <TransactionItem
+                key={transaction._id.toString()}
+                {...transaction}
+              />
             ))}
           </View>
         ))}

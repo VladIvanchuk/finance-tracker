@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import React from "react";
 import { IconNameType } from "@/types/Transactions";
 import { iconConfig } from "@/utils/getTransactionIcon";
