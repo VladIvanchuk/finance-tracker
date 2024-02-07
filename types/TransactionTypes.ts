@@ -1,5 +1,5 @@
 import { BSON } from "realm";
-import { CurrencyType, OperationType } from "./Operations";
+import { CurrencyType, OperationType } from "./OperationTypes";
 
 export type IconNameType =
   | "shopping"

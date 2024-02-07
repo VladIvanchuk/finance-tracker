@@ -1,6 +1,6 @@
-import { AccountType } from "@/types/Accounts";
-import { CurrencyType } from "@/types/Operations";
-import { ITransaction } from "@/types/Transactions";
+import { AccountType } from "@/types/AccountTypes";
+import { CurrencyType } from "@/types/OperationTypes";
+import { ITransaction } from "@/types/TransactionTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
 
 export class Account extends Realm.Object<Account> {

@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View } from "react-native";
 import React, { useState } from "react";
-import { IAccount } from "@/types/Accounts";
+import { IAccount } from "@/types/AccountTypes";
 import AccountForm from "@/components/NewAccount/AccountForm";
 import { BSON } from "realm";
 

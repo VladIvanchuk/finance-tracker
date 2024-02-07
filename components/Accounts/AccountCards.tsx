@@ -2,7 +2,7 @@ import React, { useRef, useState } from "react";
 import { ScrollView, StyleSheet, Dimensions } from "react-native";
 import accounts from "@/mock/accounts.json";
 import AccountItem from "./AccountItem";
-import { IAccount } from "@/types/Accounts";
+import { IAccount } from "@/types/AccountTypes";
 import { useQuery } from "@realm/react";
 import { Account } from "@/models/Account";
 

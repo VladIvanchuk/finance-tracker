@@ -2,9 +2,9 @@ import { StyleSheet, TextInput, View } from "react-native";
 import React, { useEffect, useState } from "react";
 import ThemedText from "../ui/ThemedText";
 import Colors from "@/constants/Colors";
-import { IOperation, OperationType } from "@/types/Operations";
+import { IOperation, OperationType } from "@/types/OperationTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
-import { IAccount } from "@/types/Accounts";
+import { IAccount } from "@/types/AccountTypes";
 
 const NewOperationHeader = ({
   setOperation,

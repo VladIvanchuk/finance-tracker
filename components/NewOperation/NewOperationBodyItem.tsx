@@ -1,10 +1,10 @@
 import React from "react";
 import ThemedSelect from "../ui/ThemedSelect";
-import { IOperation, OperationItemType } from "@/types/Operations";
+import { IOperation, OperationItemType } from "@/types/OperationTypes";
 import ThemedInput from "../ui/ThemedInput";
 import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
-import { AccountItemType, IAccount } from "@/types/Accounts";
+import { AccountItemType, IAccount } from "@/types/AccountTypes";
 
 interface NewOperationBodyItemProps {
   id: string;

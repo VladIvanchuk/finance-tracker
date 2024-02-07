@@ -1,6 +1,6 @@
 import { BSON } from "realm";
-import { CurrencyType } from "./Operations";
-import { ITransaction } from "./Transactions";
+import { CurrencyType } from "./OperationTypes";
+import { ITransaction } from "./TransactionTypes";
 
 export type AccountType =
   | "Cash"

@@ -1,12 +1,20 @@
-import { OperationItem, OperationType } from "@/types/Operations";
-
+import { OperationItem, OperationType } from "@/types/OperationTypes";
 import incomeCategoryItems from "@/mock/incomeCategoryItems.json";
 import expenseCategoryItems from "@/mock/expenseCategoryItems.json";
-import currencyItems from "@/mock/InputCurrenciesItems.json";
-import accountTypeItems from "@/mock/accountTypeItems.json";
-import { AccountItem } from "@/types/Accounts";
+import { AccountItem } from "@/types/AccountTypes";
 import { useQuery } from "@realm/react";
 import { Account } from "@/models/Account";
+import { currencies } from "@/data/currencies";
+import { accountTypes } from "@/data/accountTypes";
+
+const mapToSelectItems = (items: string[]) =>
+  items.map((item: string) => ({
+    label: item,
+    value: item,
+  }));
+
+const currencyItems = mapToSelectItems(currencies);
+const accountTypeItems = mapToSelectItems(accountTypes);
 
 export const operationFields: OperationItem[] = [
   {

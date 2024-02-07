@@ -2,7 +2,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import React, { useState } from "react";
 import ThemedText from "../ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
-import { IAccount } from "@/types/Accounts";
+import { IAccount } from "@/types/AccountTypes";
 import { Feather } from "@expo/vector-icons";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { Link } from "expo-router";

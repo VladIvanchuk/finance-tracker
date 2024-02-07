@@ -1,4 +1,4 @@
-import { ITransaction } from "@/types/Transactions";
+import { ITransaction } from "@/types/TransactionTypes";
 
 type TransactionGroups = {
   [key: string]: ITransaction[];

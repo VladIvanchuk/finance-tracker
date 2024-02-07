@@ -3,7 +3,7 @@ import React from "react";
 import Colors, { palette } from "@/constants/Colors";
 import DashedLine from "react-native-dashed-line";
 import ThemedText from "../ui/ThemedText";
-import { ITransaction } from "@/types/Transactions";
+import { ITransaction } from "@/types/TransactionTypes";
 
 const TransactionViewBody = ({ description, attachment }: ITransaction) => {
   return (

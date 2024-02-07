@@ -1,6 +1,6 @@
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Colors from "@/constants/Colors";
-import { ITransaction } from "@/types/Transactions";
+import { ITransaction } from "@/types/TransactionTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import ThemedText from "../ui/ThemedText";

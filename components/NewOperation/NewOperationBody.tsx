@@ -5,10 +5,10 @@ import {
   IOperation,
   OperationType,
   OperationItemType,
-} from "@/types/Operations";
+} from "@/types/OperationTypes";
 import NewOperationBodyItem from "./NewOperationBodyItem";
 import { getOperationItems } from "../../utils/operationItems";
-import { AccountItem, AccountItemType, IAccount } from "@/types/Accounts";
+import { AccountItem, AccountItemType, IAccount } from "@/types/AccountTypes";
 
 const NewOperationBody = ({
   operationType,

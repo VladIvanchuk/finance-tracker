@@ -1,7 +1,7 @@
 import { StyleSheet, View } from "react-native";
 import React from "react";
-import { IconNameType } from "@/types/Transactions";
-import { iconConfig } from "@/utils/getTransactionIcon";
+import { IconNameType } from "@/types/TransactionTypes";
+import { iconConfig } from "@/data/iconConfig";
 
 const TransactionIcon = ({ iconName }: { iconName: IconNameType }) => {
   const icon = iconConfig[iconName];

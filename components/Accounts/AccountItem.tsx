@@ -3,8 +3,8 @@ import { Animated, ScrollView, StyleSheet, View } from "react-native";
 import AccountCard from "./AccountCard";
 import ThemedText from "../ui/ThemedText";
 import TransactionItem from "../Home/TransactionItem";
-import { IAccount } from "@/types/Accounts";
-import { ITransaction } from "@/types/Transactions";
+import { IAccount } from "@/types/AccountTypes";
+import { ITransaction } from "@/types/TransactionTypes";
 
 interface AccountItemProps {
   account: IAccount;

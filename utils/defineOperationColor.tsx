@@ -1,5 +1,5 @@
 import { palette } from "@/constants/Colors";
-import { OperationType } from "@/types/Operations";
+import { OperationType } from "@/types/OperationTypes";
 
 export const getOperationColor = (type: OperationType) => {
   switch (type) {

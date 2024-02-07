@@ -6,7 +6,7 @@ import { groupTransactionsByDate } from "@/utils/transactionsUtils";
 import { formatShortDate } from "@/utils/formatShortDate";
 import { Transaction } from "@/models/Transaction";
 import { useQuery } from "@realm/react";
-import { ITransaction } from "@/types/Transactions";
+import { ITransaction } from "@/types/TransactionTypes";
 import transactions from "@/mock/transactions.json";
 
 const TransactionsHistory = () => {

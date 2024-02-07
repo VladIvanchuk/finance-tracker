@@ -2,7 +2,7 @@ import { StyleSheet, View, TouchableOpacity } from "react-native";
 import React, { useLayoutEffect, useState } from "react";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import { getOperationColor } from "@/utils/defineOperationColor";
-import { OperationType } from "@/types/Operations";
+import { OperationType } from "@/types/OperationTypes";
 import TransactionViewHeader from "@/components/TransactionView/TransactionViewHeader";
 import Colors from "@/constants/Colors";
 import ThemedButton from "@/components/ui/ThemedButton";

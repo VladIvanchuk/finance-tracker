@@ -1,5 +1,4 @@
 import { palette } from "@/constants/Colors";
-import { IconNameType } from "@/types/Transactions";
 import {
   AntDesign,
   FontAwesome5,
@@ -8,7 +7,6 @@ import {
   MaterialCommunityIcons,
   MaterialIcons,
 } from "@expo/vector-icons";
-import { StyleSheet, View } from "react-native";
 
 export const iconConfig = {
   shopping: {

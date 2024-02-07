@@ -1,5 +1,5 @@
 import OperationForm from "@/components/NewOperation/OperationForm";
-import { IOperation } from "@/types/Operations";
+import { IOperation } from "@/types/OperationTypes";
 import { useState } from "react";
 import { BSON } from "realm";
 

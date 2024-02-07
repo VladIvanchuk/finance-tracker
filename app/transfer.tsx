@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import OperationForm from "@/components/NewOperation/OperationForm";
-import { IOperation } from "@/types/Operations";
+import { IOperation } from "@/types/OperationTypes";
 import { BSON } from "realm";
 
 const AddTransfer = () => {

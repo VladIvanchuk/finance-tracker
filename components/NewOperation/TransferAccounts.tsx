@@ -2,7 +2,7 @@ import { StyleSheet, View } from "react-native";
 import React from "react";
 import ThemedSelect from "../ui/ThemedSelect";
 import TransferAccountsIcon from "../Icons/transferAccounts";
-import { IOperation, OperationItemType } from "@/types/Operations";
+import { IOperation, OperationItemType } from "@/types/OperationTypes";
 
 interface TransferAccountsProps {
   onChange: (value: string, type?: OperationItemType) => void;

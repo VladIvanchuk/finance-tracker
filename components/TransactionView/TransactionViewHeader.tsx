@@ -1,7 +1,7 @@
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { StyleSheet, View } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
-import { ITransaction } from "@/types/Transactions";
+import { ITransaction } from "@/types/TransactionTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import Colors from "@/constants/Colors";
 import { formatFullDate } from "@/utils/formatFullDate";

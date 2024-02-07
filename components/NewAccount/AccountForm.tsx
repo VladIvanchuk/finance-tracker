@@ -1,6 +1,6 @@
 import { BackHandler, StyleSheet, View } from "react-native";
 import React, { useCallback, useEffect, useState } from "react";
-import { AccountItemType, IAccount } from "@/types/Accounts";
+import { AccountItemType, IAccount } from "@/types/AccountTypes";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect, useNavigation } from "expo-router";
 import ThemedAlert from "../ui/ThemedAlert";
@@ -10,7 +10,7 @@ import NewOperationFooter from "../NewOperation/NewOperationFooter";
 import NewOperationHeader from "../NewOperation/NewOperationHeader";
 import ThemedToast from "../ui/ThemedToast";
 import Colors from "@/constants/Colors";
-import { OperationItemType } from "@/types/Operations";
+import { OperationItemType } from "@/types/OperationTypes";
 import { Account } from "@/models/Account";
 import { useRealm } from "@realm/react";
 
