@@ -1,8 +1,0 @@
-[
-  { "label": "Cash", "value": "Cash" },
-  { "label": "Debit", "value": "Debit" },
-  { "label": "Credit", "value": "Credit" },
-  { "label": "Savings", "value": "Savings" },
-  { "label": "Investment", "value": "Investment" },
-  { "label": "Online Card", "value": "Online Card" }
-]

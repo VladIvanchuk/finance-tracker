@@ -11,7 +11,7 @@ import NewOperationHeader from "../NewOperation/NewOperationHeader";
 import ThemedToast from "../ui/ThemedToast";
 import Colors from "@/constants/Colors";
 import { OperationItemType } from "@/types/OperationTypes";
-import { Account } from "@/models/Account";
+import { Account } from "@/schemas/Account";
 import { useRealm } from "@realm/react";
 
 const AccountForm = ({
@@ -35,7 +35,7 @@ const AccountForm = ({
     (
       title: string,
       message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
+      action?: "warning" | "error" | "success" | "info" | "attention"
     ) => {
       toast.closeAll();
       toast.show({
@@ -51,7 +51,7 @@ const AccountForm = ({
         ),
       });
     },
-    [toast],
+    [toast]
   );
 
   const addAccount = () => {
@@ -77,7 +77,7 @@ const AccountForm = ({
 
   const handleValueChange = (
     type: OperationItemType | AccountItemType,
-    value: string,
+    value: string
   ) => {
     setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -107,7 +107,7 @@ const AccountForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

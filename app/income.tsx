@@ -16,8 +16,6 @@ const AddIncome = () => {
     date: new Date().toISOString(),
   });
 
-  console.log(operation);
-
   return (
     <OperationForm
       operationType="income"

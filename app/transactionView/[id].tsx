@@ -10,7 +10,7 @@ import { MaterialIcons } from "@expo/vector-icons";
 import ThemedAlert from "@/components/ui/ThemedAlert";
 import TransactionViewBody from "@/components/TransactionView/TransactionViewBody";
 import { useObject, useRealm } from "@realm/react";
-import { Transaction } from "@/models/Transaction";
+import { Transaction } from "@/schemas/Transaction";
 import ThemedText from "@/components/ui/ThemedText";
 import { ObjectId } from "bson";
 import { StackActions } from "@react-navigation/native";

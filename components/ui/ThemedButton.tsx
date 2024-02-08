@@ -1,5 +1,6 @@
 import React from "react";
 import { ButtonText, Button, View } from "@gluestack-ui/themed";
+import { Link } from "expo-router";
 
 interface ThemedButtonProps {
   label: string;

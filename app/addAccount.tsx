@@ -15,6 +15,7 @@ const addAccount = () => {
     accountNumber: undefined,
     notes: undefined,
   });
+  
 
   return (
     <AccountForm accountData={accountData} setAccountData={setAccountData} />

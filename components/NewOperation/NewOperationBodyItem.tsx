@@ -5,6 +5,7 @@ import ThemedInput from "../ui/ThemedInput";
 import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
+import { router } from "expo-router";
 
 interface NewOperationBodyItemProps {
   id: string;
@@ -48,6 +49,7 @@ const NewOperationBodyItem = ({
           placeholder={`Select ${type}`}
           items={items}
           onChange={onChange}
+          addButtonAction={() => router.replace("/addAccount")}
         />
       );
     case "description":

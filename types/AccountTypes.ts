@@ -19,7 +19,7 @@ export interface IAccount {
   currency: CurrencyType;
   transactions?: ITransaction[];
   bankName?: string;
-  accountNumber?: number;
+  accountNumber?: string;
   notes?: string;
 }
 

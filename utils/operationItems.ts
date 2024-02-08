@@ -3,7 +3,7 @@ import incomeCategoryItems from "@/mock/incomeCategoryItems.json";
 import expenseCategoryItems from "@/mock/expenseCategoryItems.json";
 import { AccountItem } from "@/types/AccountTypes";
 import { useQuery } from "@realm/react";
-import { Account } from "@/models/Account";
+import { Account } from "@/schemas/Account";
 import { currencies } from "@/data/currencies";
 import { accountTypes } from "@/data/accountTypes";
 
@@ -61,7 +61,7 @@ export const accountFields: AccountItem[] = [
 ];
 
 export const getOperationItems = (
-  operationType: OperationType | "account",
+  operationType: OperationType | "account"
 ): OperationItem[] | AccountItem[] => {
   const accounts = useQuery(Account);
 
@@ -95,7 +95,7 @@ export const getOperationItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      },
+      }
     );
   }
 

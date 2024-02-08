@@ -11,7 +11,7 @@ export class Account extends Realm.Object<Account> {
   currency!: CurrencyType;
   transactions?: ITransaction[];
   bankName?: string;
-  accountNumber?: number;
+  accountNumber?: string;
   notes?: string;
 
   static schema: ObjectSchema = {
@@ -24,7 +24,7 @@ export class Account extends Realm.Object<Account> {
       currency: "string",
       transactions: "Transaction[]",
       bankName: "string?",
-      accountNumber: "int?",
+      accountNumber: "string?",
       notes: "string?",
     },
     primaryKey: "_id",

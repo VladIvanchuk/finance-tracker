@@ -4,7 +4,7 @@ import ThemedText from "../ui/ThemedText";
 import TransactionItem from "./TransactionItem";
 import { groupTransactionsByDate } from "@/utils/transactionsUtils";
 import { formatShortDate } from "@/utils/formatShortDate";
-import { Transaction } from "@/models/Transaction";
+import { Transaction } from "@/schemas/Transaction";
 import { useQuery } from "@realm/react";
 import { ITransaction } from "@/types/TransactionTypes";
 import transactions from "@/mock/transactions.json";

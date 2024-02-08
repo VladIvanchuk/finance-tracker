@@ -1,10 +1,8 @@
-import React, { useRef, useState } from "react";
+import React from "react";
 import { ScrollView, StyleSheet, Dimensions } from "react-native";
-import accounts from "@/mock/accounts.json";
 import AccountItem from "./AccountItem";
-import { IAccount } from "@/types/AccountTypes";
 import { useQuery } from "@realm/react";
-import { Account } from "@/models/Account";
+import { Account } from "@/schemas/Account";
 
 const { width: screenWidth } = Dimensions.get("window");
 
