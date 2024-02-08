@@ -1,18 +1,17 @@
-import { BackHandler, StyleSheet, View } from "react-native";
-import React, { useCallback, useEffect, useState } from "react";
+import Colors from "@/constants/Colors";
+import { usePopToTop } from "@/hooks/usePopToTop";
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
+import { OperationItemType } from "@/types/OperationTypes";
 import { useToast } from "@gluestack-ui/themed";
-import { useFocusEffect, useNavigation } from "expo-router";
-import ThemedAlert from "../ui/ThemedAlert";
-import { StackActions } from "@react-navigation/native";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import { BackHandler, StyleSheet, View } from "react-native";
 import NewOperationBody from "../NewOperation/NewOperationBody";
 import NewOperationFooter from "../NewOperation/NewOperationFooter";
 import NewOperationHeader from "../NewOperation/NewOperationHeader";
+import ThemedAlert from "../ui/ThemedAlert";
 import ThemedToast from "../ui/ThemedToast";
-import Colors from "@/constants/Colors";
-import { OperationItemType } from "@/types/OperationTypes";
-import { Account } from "@/schemas/Account";
-import { useRealm } from "@realm/react";
+import { useAccountActions } from "@/hooks/useAccountActions";
 
 const AccountForm = ({
   accountData,
@@ -23,13 +22,9 @@ const AccountForm = ({
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
-  const navigation = useNavigation();
+  const popToTop = usePopToTop();
   const toast = useToast();
-  const realm = useRealm();
-
-  const handlePopToTop = () => {
-    navigation.dispatch(StackActions.popToTop());
-  };
+  const { createAccount } = useAccountActions();
 
   const showToast = useCallback(
     (
@@ -54,12 +49,6 @@ const AccountForm = ({
     [toast]
   );
 
-  const addAccount = () => {
-    realm.write(() => {
-      realm.create(Account, accountData);
-    });
-  };
-
   const handleContinue = () => {
     if (
       !accountData.balance ||
@@ -70,8 +59,8 @@ const AccountForm = ({
       setIsFormValidated(false);
       return;
     }
-    addAccount();
-    handlePopToTop();
+    createAccount(accountData);
+    popToTop();
     showToast("Success", `Account added successfully`, "success");
   };
 
@@ -133,7 +122,7 @@ const AccountForm = ({
         type="exit"
         action={() => {
           setAlertVisible(false);
-          handlePopToTop();
+          popToTop();
         }}
       />
     </View>

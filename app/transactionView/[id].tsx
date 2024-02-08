@@ -1,42 +1,35 @@
-import { StyleSheet, View, TouchableOpacity } from "react-native";
-import React, { useLayoutEffect, useState } from "react";
-import { useLocalSearchParams, useNavigation } from "expo-router";
-import { getOperationColor } from "@/utils/defineOperationColor";
-import { OperationType } from "@/types/OperationTypes";
-import TransactionViewHeader from "@/components/TransactionView/TransactionViewHeader";
-import Colors from "@/constants/Colors";
-import ThemedButton from "@/components/ui/ThemedButton";
-import { MaterialIcons } from "@expo/vector-icons";
-import ThemedAlert from "@/components/ui/ThemedAlert";
 import TransactionViewBody from "@/components/TransactionView/TransactionViewBody";
-import { useObject, useRealm } from "@realm/react";
-import { Transaction } from "@/schemas/Transaction";
+import TransactionViewHeader from "@/components/TransactionView/TransactionViewHeader";
+import ThemedAlert from "@/components/ui/ThemedAlert";
+import ThemedButton from "@/components/ui/ThemedButton";
 import ThemedText from "@/components/ui/ThemedText";
+import Colors from "@/constants/Colors";
+import { usePopToTop } from "@/hooks/usePopToTop";
+import { useTransactionActions } from "@/hooks/useTransactionActions";
+import { Transaction } from "@/schemas/Transaction";
+import { OperationType } from "@/types/OperationTypes";
+import { getOperationColor } from "@/utils/defineOperationColor";
+import { MaterialIcons } from "@expo/vector-icons";
+import { useObject } from "@realm/react";
 import { ObjectId } from "bson";
-import { StackActions } from "@react-navigation/native";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 const TransactionView = () => {
   const [alertVisible, setAlertVisible] = useState(false);
-
+  const { deleteTransaction } = useTransactionActions();
+  const popToTop = usePopToTop();
   const navigation = useNavigation();
 
   const { id } = useLocalSearchParams();
   const primaryKey = Array.isArray(id) ? new ObjectId(id[0]) : new ObjectId(id);
 
   const transaction = useObject(Transaction, primaryKey);
-  const realm = useRealm();
 
-  const handlePopToTop = () => {
-    navigation.dispatch(StackActions.popToTop());
-  };
   const handleDelete = () => {
-    const toDelete = realm
-      .objects(Transaction)
-      .filtered("_id == $0", primaryKey);
-    realm.write(() => {
-      realm.delete(toDelete);
-    });
-    handlePopToTop();
+    deleteTransaction(primaryKey);
+    popToTop();
   };
 
   useLayoutEffect(() => {

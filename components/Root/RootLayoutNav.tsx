@@ -1,19 +1,16 @@
-import { StatusBar } from "react-native";
-import React, { useState } from "react";
+import Colors from "@/constants/Colors";
+import { usePopToTop } from "@/hooks/usePopToTop";
 import Providers from "@/lib/providers";
 import { getOperationColor } from "@/utils/defineOperationColor";
-import { StackActions } from "@react-navigation/native";
-import { useNavigation, Stack } from "expo-router";
-import ThemedAlert from "../ui/ThemedAlert";
-import Colors from "@/constants/Colors";
 import { HeaderBackButton } from "@react-navigation/elements";
+import { Stack } from "expo-router";
+import React, { useState } from "react";
+import { StatusBar } from "react-native";
+import ThemedAlert from "../ui/ThemedAlert";
 
 const RootLayoutNav = () => {
   const [alertVisible, setAlertVisible] = useState(false);
-  const navigation = useNavigation();
-  const handlePopToTop = () => {
-    navigation.dispatch(StackActions.popToTop());
-  };
+  const popToTop = usePopToTop();
 
   return (
     <Providers>
@@ -108,7 +105,7 @@ const RootLayoutNav = () => {
           options={{
             title: "Transaction Details",
             headerLeft: (props) => (
-              <HeaderBackButton {...props} onPress={handlePopToTop} />
+              <HeaderBackButton {...props} onPress={popToTop} />
             ),
           }}
         />
@@ -119,7 +116,7 @@ const RootLayoutNav = () => {
         message="Are you sure you want to exit? Data will not be saved!"
         onClose={() => setAlertVisible(false)}
         type="exit"
-        action={handlePopToTop}
+        action={popToTop}
       />
     </Providers>
   );

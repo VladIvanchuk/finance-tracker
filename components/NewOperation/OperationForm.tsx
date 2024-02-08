@@ -1,25 +1,21 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { BackHandler, StyleSheet, View } from "react-native";
+import ThemedToast from "@/components/ui/ThemedToast";
+import { usePopToTop } from "@/hooks/usePopToTop";
+import { useTransactionActions } from "@/hooks/useTransactionActions";
+import { AccountItemType } from "@/types/AccountTypes";
 import {
   IOperation,
-  IncomeExpenseOperation,
   OperationItemType,
   OperationType,
-  TransferOperation,
 } from "@/types/OperationTypes";
+import { getOperationColor } from "@/utils/defineOperationColor";
 import { useToast } from "@gluestack-ui/themed";
-import ThemedToast from "@/components/ui/ThemedToast";
-import { useFocusEffect, useNavigation } from "expo-router";
-import { StackActions } from "@react-navigation/native";
+import { useFocusEffect } from "expo-router";
+import React, { useCallback, useEffect, useState } from "react";
+import { BackHandler, StyleSheet, View } from "react-native";
+import ThemedAlert from "../ui/ThemedAlert";
 import NewOperationBody from "./NewOperationBody";
 import NewOperationFooter from "./NewOperationFooter";
 import NewOperationHeader from "./NewOperationHeader";
-import { getOperationColor } from "@/utils/defineOperationColor";
-import ThemedAlert from "../ui/ThemedAlert";
-import { AccountItemType } from "@/types/AccountTypes";
-import { useRealm } from "@realm/react";
-import { Transaction } from "@/schemas/Transaction";
-import { BSON } from "realm";
 
 const OperationForm = ({
   operationType,
@@ -32,13 +28,9 @@ const OperationForm = ({
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
-  const navigation = useNavigation();
+  const { createTransaction } = useTransactionActions();
+  const popToTop = usePopToTop();
   const toast = useToast();
-  const realm = useRealm();
-
-  const handlePopToTop = () => {
-    navigation.dispatch(StackActions.popToTop());
-  };
 
   const showToast = useCallback(
     (
@@ -62,36 +54,6 @@ const OperationForm = ({
     },
     [toast]
   );
-
-  const addTransaction = () => {
-    realm.write(() => {
-      let operationToCreate: Partial<Transaction>;
-
-      if (operation.type === "income" || operation.type === "expense") {
-        operationToCreate = {
-          ...operation,
-          accountId: operation.accountId
-            ? new BSON.ObjectId(operation.accountId)
-            : undefined,
-          category: operation.category,
-        };
-      } else if (operation.type === "transfer") {
-        operationToCreate = {
-          ...operation,
-          fromAccountId: operation.fromAccountId
-            ? new BSON.ObjectId(operation.fromAccountId)
-            : undefined,
-          toAccountId: operation.toAccountId
-            ? new BSON.ObjectId(operation.toAccountId)
-            : undefined,
-        };
-      } else {
-        throw new Error("Invalid operation type");
-      }
-
-      realm.create("Transaction", operationToCreate as Partial<Transaction>);
-    });
-  };
 
   const handleContinue = () => {
     if (
@@ -129,8 +91,8 @@ const OperationForm = ({
         return;
       }
     }
-    addTransaction();
-    handlePopToTop();
+    createTransaction(operation);
+    popToTop();
     showToast(
       "Success",
       `${
@@ -195,7 +157,7 @@ const OperationForm = ({
         type="exit"
         action={() => {
           setAlertVisible(false);
-          handlePopToTop();
+          popToTop();
         }}
       />
     </View>

@@ -7,7 +7,6 @@ import { formatShortDate } from "@/utils/formatShortDate";
 import { Transaction } from "@/schemas/Transaction";
 import { useQuery } from "@realm/react";
 import { ITransaction } from "@/types/TransactionTypes";
-import transactions from "@/mock/transactions.json";
 
 const TransactionsHistory = () => {
   const transactionsResults = useQuery(Transaction);

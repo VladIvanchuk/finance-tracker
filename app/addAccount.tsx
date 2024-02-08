@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from "react-native";
-import React, { useState } from "react";
-import { IAccount } from "@/types/AccountTypes";
 import AccountForm from "@/components/NewAccount/AccountForm";
+import { IAccount } from "@/types/AccountTypes";
+import React, { useState } from "react";
 import { BSON } from "realm";
 
 const addAccount = () => {
@@ -15,7 +14,6 @@ const addAccount = () => {
     accountNumber: undefined,
     notes: undefined,
   });
-  
 
   return (
     <AccountForm accountData={accountData} setAccountData={setAccountData} />
