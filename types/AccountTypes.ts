@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import { BSON } from "realm";
 import { CurrencyType } from "./OperationTypes";
 import { ITransaction } from "./TransactionTypes";

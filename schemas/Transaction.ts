@@ -9,7 +9,7 @@ export class Transaction extends Realm.Object<Transaction> {
   description?: string;
   attachment?: string;
   date!: string;
-  category?: string;
+  categoryId?: BSON.ObjectId;
   accountId?: BSON.ObjectId;
   fromAccountId?: BSON.ObjectId;
   toAccountId?: BSON.ObjectId;
@@ -24,7 +24,7 @@ export class Transaction extends Realm.Object<Transaction> {
       description: "string?",
       attachment: "string?",
       date: "string",
-      category: "string?",
+      categoryId: "objectId?",
       accountId: "objectId?",
       fromAccountId: "objectId?",
       toAccountId: "objectId?",

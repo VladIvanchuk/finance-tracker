@@ -7,8 +7,8 @@ import {
   OperationItemType,
 } from "@/types/OperationTypes";
 import NewOperationBodyItem from "./NewOperationBodyItem";
-import { getOperationItems } from "../../utils/operationItems";
 import { AccountItem, AccountItemType, IAccount } from "@/types/AccountTypes";
+import { useOperationItems } from "@/hooks/useOperationItems";
 
 const NewOperationBody = ({
   operationType,
@@ -34,7 +34,7 @@ const NewOperationBody = ({
     />
   );
 
-  const currentOperationItems = getOperationItems(operationType);
+  const currentOperationItems = useOperationItems(operationType);
 
   return (
     <View style={styles.body_container}>

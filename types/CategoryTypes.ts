@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import { BSON } from "realm";
 import { OperationType } from "./OperationTypes";
 

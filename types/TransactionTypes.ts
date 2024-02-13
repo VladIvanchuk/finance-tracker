@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import { BSON } from "realm";
 import { CurrencyType, OperationType } from "./OperationTypes";
 
@@ -27,8 +28,8 @@ export interface ITransaction {
   description?: string;
   attachment?: string;
   date: string;
-  category?: string;
-  accountId?: BSON.ObjectId;
+  categoryId: BSON.ObjectId;
+  accountId: BSON.ObjectId;
   fromAccountId?: BSON.ObjectId;
   toAccountId?: BSON.ObjectId;
 }

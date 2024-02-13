@@ -1,11 +1,10 @@
-import { OperationItem, OperationType } from "@/types/OperationTypes";
-import incomeCategoryItems from "@/mock/incomeCategoryItems.json";
-import expenseCategoryItems from "@/mock/expenseCategoryItems.json";
-import { AccountItem } from "@/types/AccountTypes";
-import { useQuery } from "@realm/react";
-import { Account } from "@/schemas/Account";
-import { currencies } from "@/data/currencies";
 import { accountTypes } from "@/data/accountTypes";
+import { currencies } from "@/data/currencies";
+import { Account } from "@/schemas/Account";
+import { Category } from "@/schemas/Category";
+import { AccountItem } from "@/types/AccountTypes";
+import { OperationItem, OperationType } from "@/types/OperationTypes";
+import { useQuery } from "@realm/react";
 
 const mapToSelectItems = (items: string[]) =>
   items.map((item: string) => ({
@@ -60,17 +59,30 @@ export const accountFields: AccountItem[] = [
   },
 ];
 
-export const getOperationItems = (
-  operationType: OperationType | "account"
-): OperationItem[] | AccountItem[] => {
+export const useOperationItems = (operationType: OperationType | "account") => {
   const accounts = useQuery(Account);
+  const categories = useQuery(Category);
 
   const accountItems = accounts.map((account) => ({
     label: account.name,
     value: account._id.toString(),
   }));
 
-  let items =
+  const incomeCategoryItems = categories
+    .filter((category) => category.type === "income")
+    .map((category) => ({
+      label: category.name,
+      value: category._id.toString(),
+    }));
+
+  const expenseCategoryItems = categories
+    .filter((category) => category.type === "expense")
+    .map((category) => ({
+      label: category.name,
+      value: category._id.toString(),
+    }));
+
+  const items =
     operationType !== "account" ? [...operationFields] : [...accountFields];
 
   if (operationType === "transfer") {
@@ -79,16 +91,15 @@ export const getOperationItems = (
       type: "transferAccounts",
       items: accountItems,
     });
-  } else if (operationType === "account") {
-  } else {
+  } else if (operationType !== "account") {
     const categoryItems =
       operationType === "income" ? incomeCategoryItems : expenseCategoryItems;
     items.splice(
       1,
       0,
       {
-        id: "category",
-        type: "category",
+        id: "categoryId",
+        type: "categoryId",
         items: categoryItems,
       },
       {

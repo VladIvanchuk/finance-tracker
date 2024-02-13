@@ -1,6 +1,7 @@
-import React, { useState } from "react";
 import OperationForm from "@/components/NewOperation/OperationForm";
 import { IOperation } from "@/types/OperationTypes";
+import React, { useState } from "react";
+import "react-native-get-random-values";
 import { BSON } from "realm";
 
 const AddTransfer = () => {

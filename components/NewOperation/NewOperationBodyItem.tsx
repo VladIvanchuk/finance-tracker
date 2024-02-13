@@ -41,7 +41,15 @@ const NewOperationBodyItem = ({
           defaultValue={operation.currency}
         />
       );
-    case "category":
+    case "categoryId":
+      return (
+        <ThemedSelect
+          placeholder={`Select category`}
+          items={items}
+          onChange={onChange}
+          addButtonAction={() => router.replace("/addAccount")}
+        />
+      );
     case "account":
     case "type":
       return (

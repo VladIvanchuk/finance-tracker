@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import { BSON } from "realm";
 
 export type OperationType = "income" | "expense" | "transfer";
@@ -16,7 +17,7 @@ export interface BaseOperation {
 
 export interface IncomeExpenseOperation extends BaseOperation {
   type: "income" | "expense";
-  category: string;
+  categoryId: BSON.ObjectId;
   accountId: BSON.ObjectId | null;
 }
 
@@ -29,7 +30,7 @@ export interface TransferOperation extends BaseOperation {
 export type IOperation = IncomeExpenseOperation | TransferOperation;
 
 export type OperationItemType =
-  | "category"
+  | "categoryId"
   | "currency"
   | "account"
   | "description"

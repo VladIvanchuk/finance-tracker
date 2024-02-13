@@ -1,12 +1,12 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
 import Colors from "@/constants/Colors";
 import { ITransaction } from "@/types/TransactionTypes";
-import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { getOperationColor } from "@/utils/defineOperationColor";
+import { formatShortDate } from "@/utils/formatShortDate";
+import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { Link } from "expo-router";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
 import TransactionIcon from "./TransactionIcon";
-import { formatShortDate } from "@/utils/formatShortDate";
-import { Link, useNavigation } from "expo-router";
 
 interface TransactionItemProps {
   useDate?: boolean;

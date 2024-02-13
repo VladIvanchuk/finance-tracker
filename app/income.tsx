@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import OperationForm from "@/components/NewOperation/OperationForm";
 import { IOperation } from "@/types/OperationTypes";
 import { useState } from "react";
@@ -8,13 +9,14 @@ const AddIncome = () => {
     _id: new BSON.ObjectId(),
     type: "income",
     sum: 0,
-    category: "",
+    categoryId: "",
     accountId: null,
     description: "",
     currency: "UAH",
     attachment: "",
     date: new Date().toISOString(),
   });
+
   return (
     <OperationForm
       operationType="income"

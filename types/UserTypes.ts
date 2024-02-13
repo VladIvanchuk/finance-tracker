@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import { BSON } from "realm";
 import { IAccount } from "./AccountTypes";
 import { ICategory } from "./CategoryTypes";

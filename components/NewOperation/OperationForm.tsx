@@ -80,7 +80,7 @@ const OperationForm = ({
         return;
       }
     } else {
-      if (!operation.category) {
+      if (!operation.categoryId) {
         showToast("Invalid data", "Please select a category.", "error");
         setIsFormValidated(false);
         return;

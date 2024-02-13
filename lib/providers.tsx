@@ -1,4 +1,3 @@
-import "react-native-get-random-values";
 import { config } from "@gluestack-ui/config";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { ThemeProvider, DarkTheme } from "@react-navigation/native";

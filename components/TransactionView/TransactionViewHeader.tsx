@@ -6,6 +6,8 @@ import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import Colors from "@/constants/Colors";
 import { formatFullDate } from "@/utils/formatFullDate";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
+import { useAccountActions } from "@/hooks/useAccountActions";
+import { useCategoryActions } from "@/hooks/useCategoryActions";
 
 interface TransactionViewHeaderProps {}
 
@@ -14,10 +16,16 @@ const TransactionViewHeader = ({
   sum,
   currency,
   date,
-  category,
+  categoryId,
+  accountId,
 }: TransactionViewHeaderProps & ITransaction) => {
-  const name = "Name";
-  const accountName = "Account Name";
+  const { getAccountById } = useAccountActions();
+  const { getCategoryById } = useCategoryActions();
+  const account = getAccountById(accountId);
+  const category = getCategoryById(categoryId);
+
+  const accountName = account?.name;
+
   return (
     <>
       <View
@@ -29,7 +37,6 @@ const TransactionViewHeader = ({
         <ThemedText style={styles.sum}>
           {sum} {getCurrencySymbol(currency)}
         </ThemedText>
-        <ThemedText style={styles.desc}>{name}</ThemedText>
         <ThemedText style={styles.date}>{formatFullDate(date)}</ThemedText>
         <View style={styles.info}>
           <View style={styles.info_item}>
@@ -41,9 +48,7 @@ const TransactionViewHeader = ({
           {category && (
             <View style={styles.info_item}>
               <ThemedText style={styles.info_title}>Category</ThemedText>
-              <ThemedText style={styles.info_text}>
-                {capitalizeFirstLetter(category)}
-              </ThemedText>
+              <ThemedText style={styles.info_text}>{category.name}</ThemedText>
             </View>
           )}
           <View style={styles.info_item}>

@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import AccountForm from "@/components/NewAccount/AccountForm";
 import { IAccount } from "@/types/AccountTypes";
 import React, { useState } from "react";

@@ -1,6 +1,7 @@
 import { Transaction } from "@/schemas/Transaction";
 import { IOperation } from "@/types/OperationTypes";
 import { useCallback } from "react";
+import "react-native-get-random-values";
 import { BSON } from "realm";
 import { useDatabase } from "./useDatabase";
 
@@ -24,7 +25,7 @@ export const useTransactionActions = () => {
             accountId: operation.accountId
               ? new BSON.ObjectId(operation.accountId)
               : undefined,
-            category: operation.category,
+            categoryId: operation.categoryId,
           };
         } else if (operation.type === "transfer") {
           operationToCreate = {
@@ -55,10 +56,6 @@ export const useTransactionActions = () => {
         realm.delete(toDelete);
       });
     },
-    [realm]
-  );
-  const updateTransaction = useCallback(
-    (operation: IOperation, primaryKey: BSON.ObjectId) => {},
     [realm]
   );
 

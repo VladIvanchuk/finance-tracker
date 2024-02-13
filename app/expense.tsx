@@ -1,6 +1,7 @@
 import OperationForm from "@/components/NewOperation/OperationForm";
 import { IOperation } from "@/types/OperationTypes";
 import { useState } from "react";
+import "react-native-get-random-values";
 import { BSON } from "realm";
 
 const AddExpense = () => {
@@ -8,7 +9,7 @@ const AddExpense = () => {
     _id: new BSON.ObjectId(),
     type: "expense",
     sum: 0,
-    category: "",
+    categoryId: "",
     accountId: null,
     description: "",
     currency: "UAH",

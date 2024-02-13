@@ -1,6 +1,8 @@
+import "react-native-get-random-values";
 import React, { createContext, ReactNode, useEffect } from "react";
 import { useRealm } from "@realm/react";
 import Realm from "realm";
+import { initializeDefaultCategories } from "@/services/databaseInitialization";
 
 interface DatabaseContextValue {
   realm: Realm | null;
@@ -14,8 +16,10 @@ export const DatabaseProvider = ({ children }: { children: ReactNode }) => {
   const realm = useRealm();
 
   useEffect(() => {
-    // Initialization of the database when the app starts
-  }, []);
+    if (realm) {
+      initializeDefaultCategories(realm);
+    }
+  }, [realm]);
 
   const value: DatabaseContextValue = {
     realm,

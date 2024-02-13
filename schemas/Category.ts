@@ -13,7 +13,7 @@ export class Category extends Realm.Object<Category> {
       _id: "objectId",
       name: "string",
       type: "string",
-      iconId: "string",
+      iconKey: "string",
     },
     primaryKey: "_id",
   };

@@ -1,6 +1,5 @@
 import { IAccount } from "@/types/AccountTypes";
 import { ICategory } from "@/types/CategoryTypes";
-import { OperationType } from "@/types/OperationTypes";
 import { ITransaction } from "@/types/TransactionTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
 

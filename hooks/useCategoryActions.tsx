@@ -1,12 +1,12 @@
-import { Account } from "@/schemas/Account";
-import { IAccount } from "@/types/AccountTypes";
 import { useCallback } from "react";
 import "react-native-get-random-values";
 import { useDatabase } from "./useDatabase";
 import { useObject } from "@realm/react";
 import { ObjectId } from "bson";
+import { Category } from "@/schemas/Category";
+import { ICategory } from "@/types/CategoryTypes";
 
-export const useAccountActions = () => {
+export const useCategoryActions = () => {
   const { realm } = useDatabase();
 
   if (!realm) {
@@ -15,24 +15,24 @@ export const useAccountActions = () => {
     );
   }
 
-  const createAccount = useCallback(
-    (accountData: IAccount) => {
+  const createCategory = useCallback(
+    (accountData: ICategory) => {
       realm.write(() => {
-        realm.create(Account, accountData);
+        realm.create(Category, accountData);
       });
     },
     [realm]
   );
 
-  const getAccountById = useCallback(
-    (id: string | ObjectId): IAccount | null => {
+  const getCategoryById = useCallback(
+    (id: string | ObjectId): ICategory | null => {
       const primaryKey = Array.isArray(id)
         ? new ObjectId(id[0])
         : new ObjectId(id);
-      return useObject(Account, primaryKey);
+      return useObject(Category, primaryKey);
     },
     [realm]
   );
 
-  return { createAccount, getAccountById };
+  return { createCategory, getCategoryById };
 };
