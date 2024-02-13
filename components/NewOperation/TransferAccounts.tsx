@@ -1,14 +1,15 @@
-import { StyleSheet, View } from "react-native";
-import React from "react";
-import ThemedSelect from "../ui/ThemedSelect";
-import TransferAccountsIcon from "../Icons/transferAccounts";
-import { IOperation, OperationItemType } from "@/types/OperationTypes";
+import { Transaction } from "@/schemas/Transaction";
+import { OperationItemType } from "@/types/OperationTypes";
 import { ObjectId } from "bson";
+import React from "react";
+import { StyleSheet, View } from "react-native";
+import TransferAccountsIcon from "../Icons/transferAccounts";
+import ThemedSelect from "../ui/ThemedSelect";
 
 interface TransferAccountsProps {
   onChange: (value: string, type?: OperationItemType) => void;
   items?: { label: string; value: string | ObjectId }[];
-  operation: IOperation;
+  operation: Partial<Transaction>;
 }
 
 const TransferAccounts = ({

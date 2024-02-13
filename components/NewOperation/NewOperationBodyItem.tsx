@@ -1,19 +1,20 @@
+import { AccountItemType, IAccount } from "@/types/AccountTypes";
+import { OperationItemType } from "@/types/OperationTypes";
+import { ITransaction } from "@/types/TransactionTypes";
+import { ObjectId } from "bson";
+import { router } from "expo-router";
 import React from "react";
-import ThemedSelect from "../ui/ThemedSelect";
-import { IOperation, OperationItemType } from "@/types/OperationTypes";
 import ThemedInput from "../ui/ThemedInput";
+import ThemedSelect from "../ui/ThemedSelect";
 import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
-import { AccountItemType, IAccount } from "@/types/AccountTypes";
-import { router } from "expo-router";
-import { ObjectId } from "bson";
 
 interface NewOperationBodyItemProps {
   id: string;
   type: OperationItemType | AccountItemType;
   items?: { label: string; value: string | ObjectId }[];
   onChange: (value: string, type?: OperationItemType) => void;
-  operation: IOperation | IAccount;
+  operation: ITransaction | IAccount;
 }
 
 const NewOperationBodyItem = ({
@@ -27,7 +28,7 @@ const NewOperationBodyItem = ({
       <TransferAccounts
         onChange={onChange}
         items={items}
-        operation={operation as IOperation}
+        operation={operation as ITransaction}
       />
     );
   }

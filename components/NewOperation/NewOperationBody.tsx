@@ -1,14 +1,14 @@
-import { StyleSheet, View, FlatList } from "react-native";
 import Colors from "@/constants/Colors";
+import { useOperationItems } from "@/hooks/useOperationItems";
+import { AccountItem, AccountItemType, IAccount } from "@/types/AccountTypes";
 import {
   OperationItem,
-  IOperation,
-  OperationType,
   OperationItemType,
+  OperationType,
 } from "@/types/OperationTypes";
+import { ITransaction } from "@/types/TransactionTypes";
+import { FlatList, StyleSheet, View } from "react-native";
 import NewOperationBodyItem from "./NewOperationBodyItem";
-import { AccountItem, AccountItemType, IAccount } from "@/types/AccountTypes";
-import { useOperationItems } from "@/hooks/useOperationItems";
 
 const NewOperationBody = ({
   operationType,
@@ -20,7 +20,7 @@ const NewOperationBody = ({
     value: string,
   ) => void;
   operationType: OperationType | "account";
-  operation: IOperation | IAccount;
+  operation: ITransaction | IAccount;
 }) => {
   const renderItem = ({ item }: { item: OperationItem | AccountItem }) => (
     <NewOperationBodyItem

@@ -1,10 +1,10 @@
-import { StyleSheet, TextInput, View } from "react-native";
-import React, { useEffect, useState } from "react";
-import ThemedText from "../ui/ThemedText";
 import Colors from "@/constants/Colors";
-import { IOperation, OperationType } from "@/types/OperationTypes";
-import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { IAccount } from "@/types/AccountTypes";
+import { ITransaction } from "@/types/TransactionTypes";
+import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TextInput, View } from "react-native";
+import ThemedText from "../ui/ThemedText";
 
 const NewOperationHeader = ({
   setOperation,
@@ -12,8 +12,8 @@ const NewOperationHeader = ({
   accountData,
   setAccountData,
 }: {
-  operation?: IOperation;
-  setOperation?: React.Dispatch<React.SetStateAction<IOperation>>;
+  operation?: ITransaction;
+  setOperation?: React.Dispatch<React.SetStateAction<ITransaction>>;
   accountData?: IAccount;
   setAccountData?: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {

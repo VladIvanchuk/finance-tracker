@@ -1,16 +1,16 @@
 import "react-native-get-random-values";
 import OperationForm from "@/components/NewOperation/OperationForm";
-import { IOperation } from "@/types/OperationTypes";
 import { useState } from "react";
 import { BSON } from "realm";
+import { ITransaction } from "@/types/TransactionTypes";
 
 const AddIncome = () => {
-  const [operation, setOperation] = useState<IOperation>({
+  const [operation, setOperation] = useState<ITransaction>({
     _id: new BSON.ObjectId(),
     type: "income",
     sum: 0,
-    categoryId: null,
-    accountId: null,
+    accountId: undefined,
+    categoryId: undefined,
     description: "",
     currency: "UAH",
     attachment: "",

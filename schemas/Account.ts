@@ -1,7 +1,7 @@
 import { AccountType } from "@/types/AccountTypes";
 import { CurrencyType } from "@/types/OperationTypes";
-import { ITransaction } from "@/types/TransactionTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
+import { Transaction } from "@/schemas/Transaction";
 
 export class Account extends Realm.Object<Account> {
   _id!: BSON.ObjectId;
@@ -9,7 +9,7 @@ export class Account extends Realm.Object<Account> {
   type!: AccountType;
   balance!: number;
   currency!: CurrencyType;
-  transactions?: ITransaction[];
+  transactions!: Realm.List<Transaction>; // To-Many relationship to Transaction
   bankName?: string;
   accountNumber?: string;
   notes?: string;

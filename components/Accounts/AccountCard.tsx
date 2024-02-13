@@ -1,11 +1,11 @@
-import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
-import ThemedText from "../ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
-import { IAccount } from "@/types/AccountTypes";
-import { Feather } from "@expo/vector-icons";
+import { AccountData } from "@/types/AccountTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { Feather } from "@expo/vector-icons";
 import { Link } from "expo-router";
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import ThemedText from "../ui/ThemedText";
 
 const AccountCard = ({
   name,
@@ -14,7 +14,7 @@ const AccountCard = ({
   currency,
   bankName,
   accountNumber,
-}: IAccount) => {
+}: AccountData) => {
   return (
     <View style={styles.card_container}>
       <View style={styles.card_header}>

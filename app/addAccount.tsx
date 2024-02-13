@@ -14,6 +14,7 @@ const addAccount = () => {
     bankName: undefined,
     accountNumber: undefined,
     notes: undefined,
+    transactions: [],
   });
 
   return (

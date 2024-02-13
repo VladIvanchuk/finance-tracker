@@ -1,5 +1,6 @@
 import { CurrencyType, OperationType } from "@/types/OperationTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
+import { Account } from "./Account";
 
 export class Transaction extends Realm.Object<Transaction> {
   _id!: BSON.ObjectId;
@@ -10,7 +11,7 @@ export class Transaction extends Realm.Object<Transaction> {
   attachment?: string;
   date!: string;
   categoryId?: BSON.ObjectId;
-  accountId?: BSON.ObjectId;
+  account?: Account; // To-One relationship to Account
   fromAccountId?: BSON.ObjectId;
   toAccountId?: BSON.ObjectId;
 
@@ -25,7 +26,7 @@ export class Transaction extends Realm.Object<Transaction> {
       attachment: "string?",
       date: "string",
       categoryId: "objectId?",
-      accountId: "objectId?",
+      account: "Account?", // To-One relationship to Account
       fromAccountId: "objectId?",
       toAccountId: "objectId?",
     },

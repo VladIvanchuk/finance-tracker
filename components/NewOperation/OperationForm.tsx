@@ -2,11 +2,7 @@ import ThemedToast from "@/components/ui/ThemedToast";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { AccountItemType } from "@/types/AccountTypes";
-import {
-  IOperation,
-  OperationItemType,
-  OperationType,
-} from "@/types/OperationTypes";
+import { OperationItemType, OperationType } from "@/types/OperationTypes";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
@@ -16,6 +12,7 @@ import ThemedAlert from "../ui/ThemedAlert";
 import NewOperationBody from "./NewOperationBody";
 import NewOperationFooter from "./NewOperationFooter";
 import NewOperationHeader from "./NewOperationHeader";
+import { ITransaction } from "@/types/TransactionTypes";
 
 const OperationForm = ({
   operationType,
@@ -23,8 +20,8 @@ const OperationForm = ({
   setOperation,
 }: {
   operationType: OperationType;
-  operation: IOperation;
-  setOperation: React.Dispatch<React.SetStateAction<IOperation>>;
+  operation: ITransaction;
+  setOperation: React.Dispatch<React.SetStateAction<ITransaction>>;
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);

@@ -1,13 +1,13 @@
-import { IAccount } from "@/types/AccountTypes";
 import { ITransaction } from "@/types/TransactionTypes";
 import React from "react";
 import { Animated, StyleSheet, View } from "react-native";
 import TransactionItem from "../Home/TransactionItem";
 import ThemedText from "../ui/ThemedText";
 import AccountCard from "./AccountCard";
+import { Account } from "@/schemas/Account";
 
 interface AccountItemProps {
-  account: IAccount;
+  account: Account;
   width: number;
   marginHorizontal: number;
 }
@@ -17,8 +17,6 @@ const AccountItem = ({
   width,
   marginHorizontal,
 }: AccountItemProps) => {
-  console.log(account);
-
   return (
     <View style={{ width, marginHorizontal }}>
       <AccountCard {...account} />

@@ -19,7 +19,7 @@ export interface BaseOperation {
 export interface IncomeExpenseOperation extends BaseOperation {
   type: "income" | "expense";
   categoryId: BSON.ObjectId | null;
-  accountId: BSON.ObjectId | null;
+  account: BSON.ObjectId | null;
 }
 
 export interface TransferOperation extends BaseOperation {

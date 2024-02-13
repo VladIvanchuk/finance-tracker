@@ -1,5 +1,6 @@
 import Colors from "@/constants/Colors";
-import { ITransaction, IconNameType } from "@/types/TransactionTypes";
+import { useCategoryActions } from "@/hooks/useCategoryActions";
+import { IconNameType, TransactionData } from "@/types/TransactionTypes";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { formatShortDate } from "@/utils/formatShortDate";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
@@ -7,8 +8,6 @@ import { Link } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
 import TransactionIcon from "./TransactionIcon";
-import { useAccountActions } from "@/hooks/useAccountActions";
-import { useCategoryActions } from "@/hooks/useCategoryActions";
 
 interface TransactionItemProps {
   useDate?: boolean;
@@ -22,17 +21,15 @@ const TransactionItem = ({
   type,
   date,
   useDate,
-  accountId,
+  account,
   categoryId,
-}: ITransaction & TransactionItemProps) => {
+}: TransactionData & TransactionItemProps) => {
   const operationColor = getOperationColor(type);
   const currencySymbol = getCurrencySymbol(currency);
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
-  const { getAccountById } = useAccountActions();
   const { getCategoryById } = useCategoryActions();
 
-  const account = accountId ? getAccountById(accountId) : null;
   const category = categoryId ? getCategoryById(categoryId) : null;
 
   return (

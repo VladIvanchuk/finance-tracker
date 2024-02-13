@@ -1,13 +1,12 @@
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { StyleSheet, View } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
-import { ITransaction } from "@/types/TransactionTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import Colors from "@/constants/Colors";
 import { formatFullDate } from "@/utils/formatFullDate";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-import { useAccountActions } from "@/hooks/useAccountActions";
 import { useCategoryActions } from "@/hooks/useCategoryActions";
+import { TransactionData } from "@/types/TransactionTypes";
 
 interface TransactionViewHeaderProps {}
 
@@ -17,14 +16,10 @@ const TransactionViewHeader = ({
   currency,
   date,
   categoryId,
-  accountId,
-}: TransactionViewHeaderProps & ITransaction) => {
-  const { getAccountById } = useAccountActions();
+  account,
+}: TransactionViewHeaderProps & TransactionData) => {
   const { getCategoryById } = useCategoryActions();
-  const account = accountId ? getAccountById(accountId) : null;
   const category = categoryId ? getCategoryById(categoryId) : null;
-
-  const accountName = account?.name;
 
   return (
     <>
@@ -53,7 +48,7 @@ const TransactionViewHeader = ({
           )}
           <View style={styles.info_item}>
             <ThemedText style={styles.info_title}>Account</ThemedText>
-            <ThemedText style={styles.info_text}>{accountName}</ThemedText>
+            <ThemedText style={styles.info_text}>{account?.name}</ThemedText>
           </View>
         </View>
       </View>
