@@ -11,7 +11,7 @@ export const useCategoryActions = () => {
 
   if (!realm) {
     throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
+      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider.",
     );
   }
 
@@ -21,7 +21,7 @@ export const useCategoryActions = () => {
         realm.create(Category, accountData);
       });
     },
-    [realm]
+    [realm],
   );
 
   const getCategoryById = useCallback(
@@ -31,7 +31,7 @@ export const useCategoryActions = () => {
         : new ObjectId(id);
       return useObject(Category, primaryKey);
     },
-    [realm]
+    [realm],
   );
 
   return { createCategory, getCategoryById };

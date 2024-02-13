@@ -28,8 +28,8 @@ export interface ITransaction {
   description?: string;
   attachment?: string;
   date: string;
-  categoryId: BSON.ObjectId;
-  accountId: BSON.ObjectId;
+  categoryId?: BSON.ObjectId;
+  accountId?: BSON.ObjectId;
   fromAccountId?: BSON.ObjectId;
   toAccountId?: BSON.ObjectId;
 }

@@ -8,11 +8,11 @@ export const groupTransactionsByDate = (
   transactions: ITransaction[],
 ): TransactionGroups => {
   return transactions.reduce((groups: TransactionGroups, transaction) => {
-    const { date } = transaction;
-    if (!groups[date]) {
-      groups[date] = [];
+    const dateKey = transaction.date.split("T")[0];
+    if (!groups[dateKey]) {
+      groups[dateKey] = [];
     }
-    groups[date].push(transaction);
+    groups[dateKey].push(transaction);
     return groups;
   }, {} as TransactionGroups);
 };

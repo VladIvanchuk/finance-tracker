@@ -1,5 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import Colors from "@/constants/Colors";
 import {
   ChevronDownIcon,
   Icon,
@@ -15,18 +14,21 @@ import {
   SelectPortal,
   SelectTrigger,
 } from "@gluestack-ui/themed";
-import Colors from "@/constants/Colors";
+import { ObjectId } from "bson";
+import React from "react";
+import { StyleSheet } from "react-native";
 import ThemedButton from "./ThemedButton";
+
 interface ThemedSelectProps {
   placeholder?: string;
   items?: Array<{
     label: string;
-    value: string;
+    value: string | ObjectId;
   }>;
   onChange: (value: string) => void;
   isAddButton?: boolean;
   addButtonAction?: () => void;
-  defaultValue?: any;
+  defaultValue?: string;
   disabled?: string;
 }
 
@@ -60,9 +62,9 @@ const ThemedSelect = ({
           <ScrollView style={styles.scrollView}>
             {items?.map((item) => (
               <SelectItem
-                key={item.value}
+                key={item.value.toString()}
                 label={item.label}
-                value={item.value}
+                value={item.value.toString()}
                 disabled={item.value === disabled}
                 style={item.value === disabled && { opacity: 0.1 }}
               />

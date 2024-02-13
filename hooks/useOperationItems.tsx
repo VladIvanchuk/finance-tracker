@@ -72,7 +72,7 @@ export const useOperationItems = (operationType: OperationType | "account") => {
     .filter((category) => category.type === "income")
     .map((category) => ({
       label: category.name,
-      value: category._id.toString(),
+      value: category._id,
     }));
 
   const expenseCategoryItems = categories
@@ -106,7 +106,7 @@ export const useOperationItems = (operationType: OperationType | "account") => {
         id: "account",
         type: "account",
         items: accountItems,
-      }
+      },
     );
   }
 

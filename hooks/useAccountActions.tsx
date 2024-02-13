@@ -11,7 +11,7 @@ export const useAccountActions = () => {
 
   if (!realm) {
     throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
+      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider.",
     );
   }
 
@@ -21,7 +21,7 @@ export const useAccountActions = () => {
         realm.create(Account, accountData);
       });
     },
-    [realm]
+    [realm],
   );
 
   const getAccountById = useCallback(
@@ -31,7 +31,7 @@ export const useAccountActions = () => {
         : new ObjectId(id);
       return useObject(Account, primaryKey);
     },
-    [realm]
+    [realm],
   );
 
   return { createAccount, getAccountById };

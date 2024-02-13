@@ -1,5 +1,5 @@
 import Colors from "@/constants/Colors";
-import { ITransaction } from "@/types/TransactionTypes";
+import { ITransaction, IconNameType } from "@/types/TransactionTypes";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { formatShortDate } from "@/utils/formatShortDate";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
@@ -7,6 +7,8 @@ import { Link } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
 import TransactionIcon from "./TransactionIcon";
+import { useAccountActions } from "@/hooks/useAccountActions";
+import { useCategoryActions } from "@/hooks/useCategoryActions";
 
 interface TransactionItemProps {
   useDate?: boolean;
@@ -20,15 +22,18 @@ const TransactionItem = ({
   type,
   date,
   useDate,
+  accountId,
+  categoryId,
 }: ITransaction & TransactionItemProps) => {
   const operationColor = getOperationColor(type);
   const currencySymbol = getCurrencySymbol(currency);
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
+  const { getAccountById } = useAccountActions();
+  const { getCategoryById } = useCategoryActions();
 
-  const iconName = "shopping";
-  const name = "Name";
-  const accountName = "Account Name";
+  const account = accountId ? getAccountById(accountId) : null;
+  const category = categoryId ? getCategoryById(categoryId) : null;
 
   return (
     <Link
@@ -39,10 +44,10 @@ const TransactionItem = ({
       asChild
     >
       <TouchableOpacity style={styles.container}>
-        <TransactionIcon iconName={iconName} />
+        <TransactionIcon iconName={category?.iconKey as IconNameType} />
         <View style={styles.infoContainer}>
           <View style={styles.textContainer}>
-            <ThemedText style={styles.name}>{name}</ThemedText>
+            <ThemedText style={styles.name}>{category?.name}</ThemedText>
             <ThemedText
               style={styles.description}
               numberOfLines={1}
@@ -56,7 +61,7 @@ const TransactionItem = ({
               {formattedSum} {currencySymbol}
             </ThemedText>
             <ThemedText style={styles.account}>
-              {useDate ? formatShortDate(date) : accountName}
+              {useDate ? formatShortDate(date) : account?.name}
             </ThemedText>
           </View>
         </View>

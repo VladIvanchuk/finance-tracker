@@ -6,11 +6,12 @@ import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
 import { router } from "expo-router";
+import { ObjectId } from "bson";
 
 interface NewOperationBodyItemProps {
   id: string;
   type: OperationItemType | AccountItemType;
-  items?: { label: string; value: string }[];
+  items?: { label: string; value: string | ObjectId }[];
   onChange: (value: string, type?: OperationItemType) => void;
   operation: IOperation | IAccount;
 }

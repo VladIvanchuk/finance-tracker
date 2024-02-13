@@ -4,15 +4,23 @@ import { useCallback } from "react";
 import "react-native-get-random-values";
 import { BSON } from "realm";
 import { useDatabase } from "./useDatabase";
+import { ObjectId } from "bson";
+import { ITransaction } from "@/types/TransactionTypes";
+import { useObject, useQuery } from "@realm/react";
 
 export const useTransactionActions = () => {
   const { realm } = useDatabase();
 
   if (!realm) {
     throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
+      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider.",
     );
   }
+
+  const getTransactions = useCallback((): ITransaction[] | [] => {
+    const transactionsResults = useQuery(Transaction);
+    return Array.from(transactionsResults);
+  }, [realm]);
 
   const createTransaction = useCallback(
     (operation: IOperation) => {
@@ -25,7 +33,9 @@ export const useTransactionActions = () => {
             accountId: operation.accountId
               ? new BSON.ObjectId(operation.accountId)
               : undefined,
-            categoryId: operation.categoryId,
+            categoryId: operation.categoryId
+              ? new BSON.ObjectId(operation.categoryId)
+              : undefined,
           };
         } else if (operation.type === "transfer") {
           operationToCreate = {
@@ -44,11 +54,14 @@ export const useTransactionActions = () => {
         realm.create("Transaction", operationToCreate as Partial<Transaction>);
       });
     },
-    [realm]
+    [realm],
   );
 
   const deleteTransaction = useCallback(
-    (primaryKey: BSON.ObjectId) => {
+    (id: string | string[] | ObjectId) => {
+      const primaryKey = Array.isArray(id)
+        ? new ObjectId(id[0])
+        : new ObjectId(id);
       const toDelete = realm
         .objects(Transaction)
         .filtered("_id == $0", primaryKey);
@@ -56,8 +69,23 @@ export const useTransactionActions = () => {
         realm.delete(toDelete);
       });
     },
-    [realm]
+    [realm],
   );
 
-  return { createTransaction, deleteTransaction };
+  const getTransactionById = useCallback(
+    (id: string | string[] | ObjectId): ITransaction | null => {
+      const primaryKey = Array.isArray(id)
+        ? new ObjectId(id[0])
+        : new ObjectId(id);
+      return useObject(Transaction, primaryKey);
+    },
+    [realm],
+  );
+
+  return {
+    createTransaction,
+    deleteTransaction,
+    getTransactionById,
+    getTransactions,
+  };
 };

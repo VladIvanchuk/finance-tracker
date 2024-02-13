@@ -4,14 +4,12 @@ import ThemedText from "../ui/ThemedText";
 import TransactionItem from "./TransactionItem";
 import { groupTransactionsByDate } from "@/utils/transactionsUtils";
 import { formatShortDate } from "@/utils/formatShortDate";
-import { Transaction } from "@/schemas/Transaction";
-import { useQuery } from "@realm/react";
-import { ITransaction } from "@/types/TransactionTypes";
+
+import { useTransactionActions } from "@/hooks/useTransactionActions";
 
 const TransactionsHistory = () => {
-  const transactionsResults = useQuery(Transaction);
-  const transactionsArray: ITransaction[] = Array.from(transactionsResults);
-  const groupedTransactions = groupTransactionsByDate(transactionsArray);
+  const { getTransactions } = useTransactionActions();
+  const groupedTransactions = groupTransactionsByDate(getTransactions());
 
   return (
     <View style={styles.container}>
@@ -19,12 +17,12 @@ const TransactionsHistory = () => {
         <ThemedText style={styles.header}>Transactions history</ThemedText>
       </View>
       <View style={styles.items_container}>
-        {Object.keys(groupedTransactions).map((date) => (
-          <View key={date} style={styles.items_group}>
+        {Object.keys(groupedTransactions).map((dateKey) => (
+          <View key={dateKey} style={styles.items_group}>
             <ThemedText style={styles.items_header}>
-              {formatShortDate(date)}
+              {formatShortDate(dateKey)}
             </ThemedText>
-            {groupedTransactions[date].map((transaction) => (
+            {groupedTransactions[dateKey].map((transaction) => (
               <TransactionItem
                 key={transaction._id.toString()}
                 {...transaction}

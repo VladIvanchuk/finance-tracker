@@ -9,7 +9,7 @@ const AddIncome = () => {
     _id: new BSON.ObjectId(),
     type: "income",
     sum: 0,
-    categoryId: "",
+    categoryId: null,
     accountId: null,
     description: "",
     currency: "UAH",

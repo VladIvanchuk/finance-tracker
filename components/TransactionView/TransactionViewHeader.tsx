@@ -21,8 +21,8 @@ const TransactionViewHeader = ({
 }: TransactionViewHeaderProps & ITransaction) => {
   const { getAccountById } = useAccountActions();
   const { getCategoryById } = useCategoryActions();
-  const account = getAccountById(accountId);
-  const category = getCategoryById(categoryId);
+  const account = accountId ? getAccountById(accountId) : null;
+  const category = categoryId ? getCategoryById(categoryId) : null;
 
   const accountName = account?.name;
 

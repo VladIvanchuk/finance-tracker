@@ -6,29 +6,24 @@ import ThemedText from "@/components/ui/ThemedText";
 import Colors from "@/constants/Colors";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
-import { Transaction } from "@/schemas/Transaction";
 import { OperationType } from "@/types/OperationTypes";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useObject } from "@realm/react";
-import { ObjectId } from "bson";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 const TransactionView = () => {
   const [alertVisible, setAlertVisible] = useState(false);
-  const { deleteTransaction } = useTransactionActions();
+  const { deleteTransaction, getTransactionById } = useTransactionActions();
   const popToTop = usePopToTop();
   const navigation = useNavigation();
-
   const { id } = useLocalSearchParams();
-  const primaryKey = Array.isArray(id) ? new ObjectId(id[0]) : new ObjectId(id);
 
-  const transaction = useObject(Transaction, primaryKey);
+  const transaction = getTransactionById(id);
 
   const handleDelete = () => {
-    deleteTransaction(primaryKey);
+    deleteTransaction(id);
     popToTop();
   };
 

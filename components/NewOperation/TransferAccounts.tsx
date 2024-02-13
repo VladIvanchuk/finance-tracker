@@ -3,10 +3,11 @@ import React from "react";
 import ThemedSelect from "../ui/ThemedSelect";
 import TransferAccountsIcon from "../Icons/transferAccounts";
 import { IOperation, OperationItemType } from "@/types/OperationTypes";
+import { ObjectId } from "bson";
 
 interface TransferAccountsProps {
   onChange: (value: string, type?: OperationItemType) => void;
-  items?: { label: string; value: string }[];
+  items?: { label: string; value: string | ObjectId }[];
   operation: IOperation;
 }
 
