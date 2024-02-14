@@ -30,7 +30,7 @@ const AccountForm = ({
     (
       title: string,
       message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
+      action?: "warning" | "error" | "success" | "info" | "attention"
     ) => {
       toast.closeAll();
       toast.show({
@@ -46,19 +46,10 @@ const AccountForm = ({
         ),
       });
     },
-    [toast],
+    [toast]
   );
 
   const handleContinue = () => {
-    if (
-      !accountData.balance ||
-      isNaN(accountData.balance) ||
-      Number(accountData.balance) <= 0
-    ) {
-      showToast("Invalid data", `Please enter a valid balance.`, "error");
-      setIsFormValidated(false);
-      return;
-    }
     createAccount(accountData);
     popToTop();
     showToast("Success", `Account added successfully`, "success");
@@ -66,7 +57,7 @@ const AccountForm = ({
 
   const handleValueChange = (
     type: OperationItemType | AccountItemType,
-    value: string,
+    value: string
   ) => {
     setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -96,7 +87,7 @@ const AccountForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

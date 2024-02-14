@@ -1,11 +1,11 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
 import Colors from "@/constants/Colors";
-import ThemedText from "../ui/ThemedText";
-import ThemedActionSheet from "../ui/ThemedActionSheet";
-import MonthPickerWheels from "./MonthPickerWheels";
 import { monthNames } from "@/constants/monthNames";
-import { Icon, ChevronDownIcon } from "@gluestack-ui/themed";
+import { ChevronDownIcon, Icon } from "@gluestack-ui/themed";
+import React, { useState } from "react";
+import { StyleSheet, TouchableOpacity } from "react-native";
+import ThemedActionSheet from "../ui/ThemedActionSheet";
+import ThemedText from "../ui/ThemedText";
+import MonthPickerWheels from "./MonthPickerWheels";
 
 const MonthPicker = () => {
   const [showPicker, setShowPicker] = useState(false);

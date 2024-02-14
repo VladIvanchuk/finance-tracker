@@ -31,7 +31,7 @@ const AccountCard = ({
         <View style={styles.body_text}>
           <ThemedText style={styles.bank_name}>{type}</ThemedText>
           <ThemedText style={styles.card_sum}>
-            {balance} {getCurrencySymbol(currency)}
+            {balance.toFixed(2)} {getCurrencySymbol(currency)}
           </ThemedText>
         </View>
         <View style={[styles.body_text, { alignItems: "flex-end" }]}>

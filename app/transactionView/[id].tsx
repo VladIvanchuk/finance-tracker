@@ -26,7 +26,7 @@ const TransactionView = () => {
     deleteTransaction(id);
     popToTop();
   };
-
+ 
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {

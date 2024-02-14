@@ -13,7 +13,7 @@ export const useTransactionActions = () => {
 
   if (!realm) {
     throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider.",
+      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
     );
   }
 
@@ -24,8 +24,6 @@ export const useTransactionActions = () => {
 
   const createTransaction = useCallback(
     (operation: ITransaction) => {
-      console.log(operation);
-
       realm.write(() => {
         let transactionData: Partial<Transaction>;
 
@@ -33,7 +31,7 @@ export const useTransactionActions = () => {
           const accountId = new BSON.ObjectId(operation.accountId);
           const account = realm.objectForPrimaryKey<Account>(
             "Account",
-            accountId,
+            accountId
           );
           if (!account) {
             throw new Error("Account not found");
@@ -49,19 +47,24 @@ export const useTransactionActions = () => {
 
           const transaction = realm.create(
             "Transaction",
-            transactionData as Partial<Transaction>,
+            transactionData as Partial<Transaction>
           );
           account.transactions.push(transaction);
+          if (operation.type === "income") {
+            account.balance += operation.sum;
+          } else if (operation.type === "expense") {
+            account.balance -= operation.sum;
+          }
         } else if (operation.type === "transfer") {
           const fromAccountId = new BSON.ObjectId(operation.fromAccountId);
           const toAccountId = new BSON.ObjectId(operation.toAccountId);
           const fromAccount = realm.objectForPrimaryKey<Account>(
             "Account",
-            fromAccountId,
+            fromAccountId
           );
           const toAccount = realm.objectForPrimaryKey<Account>(
             "Account",
-            toAccountId,
+            toAccountId
           );
 
           if (!fromAccount || !toAccount) {
@@ -76,16 +79,21 @@ export const useTransactionActions = () => {
 
           const transaction = realm.create(
             "Transaction",
-            transactionData as Partial<Transaction>,
+            transactionData as Partial<Transaction>
           );
           fromAccount.transactions.push(transaction);
           toAccount.transactions.push(transaction);
+          if (fromAccount.balance < operation.sum) {
+            throw new Error("Insufficient balance in FromAccount");
+          }
+          fromAccount.balance -= operation.sum;
+          toAccount.balance += operation.sum;
         } else {
           throw new Error("Invalid operation type");
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   const deleteTransaction = useCallback(
@@ -96,11 +104,35 @@ export const useTransactionActions = () => {
       const toDelete = realm
         .objects(Transaction)
         .filtered("_id == $0", primaryKey);
+
       realm.write(() => {
-        realm.delete(toDelete);
+        if (toDelete.length > 0) {
+          const transaction = toDelete[0];
+
+          if (transaction.type === "income" || transaction.type === "expense") {
+            if (transaction.account) {
+              if (transaction.type === "income") {
+                transaction.account.balance -= transaction.sum;
+              } else if (transaction.type === "expense") {
+                transaction.account.balance += transaction.sum;
+              }
+            } else {
+              throw new Error("Transaction account not found");
+            }
+          } else if (transaction.type === "transfer") {
+            if (transaction.fromAccount && transaction.toAccount) {
+              transaction.fromAccount.balance += transaction.sum;
+              transaction.toAccount.balance -= transaction.sum;
+            } else {
+              throw new Error("Transaction accounts not found");
+            }
+          }
+
+          realm.delete(toDelete);
+        }
       });
     },
-    [realm],
+    [realm]
   );
 
   const getTransactionById = useCallback(
@@ -110,7 +142,7 @@ export const useTransactionActions = () => {
         : new ObjectId(id);
       return realm.objectForPrimaryKey(Transaction, primaryKey);
     },
-    [realm],
+    [realm]
   );
 
   return {
