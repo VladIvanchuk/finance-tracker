@@ -23,6 +23,8 @@ const TransactionItem = ({
   useDate,
   account,
   categoryId,
+  fromAccount,
+  toAccount,
 }: TransactionData & TransactionItemProps) => {
   const operationColor = getOperationColor(type);
   const currencySymbol = getCurrencySymbol(currency);
@@ -31,6 +33,12 @@ const TransactionItem = ({
   const { getCategoryById } = useCategoryActions();
 
   const category = categoryId ? getCategoryById(categoryId) : null;
+  const icon = type === "transfer" ? "money-bill-transfer" : category?.iconKey;
+  const name = type === "transfer" ? "Transfer" : category?.name;
+  const accountName =
+    type === "transfer"
+      ? `${fromAccount?.name} > ${toAccount?.name}`
+      : account?.name;
 
   return (
     <Link
@@ -41,10 +49,10 @@ const TransactionItem = ({
       asChild
     >
       <TouchableOpacity style={styles.container}>
-        <TransactionIcon iconName={category?.iconKey as IconNameType} />
+        <TransactionIcon iconName={icon as IconNameType} />
         <View style={styles.infoContainer}>
           <View style={styles.textContainer}>
-            <ThemedText style={styles.name}>{category?.name}</ThemedText>
+            <ThemedText style={styles.name}>{name}</ThemedText>
             <ThemedText
               style={styles.description}
               numberOfLines={1}
@@ -58,7 +66,7 @@ const TransactionItem = ({
               {formattedSum} {currencySymbol}
             </ThemedText>
             <ThemedText style={styles.account}>
-              {useDate ? formatShortDate(date) : account?.name}
+              {useDate ? formatShortDate(date) : accountName}
             </ThemedText>
           </View>
         </View>

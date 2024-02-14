@@ -30,8 +30,8 @@ export const iconConfig = {
   "money-bill-transfer": {
     component: FontAwesome6,
     name: "money-bill-transfer",
-    color: palette.violet[100],
-    backgroundColor: palette.violet[20],
+    color: palette.yellow[100],
+    backgroundColor: palette.yellow[20],
   },
   bank: {
     component: MaterialCommunityIcons,

@@ -11,9 +11,9 @@ export class Transaction extends Realm.Object<Transaction> {
   attachment?: string;
   date!: string;
   categoryId?: BSON.ObjectId;
-  account?: Account; // To-One relationship to Account
-  fromAccountId?: BSON.ObjectId;
-  toAccountId?: BSON.ObjectId;
+  account?: Account;
+  fromAccount?: Account;
+  toAccount?: Account;
 
   static schema: ObjectSchema = {
     name: "Transaction",
@@ -26,9 +26,9 @@ export class Transaction extends Realm.Object<Transaction> {
       attachment: "string?",
       date: "string",
       categoryId: "objectId?",
-      account: "Account?", // To-One relationship to Account
-      fromAccountId: "objectId?",
-      toAccountId: "objectId?",
+      account: "Account?",
+      fromAccount: "Account?",
+      toAccount: "Account?",
     },
     primaryKey: "_id",
   };

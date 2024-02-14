@@ -9,13 +9,13 @@ import React, { useRef, useState } from "react";
 import TabBarButton from "./TabBarButton";
 import { palette } from "@/constants/Colors";
 import { ExpenseIcon, IncomeIcon, TransferIcon } from "..";
-import { Link } from "expo-router";
+import { useRouter } from "expo-router";
 
 const { width } = Dimensions.get("window");
 
 const TabBarMenu = () => {
   const [isMenuVisible, setMenuVisible] = useState(false);
-
+  const router = useRouter();
   const toggleMenu = () => {
     setMenuVisible(!isMenuVisible);
     animateButtons(!isMenuVisible);
@@ -23,6 +23,11 @@ const TabBarMenu = () => {
   const handleOverlayPress = () => {
     setMenuVisible(false);
     animateButtons(!isMenuVisible);
+  };
+
+  const handleLinkPress = (path: string) => {
+    router.navigate({ pathname: path });
+    handleOverlayPress();
   };
 
   const leftButtonAnim = useRef(new Animated.Value(0)).current;
@@ -106,23 +111,23 @@ const TabBarMenu = () => {
         <Animated.View
           style={[styles.button, styles.left_button, leftButtonStyle]}
         >
-          <Link href="/income">
+          <Pressable onPress={() => handleLinkPress("/income")}>
             <IncomeIcon />
-          </Link>
+          </Pressable>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.middle_button, middleButtonStyle]}
         >
-          <Link href="/transfer">
+          <Pressable onPress={() => handleLinkPress("/transfer")}>
             <TransferIcon />
-          </Link>
+          </Pressable>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.right_button, rightButtonStyle]}
         >
-          <Link href="/expense">
+          <Pressable onPress={() => handleLinkPress("/expense")}>
             <ExpenseIcon />
-          </Link>
+          </Pressable>
         </Animated.View>
       </View>
       <TabBarButton onToggle={toggleMenu} isMenuVisible={isMenuVisible} />
@@ -137,8 +142,8 @@ const styles = StyleSheet.create({
     position: "absolute",
     width: "100%",
     height: "100%",
-    backgroundColor: "transparent", // You can set a background color with opacity if you want
-    zIndex: 1, // Make sure this zIndex is lower than the menu's zIndex
+    backgroundColor: "rgba(0,0,0, 0.4)",
+    zIndex: 1,
   },
   menu: {
     position: "absolute",
@@ -147,7 +152,7 @@ const styles = StyleSheet.create({
     width: 50,
     flexDirection: "row",
     justifyContent: "space-between",
-    zIndex: 2, // Ensure this zIndex is higher than the overlay's zIndex
+    zIndex: 2,
   },
   button: {
     width: 50,

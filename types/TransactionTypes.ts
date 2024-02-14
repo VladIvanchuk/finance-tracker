@@ -45,6 +45,6 @@ export interface TransactionData {
   date: string;
   categoryId?: BSON.ObjectId;
   account?: Account;
-  fromAccountId?: BSON.ObjectId;
-  toAccountId?: BSON.ObjectId;
+  fromAccount?: Account;
+  toAccount?: Account;
 }

@@ -17,19 +17,21 @@ const TransactionsHistory = () => {
         <ThemedText style={styles.header}>Transactions history</ThemedText>
       </View>
       <View style={styles.items_container}>
-        {Object.keys(groupedTransactions).map((dateKey) => (
-          <View key={dateKey} style={styles.items_group}>
-            <ThemedText style={styles.items_header}>
-              {formatShortDate(dateKey)}
-            </ThemedText>
-            {groupedTransactions[dateKey].map((transaction) => (
-              <TransactionItem
-                key={transaction._id.toString()}
-                {...transaction}
-              />
-            ))}
-          </View>
-        ))}
+        {Object.keys(groupedTransactions)
+          .sort((a, b) => new Date(b).getTime() - new Date(a).getTime())
+          .map((dateKey) => (
+            <View key={dateKey} style={styles.items_group}>
+              <ThemedText style={styles.items_header}>
+                {formatShortDate(dateKey)}
+              </ThemedText>
+              {groupedTransactions[dateKey].map((transaction) => (
+                <TransactionItem
+                  key={transaction._id.toString()}
+                  {...transaction}
+                />
+              ))}
+            </View>
+          ))}
       </View>
     </View>
   );
@@ -40,7 +42,7 @@ export default TransactionsHistory;
 const styles = StyleSheet.create({
   container: {
     marginTop: 32,
-    marginBottom: 10,
+    marginBottom: 24,
   },
   header: {
     fontSize: 18,

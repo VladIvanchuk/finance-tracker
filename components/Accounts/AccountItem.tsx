@@ -42,7 +42,7 @@ export default AccountItem;
 const styles = StyleSheet.create({
   transactionsContainer: {
     marginTop: 16,
-    paddingBottom: 48,
+    paddingBottom: 100,
     paddingHorizontal: 6,
     gap: 12,
   },

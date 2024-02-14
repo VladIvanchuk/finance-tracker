@@ -85,7 +85,7 @@ const styles = StyleSheet.create({
   info: {
     flexDirection: "row",
     backgroundColor: Colors.tintDark,
-    height: 72,
+    minHeight: 72,
     width: "100%",
     paddingHorizontal: 26,
     borderRadius: 12,
@@ -99,5 +99,5 @@ const styles = StyleSheet.create({
     gap: 4,
   },
   info_title: { fontWeight: "500", fontSize: 16, color: Colors.textSecondary },
-  info_text: { fontWeight: "600", fontSize: 18 },
+  info_text: { fontWeight: "600", fontSize: 18, textAlign: "center" },
 });

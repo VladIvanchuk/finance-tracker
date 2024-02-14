@@ -67,7 +67,10 @@ const OperationForm = ({
       return;
     }
     if (operation.type === "transfer") {
-      if (operation.fromAccountId === null || operation.toAccountId === null) {
+      if (
+        operation.fromAccountId === undefined ||
+        operation.toAccountId === undefined
+      ) {
         showToast(
           "Invalid data",
           "Please select both source and destination accounts.",
@@ -82,7 +85,7 @@ const OperationForm = ({
         setIsFormValidated(false);
         return;
       }
-      if (operation.accountId === null) {
+      if (operation.accountId === undefined) {
         showToast("Invalid data", "Please select an account.", "error");
         setIsFormValidated(false);
         return;
