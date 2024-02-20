@@ -1,15 +1,51 @@
+import { formatShortDate } from "@/utils/formatShortDate";
+import { groupTransactionsByDate } from "@/utils/transactionsUtils";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
-import React from "react";
 import ThemedText from "../ui/ThemedText";
 import TransactionItem from "./TransactionItem";
-import { groupTransactionsByDate } from "@/utils/transactionsUtils";
-import { formatShortDate } from "@/utils/formatShortDate";
 
+import { useMonthContext } from "@/context/MonthContext";
+import { useDatabase } from "@/hooks/useDatabase";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
+import { Transaction } from "@/schemas/Transaction";
+import { ITransaction } from "@/types/TransactionTypes";
+
+interface GroupedTransactions {
+  [key: string]: ITransaction[];
+}
 
 const TransactionsHistory = () => {
-  const { getTransactions } = useTransactionActions();
-  const groupedTransactions = groupTransactionsByDate(getTransactions());
+  const { realm } = useDatabase();
+
+  if (!realm) {
+    throw new Error(
+      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
+    );
+  }
+  const { selectedYear, selectedMonth } = useMonthContext();
+  const { getTransactionsByMonthYear } = useTransactionActions();
+  const [groupedTransactions, setGroupedTransactions] =
+    useState<GroupedTransactions>({});
+
+  useEffect(() => {
+    const updateTransactions = () => {
+      const transactions = getTransactionsByMonthYear(
+        selectedMonth,
+        selectedYear
+      );
+      setGroupedTransactions(groupTransactionsByDate(transactions));
+    };
+
+    const transactions = realm.objects<Transaction>("Transaction");
+    transactions.addListener(updateTransactions);
+
+    updateTransactions();
+
+    return () => {
+      transactions.removeListener(updateTransactions);
+    };
+  }, [selectedMonth, selectedYear, getTransactionsByMonthYear, realm]);
 
   return (
     <View style={styles.container}>

@@ -6,16 +6,20 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import ThemedActionSheet from "../ui/ThemedActionSheet";
 import ThemedText from "../ui/ThemedText";
 import MonthPickerWheels from "./MonthPickerWheels";
+import { useMonthContext } from "@/context/MonthContext";
 
 const MonthPicker = () => {
+  const {
+    selectedYear,
+    selectedMonth,
+    setSelectedMonth,
+    setSelectedYear,
+    currentMonthIndex,
+    currentYear,
+  } = useMonthContext();
+
   const [showPicker, setShowPicker] = useState(false);
   const handleChange = () => setShowPicker(!showPicker);
-
-  const currentMonthIndex = new Date().getMonth();
-  const currentYear = new Date().getFullYear();
-
-  const [selectedMonth, setSelectedMonth] = useState(currentMonthIndex);
-  const [selectedYear, setSelectedYear] = useState(currentYear);
 
   const formattedMonth = monthNames[selectedMonth];
 

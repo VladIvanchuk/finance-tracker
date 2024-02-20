@@ -6,5 +6,6 @@ export const useDatabase = () => {
   if (context === undefined) {
     throw new Error("useDatabase must be used within a DatabaseProvider");
   }
+
   return context;
 };

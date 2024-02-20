@@ -145,10 +145,25 @@ export const useTransactionActions = () => {
     [realm]
   );
 
+  const getTransactionsByMonthYear = useCallback(
+    (month: number, year: number): Transaction[] | [] => {
+      const startOfMonth = new Date(year, month, 1);
+      const endOfMonth = new Date(year, month + 1, 0);
+
+      const transactionsResults = realm
+        .objects(Transaction)
+        .filtered("date >= $0 AND date < $1", startOfMonth, endOfMonth);
+
+      return Array.from(transactionsResults);
+    },
+    [realm]
+  );
+
   return {
     createTransaction,
     deleteTransaction,
     getTransactionById,
     getTransactions,
+    getTransactionsByMonthYear,
   };
 };

@@ -5,10 +5,10 @@ type TransactionGroups = {
 };
 
 export const groupTransactionsByDate = (
-  transactions: ITransaction[],
+  transactions: ITransaction[]
 ): TransactionGroups => {
   return transactions.reduce((groups: TransactionGroups, transaction) => {
-    const dateKey = transaction.date.split("T")[0];
+    const dateKey = transaction.date.toISOString().split("T")[0];
     if (!groups[dateKey]) {
       groups[dateKey] = [];
     }

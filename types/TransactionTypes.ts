@@ -28,7 +28,7 @@ export interface ITransaction {
   currency: CurrencyType;
   description?: string;
   attachment?: string;
-  date: string;
+  date: Date;
   categoryId?: BSON.ObjectId;
   accountId?: BSON.ObjectId;
   fromAccountId?: BSON.ObjectId;
@@ -42,7 +42,7 @@ export interface TransactionData {
   currency: CurrencyType;
   description?: string;
   attachment?: string;
-  date: string;
+  date: Date;
   categoryId?: BSON.ObjectId;
   account?: Account;
   fromAccount?: Account;

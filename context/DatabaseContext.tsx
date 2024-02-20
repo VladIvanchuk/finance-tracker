@@ -1,15 +1,15 @@
-import "react-native-get-random-values";
-import React, { createContext, ReactNode, useEffect } from "react";
-import { useRealm } from "@realm/react";
-import Realm from "realm";
 import { initializeDefaultCategories } from "@/services/databaseInitialization";
+import { useRealm } from "@realm/react";
+import React, { createContext, ReactNode, useEffect } from "react";
+import "react-native-get-random-values";
+import Realm from "realm";
 
 interface DatabaseContextValue {
   realm: Realm | null;
 }
 
 export const DatabaseContext = createContext<DatabaseContextValue | undefined>(
-  undefined,
+  undefined
 );
 
 export const DatabaseProvider = ({ children }: { children: ReactNode }) => {
