@@ -4,9 +4,6 @@ export function formatFullDate(dateString: string): string {
     year: "numeric",
     month: "long",
     day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    hour12: false,
   };
 
   const date = new Date(dateString);

@@ -8,6 +8,7 @@ import ThemedInput from "../ui/ThemedInput";
 import ThemedSelect from "../ui/ThemedSelect";
 import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
+import ChooseDate from "./ChooseDate";
 
 interface NewOperationBodyItemProps {
   id: string;
@@ -80,6 +81,8 @@ const NewOperationBodyItem = ({
       return <ThemedInput placeholder={`Notes`} onChange={onChange} />;
     case "attachment":
       return <Attachment onChange={onChange} />;
+    case "date":
+      return <ChooseDate onChange={onChange} />;
   }
   return null;
 };

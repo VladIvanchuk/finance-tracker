@@ -24,6 +24,10 @@ export const operationFields: OperationItem[] = [
     id: "attachment",
     type: "attachment",
   },
+  {
+    id: "date",
+    type: "date",
+  },
 ];
 export const accountFields: AccountItem[] = [
   {

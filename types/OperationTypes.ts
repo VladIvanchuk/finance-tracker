@@ -38,7 +38,8 @@ export type OperationItemType =
   | "attachment"
   | "fromAccountId"
   | "toAccountId"
-  | "transferAccounts";
+  | "transferAccounts"
+  | "date";
 
 export interface OperationItem {
   id: string;
