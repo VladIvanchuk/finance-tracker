@@ -17,7 +17,7 @@ const NewOperationBody = ({
 }: {
   handleValueChange: (
     type: OperationItemType | AccountItemType,
-    value: string,
+    value: string
   ) => void;
   operationType: OperationType | "account";
   operation: ITransaction | IAccount;
@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
     borderTopRightRadius: 32,
     paddingHorizontal: 4,
     paddingVertical: 28,
-    maxHeight: 440,
+    flex: 1,
   },
   body_item_container: {
     gap: 20,

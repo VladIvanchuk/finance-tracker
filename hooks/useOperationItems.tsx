@@ -17,11 +17,6 @@ const accountTypeItems = mapToSelectItems(accountTypes);
 
 export const operationFields: OperationItem[] = [
   {
-    id: "currency",
-    type: "currency",
-    items: currencyItems,
-  },
-  {
     id: "Description",
     type: "description",
   },
@@ -106,7 +101,7 @@ export const useOperationItems = (operationType: OperationType | "account") => {
         id: "account",
         type: "account",
         items: accountItems,
-      },
+      }
     );
   }
 

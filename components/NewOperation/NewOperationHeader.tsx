@@ -1,10 +1,20 @@
 import Colors from "@/constants/Colors";
+import { currencies } from "@/data/currencies";
 import { IAccount } from "@/types/AccountTypes";
 import { ITransaction } from "@/types/TransactionTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { ActionsheetItem, ActionsheetItemText } from "@gluestack-ui/themed";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, TextInput, View } from "react-native";
+import {
+  ScrollView,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
+import ThemedActionSheet from "../ui/ThemedActionSheet";
 import ThemedText from "../ui/ThemedText";
+import { CurrencyType } from "@/types/OperationTypes";
 
 const NewOperationHeader = ({
   setOperation,
@@ -18,6 +28,8 @@ const NewOperationHeader = ({
   setAccountData?: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {
   const [number, onChangeNumber] = useState("");
+  const [showPicker, setShowPicker] = useState(false);
+  const handleChange = () => setShowPicker(!showPicker);
 
   useEffect(() => {
     if (setOperation) {
@@ -27,6 +39,16 @@ const NewOperationHeader = ({
       setAccountData((prev) => ({ ...prev, balance: parseFloat(number) }));
     }
   }, [number, setOperation]);
+
+  const handleChangeCurrency = (currency: CurrencyType) => {
+    if (setOperation) {
+      setOperation((prev) => ({ ...prev, currency: currency }));
+    }
+    if (setAccountData) {
+      setAccountData((prev) => ({ ...prev, currency: currency }));
+    }
+    handleChange();
+  };
 
   return (
     <View style={styles.header_container}>
@@ -42,14 +64,34 @@ const NewOperationHeader = ({
           keyboardType="numeric"
           placeholderTextColor={Colors.text}
         />
-        <ThemedText style={{ fontWeight: "bold", fontSize: 64 }}>
-          {operation?.currency
-            ? getCurrencySymbol(operation.currency)
-            : accountData?.currency
-              ? getCurrencySymbol(accountData.currency)
-              : null}
-        </ThemedText>
+        <TouchableOpacity onPress={handleChange}>
+          <ThemedText style={{ fontWeight: "bold", fontSize: 64 }}>
+            {operation?.currency
+              ? getCurrencySymbol(operation.currency)
+              : accountData?.currency
+                ? getCurrencySymbol(accountData.currency)
+                : null}
+          </ThemedText>
+        </TouchableOpacity>
       </View>
+      <ThemedActionSheet
+        handleClose={handleChange}
+        showActionSheet={showPicker}
+        maxHeight={500}
+        height={"auto"}
+        actionSheetItems={
+          <ScrollView style={{ width: "100%" }}>
+            {currencies.map((currency) => (
+              <ActionsheetItem
+                key={currency}
+                onPress={() => handleChangeCurrency(currency as CurrencyType)}
+              >
+                <ActionsheetItemText>{currency}</ActionsheetItemText>
+              </ActionsheetItem>
+            ))}
+          </ScrollView>
+        }
+      />
     </View>
   );
 };
@@ -59,10 +101,10 @@ export default NewOperationHeader;
 const styles = StyleSheet.create({
   header_container: {
     justifyContent: "flex-end",
-    flex: 2,
     paddingHorizontal: 24,
     paddingBottom: 16,
     gap: 10,
+    maxHeight: 150,
   },
   input_container: {
     flexDirection: "row",
