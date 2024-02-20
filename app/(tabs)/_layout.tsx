@@ -1,12 +1,11 @@
-import React from "react";
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
+import React from "react";
 import { StyleSheet, View } from "react-native";
 
-import Colors from "@/constants/Colors";
 import TabBarMenu from "@/components/TabBar/TabBarMenu";
 import Header from "@/components/ui/Header";
-import MonthPicker from "@/components/Home/MonthPicker";
+import Colors from "@/constants/Colors";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof Ionicons>["name"];
@@ -31,11 +30,7 @@ export default function TabLayout() {
           name="index"
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
-            header: () => (
-              <Header>
-                <MonthPicker />
-              </Header>
-            ),
+            header: () => <Header title="Home" />,
           }}
         />
         <Tabs.Screen

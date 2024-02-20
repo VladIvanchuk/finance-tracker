@@ -1,4 +1,5 @@
 import Activity from "@/components/Home/Activity";
+import MonthPicker from "@/components/Home/MonthPicker";
 import TotalBalance from "@/components/Home/TotalBalance";
 import TransactionsHistory from "@/components/Home/TransactionsHistory";
 import React, { useRef } from "react";
@@ -9,7 +10,7 @@ const Home = () => {
 
   return (
     <View style={styles.page_container}>
-      <TotalBalance />
+      <TotalBalance scrollY={scrollY} />
       <Animated.ScrollView
         style={styles.scroll_container}
         onScroll={Animated.event(
@@ -18,6 +19,7 @@ const Home = () => {
         )}
         scrollEventThrottle={16}
       >
+        <MonthPicker />
         <Activity />
         <TransactionsHistory />
       </Animated.ScrollView>

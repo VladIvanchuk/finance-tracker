@@ -2,25 +2,22 @@ import Colors from "@/constants/Colors";
 import { useAccountActions } from "@/hooks/useAccountActions";
 import { useDatabase } from "@/hooks/useDatabase";
 import { Transaction } from "@/schemas/Transaction";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import ThemedText from "../ui/ThemedText";
-import { useMonthContext } from "@/context/MonthContext";
 
 const { width } = Dimensions.get("window");
 
-const TotalBalance = () => {
-  const { selectedMonth, selectedYear } = useMonthContext();
-
+const TotalBalance = ({ scrollY }: { scrollY: Animated.Value }) => {
   const [totalBalance, setTotalBalance] = useState("");
 
-  const { getTotalBalanceByMonth } = useAccountActions();
+  const { getTotalBalance } = useAccountActions();
 
   const { realm } = useDatabase();
 
   useEffect(() => {
     const updateBalance = () => {
-      setTotalBalance(getTotalBalanceByMonth(selectedMonth, selectedYear));
+      setTotalBalance(getTotalBalance());
     };
 
     const transactions = realm.objects<Transaction>("Transaction");
@@ -31,9 +28,7 @@ const TotalBalance = () => {
     return () => {
       transactions.removeListener(updateBalance);
     };
-  }, [realm, getTotalBalanceByMonth, selectedMonth, selectedYear]);
-
-  const scrollY = useRef(new Animated.Value(0)).current;
+  }, [realm, getTotalBalance]);
 
   const balanceOpacity = scrollY.interpolate({
     inputRange: [100, 150],
@@ -49,6 +44,7 @@ const TotalBalance = () => {
   const balanceTranslateX = scrollY.interpolate({
     inputRange: [100, 200],
     outputRange: [0, width / 2 - 100],
+
     extrapolate: "clamp",
   });
 
@@ -82,7 +78,6 @@ const styles = StyleSheet.create({
   balance: {
     flexDirection: "row",
     alignItems: "flex-end",
-    gap: 12,
     paddingHorizontal: 14,
   },
   number: { color: Colors.text, fontWeight: "600", fontSize: 32 },

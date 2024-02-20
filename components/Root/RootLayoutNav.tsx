@@ -1,6 +1,6 @@
 import Colors from "@/constants/Colors";
 import { usePopToTop } from "@/hooks/usePopToTop";
-import Providers from "@/lib/providers";
+import Providers from "@/providers/providers";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { Stack } from "expo-router";

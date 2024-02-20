@@ -19,6 +19,7 @@
     "@gluestack-style/react": "^1.0.43",
     "@gluestack-ui/config": "^1.1.1",
     "@gluestack-ui/themed": "^1.1.0",
+    "@react-native-community/datetimepicker": "7.6.1",
     "@react-navigation/native": "^6.0.2",
     "@realm/react": "^0.6.2",
     "@types/realm": "^1.13.0",
