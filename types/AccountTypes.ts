@@ -15,6 +15,7 @@ export type AccountType =
 
 export interface IAccount {
   _id: BSON.ObjectId;
+  createdAt: Date;
   name: string;
   type: AccountType;
   balance: number;
@@ -40,6 +41,7 @@ export interface AccountItem {
 }
 export interface AccountData {
   _id: BSON.ObjectId;
+  createdAt: Date;
   name: string;
   type: AccountType;
   balance: number;

@@ -9,12 +9,6 @@ import { Transaction } from "@/schemas/Transaction";
 export const useAccountActions = () => {
   const { realm } = useDatabase();
 
-  if (!realm) {
-    throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
-    );
-  }
-
   const createAccount = useCallback(
     (accountData: IAccount) => {
       realm.write(() => {
@@ -71,11 +65,92 @@ export const useAccountActions = () => {
     return totalExpense.toFixed(2);
   }, [realm]);
 
+  const getTotalBalanceByMonth = useCallback(
+    (month: number, year: number) => {
+      let totalBalance = 0;
+
+      const startOfMonth = new Date(year, month, 1);
+      const endOfMonth = new Date(year, month + 1, 0);
+
+      const accounts = realm.objects<Account>("Account");
+
+      accounts.forEach((account) => {
+        // Consider the initial balance of the account at the start of the month
+        if (account.createdAt < startOfMonth) {
+          totalBalance += account.balance;
+        }
+
+        const transactions = account.transactions.filtered(
+          "date >= $0 AND date <= $1",
+          startOfMonth,
+          endOfMonth
+        );
+        transactions.forEach((transaction) => {
+          totalBalance += transaction.sum;
+        });
+      });
+
+      return totalBalance.toFixed(2);
+    },
+    [realm]
+  );
+
+  const getTotalIncomeByMonth = useCallback(
+    (month: number, year: number) => {
+      let totalIncome = 0;
+
+      const startOfMonth = new Date(year, month, 1);
+      const endOfMonth = new Date(year, month + 1, 0);
+
+      const transactions = realm
+        .objects<Transaction>("Transaction")
+        .filtered(
+          "date >= $0 AND date < $1 AND type = 'income'",
+          startOfMonth,
+          endOfMonth
+        );
+
+      transactions.forEach((transaction) => {
+        totalIncome += transaction.sum;
+      });
+
+      return totalIncome.toFixed(2);
+    },
+    [realm]
+  );
+
+  const getTotalExpenseByMonth = useCallback(
+    (month: number, year: number) => {
+      let totalExpense = 0;
+
+      const startOfMonth = new Date(year, month, 1);
+      const endOfMonth = new Date(year, month + 1, 0);
+
+      const transactions = realm
+        .objects<Transaction>("Transaction")
+        .filtered(
+          "date >= $0 AND date < $1 AND type = 'expense'",
+          startOfMonth,
+          endOfMonth
+        );
+
+      transactions.forEach((transaction) => {
+        totalExpense += transaction.sum;
+      });
+
+      return totalExpense.toFixed(2);
+    },
+    [realm]
+  );
+
   return {
     createAccount,
     getAccountById,
     getTotalBalance,
     getTotalIncome,
     getTotalExpense,
+    getTotalBalanceByMonth,
+    getTotalIncomeByMonth,
+    getTotalExpenseByMonth,
   };
 };

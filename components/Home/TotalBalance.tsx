@@ -5,25 +5,22 @@ import { Transaction } from "@/schemas/Transaction";
 import React, { useEffect, useRef, useState } from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import ThemedText from "../ui/ThemedText";
+import { useMonthContext } from "@/context/MonthContext";
 
 const { width } = Dimensions.get("window");
 
 const TotalBalance = () => {
+  const { selectedMonth, selectedYear } = useMonthContext();
+
   const [totalBalance, setTotalBalance] = useState("");
 
-  const { getTotalBalance } = useAccountActions();
+  const { getTotalBalanceByMonth } = useAccountActions();
 
   const { realm } = useDatabase();
 
-  if (!realm) {
-    throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
-    );
-  }
-
   useEffect(() => {
     const updateBalance = () => {
-      setTotalBalance(getTotalBalance());
+      setTotalBalance(getTotalBalanceByMonth(selectedMonth, selectedYear));
     };
 
     const transactions = realm.objects<Transaction>("Transaction");
@@ -34,7 +31,7 @@ const TotalBalance = () => {
     return () => {
       transactions.removeListener(updateBalance);
     };
-  }, [realm, getTotalBalance]);
+  }, [realm, getTotalBalanceByMonth, selectedMonth, selectedYear]);
 
   const scrollY = useRef(new Animated.Value(0)).current;
 

@@ -5,6 +5,7 @@ import { Transaction } from "@/schemas/Transaction";
 
 export class Account extends Realm.Object<Account> {
   _id!: BSON.ObjectId;
+  createdAt!: Date;
   name!: string;
   type!: AccountType;
   balance!: number;
@@ -18,6 +19,7 @@ export class Account extends Realm.Object<Account> {
     name: "Account",
     properties: {
       _id: "objectId",
+      createdAt: "date",
       name: "string",
       type: "string",
       balance: "double",

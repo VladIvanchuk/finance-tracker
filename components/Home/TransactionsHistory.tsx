@@ -18,22 +18,14 @@ interface GroupedTransactions {
 const TransactionsHistory = () => {
   const { realm } = useDatabase();
 
-  if (!realm) {
-    throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
-    );
-  }
   const { selectedYear, selectedMonth } = useMonthContext();
-  const { getTransactionsByMonthYear } = useTransactionActions();
+  const { getTransactionsByMonth } = useTransactionActions();
   const [groupedTransactions, setGroupedTransactions] =
     useState<GroupedTransactions>({});
 
   useEffect(() => {
     const updateTransactions = () => {
-      const transactions = getTransactionsByMonthYear(
-        selectedMonth,
-        selectedYear
-      );
+      const transactions = getTransactionsByMonth(selectedMonth, selectedYear);
       setGroupedTransactions(groupTransactionsByDate(transactions));
     };
 
@@ -45,7 +37,7 @@ const TransactionsHistory = () => {
     return () => {
       transactions.removeListener(updateTransactions);
     };
-  }, [selectedMonth, selectedYear, getTransactionsByMonthYear, realm]);
+  }, [selectedMonth, selectedYear, getTransactionsByMonth, realm]);
 
   return (
     <View style={styles.container}>

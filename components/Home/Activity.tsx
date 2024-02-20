@@ -7,24 +7,21 @@ import ThemedText from "../ui/ThemedText";
 import { useAccountActions } from "@/hooks/useAccountActions";
 import { useDatabase } from "@/hooks/useDatabase";
 import { Transaction } from "@/schemas/Transaction";
+import { useMonthContext } from "@/context/MonthContext";
 
 const Activity = () => {
-  const { getTotalExpense, getTotalIncome } = useAccountActions();
+  const { selectedMonth, selectedYear } = useMonthContext();
+
+  const { getTotalExpenseByMonth, getTotalIncomeByMonth } = useAccountActions();
   const [totalIncome, setTotalIncome] = useState("");
   const [totalExpense, setTotalExpense] = useState("");
 
   const { realm } = useDatabase();
 
-  if (!realm) {
-    throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
-    );
-  }
-
   useEffect(() => {
     const updateBalance = () => {
-      setTotalExpense(getTotalExpense());
-      setTotalIncome(getTotalIncome());
+      setTotalExpense(getTotalExpenseByMonth(selectedMonth, selectedYear));
+      setTotalIncome(getTotalIncomeByMonth(selectedMonth, selectedYear));
     };
 
     const transactions = realm.objects<Transaction>("Transaction");
@@ -35,7 +32,13 @@ const Activity = () => {
     return () => {
       transactions.removeListener(updateBalance);
     };
-  }, [realm, getTotalExpense, getTotalIncome]);
+  }, [
+    realm,
+    getTotalExpenseByMonth,
+    getTotalIncomeByMonth,
+    selectedMonth,
+    selectedYear,
+  ]);
 
   return (
     <View style={styles.activity}>

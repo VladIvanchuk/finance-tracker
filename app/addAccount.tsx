@@ -7,6 +7,7 @@ import { BSON } from "realm";
 const addAccount = () => {
   const [accountData, setAccountData] = useState<IAccount>({
     _id: new BSON.ObjectId(),
+    createdAt: new Date(),
     name: "",
     type: "",
     balance: 0,

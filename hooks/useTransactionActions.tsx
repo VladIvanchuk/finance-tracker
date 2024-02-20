@@ -11,12 +11,6 @@ import { useDatabase } from "./useDatabase";
 export const useTransactionActions = () => {
   const { realm } = useDatabase();
 
-  if (!realm) {
-    throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
-    );
-  }
-
   const getTransactions = useCallback((): Transaction[] | [] => {
     const transactionsResults = useQuery(Transaction);
     return Array.from(transactionsResults);
@@ -145,7 +139,7 @@ export const useTransactionActions = () => {
     [realm]
   );
 
-  const getTransactionsByMonthYear = useCallback(
+  const getTransactionsByMonth = useCallback(
     (month: number, year: number): Transaction[] | [] => {
       const startOfMonth = new Date(year, month, 1);
       const endOfMonth = new Date(year, month + 1, 0);
@@ -164,6 +158,6 @@ export const useTransactionActions = () => {
     deleteTransaction,
     getTransactionById,
     getTransactions,
-    getTransactionsByMonthYear,
+    getTransactionsByMonth,
   };
 };
