@@ -10,6 +10,7 @@ import TabBarButton from "./TabBarButton";
 import { palette } from "@/constants/Colors";
 import { ExpenseIcon, IncomeIcon, TransferIcon } from "..";
 import { useRouter } from "expo-router";
+import { OperationType } from "@/types/OperationTypes";
 
 const { width } = Dimensions.get("window");
 
@@ -25,8 +26,8 @@ const TabBarMenu = () => {
     animateButtons(!isMenuVisible);
   };
 
-  const handleLinkPress = (path: string) => {
-    router.navigate({ pathname: path });
+  const handleLinkPress = (path: string, type: OperationType) => {
+    router.navigate({ pathname: path, params: { type: type } });
     handleOverlayPress();
   };
 
@@ -111,21 +112,29 @@ const TabBarMenu = () => {
         <Animated.View
           style={[styles.button, styles.left_button, leftButtonStyle]}
         >
-          <Pressable onPress={() => handleLinkPress("/income")}>
+          <Pressable
+            onPress={() => handleLinkPress("/transactionAdd/[type]", "income")}
+          >
             <IncomeIcon />
           </Pressable>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.middle_button, middleButtonStyle]}
         >
-          <Pressable onPress={() => handleLinkPress("/transfer")}>
+          <Pressable
+            onPress={() =>
+              handleLinkPress("/transactionAdd/[type]", "transfer")
+            }
+          >
             <TransferIcon />
           </Pressable>
         </Animated.View>
         <Animated.View
           style={[styles.button, styles.right_button, rightButtonStyle]}
         >
-          <Pressable onPress={() => handleLinkPress("/expense")}>
+          <Pressable
+            onPress={() => handleLinkPress("/transactionAdd/[type]", "expense")}
+          >
             <ExpenseIcon />
           </Pressable>
         </Animated.View>

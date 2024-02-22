@@ -1,7 +1,6 @@
 import Colors from "@/constants/Colors";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import Providers from "@/providers/providers";
-import { getOperationColor } from "@/utils/defineOperationColor";
 import { HeaderBackButton } from "@react-navigation/elements";
 import { Stack } from "expo-router";
 import React, { useState } from "react";
@@ -26,47 +25,10 @@ const RootLayoutNav = () => {
       >
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen
-          name="income"
+          name="transactionAdd/[type]"
           options={{
-            title: "Income",
-            headerStyle: {
-              backgroundColor: getOperationColor("income"),
-            },
             headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="transfer"
-          options={{
-            title: "Transfer",
-            headerStyle: {
-              backgroundColor: getOperationColor("transfer"),
-            },
-            headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
-            ),
-          }}
-        />
-        <Stack.Screen
-          name="expense"
-          options={{
-            title: "Expense",
-            headerStyle: {
-              backgroundColor: getOperationColor("expense"),
-            },
-            headerLeft: (props) => (
-              <HeaderBackButton
-                {...props}
-                onPress={() => setAlertVisible(true)}
-              />
+              <HeaderBackButton {...props} onPress={popToTop} />
             ),
           }}
         />

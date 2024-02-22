@@ -1,7 +1,9 @@
 import OperationForm from "@/components/NewOperation/OperationForm";
 import { CurrencyType, OperationType } from "@/types/OperationTypes";
 import { ITransaction } from "@/types/TransactionTypes";
-import React, { useState } from "react";
+import { getOperationColor } from "@/utils/defineOperationColor";
+import { useLocalSearchParams, useNavigation } from "expo-router";
+import React, { useLayoutEffect, useState } from "react";
 import { BSON } from "realm";
 
 const getInitialData = (type: OperationType): ITransaction => {
@@ -16,16 +18,10 @@ const getInitialData = (type: OperationType): ITransaction => {
 
   switch (type) {
     case "expense":
-      return {
-        ...baseData,
-        type: "expense",
-        accountId: undefined,
-        categoryId: undefined,
-      };
     case "income":
       return {
         ...baseData,
-        type: "income",
+        type,
         accountId: undefined,
         categoryId: undefined,
       };
@@ -41,10 +37,24 @@ const getInitialData = (type: OperationType): ITransaction => {
   }
 };
 
-const AddOperation = ({ type }: { type: OperationType }) => {
+const AddOperation = () => {
+  const navigation = useNavigation();
+  const { type } = useLocalSearchParams();
   const [operation, setOperation] = useState<ITransaction>(
-    getInitialData(type)
+    getInitialData(type as OperationType)
   );
+
+  useLayoutEffect(() => {
+    if (typeof type === "string") {
+      navigation.setOptions({
+        title: type.charAt(0).toUpperCase() + type.slice(1),
+        headerStyle: {
+          backgroundColor: getOperationColor(type as OperationType),
+        },
+      });
+    }
+  }, [navigation, type]);
+
   return <OperationForm operation={operation} setOperation={setOperation} />;
 };
 
