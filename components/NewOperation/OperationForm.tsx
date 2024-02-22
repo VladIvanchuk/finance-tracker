@@ -2,7 +2,8 @@ import ThemedToast from "@/components/ui/ThemedToast";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { AccountItemType } from "@/types/AccountTypes";
-import { OperationItemType, OperationType } from "@/types/OperationTypes";
+import { OperationItemType } from "@/types/OperationTypes";
+import { ITransaction } from "@/types/TransactionTypes";
 import { getOperationColor } from "@/utils/defineOperationColor";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
@@ -12,14 +13,11 @@ import ThemedAlert from "../ui/ThemedAlert";
 import NewOperationBody from "./NewOperationBody";
 import NewOperationFooter from "./NewOperationFooter";
 import NewOperationHeader from "./NewOperationHeader";
-import { ITransaction } from "@/types/TransactionTypes";
 
 const OperationForm = ({
-  operationType,
   operation,
   setOperation,
 }: {
-  operationType: OperationType;
   operation: ITransaction;
   setOperation: React.Dispatch<React.SetStateAction<ITransaction>>;
 }) => {
@@ -33,7 +31,7 @@ const OperationForm = ({
     (
       title: string,
       message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
+      action?: "warning" | "error" | "success" | "info" | "attention"
     ) => {
       toast.closeAll();
       toast.show({
@@ -49,7 +47,7 @@ const OperationForm = ({
         ),
       });
     },
-    [toast],
+    [toast]
   );
 
   const handleContinue = () => {
@@ -60,8 +58,8 @@ const OperationForm = ({
     ) {
       showToast(
         "Invalid data",
-        `Please enter a valid ${operationType} sum.`,
-        "error",
+        `Please enter a valid ${operation.type} sum.`,
+        "error"
       );
       setIsFormValidated(false);
       return;
@@ -74,7 +72,7 @@ const OperationForm = ({
         showToast(
           "Invalid data",
           "Please select both source and destination accounts.",
-          "error",
+          "error"
         );
         setIsFormValidated(false);
         return;
@@ -96,15 +94,15 @@ const OperationForm = ({
     showToast(
       "Success",
       `${
-        operationType.charAt(0).toUpperCase() + operationType.slice(1)
+        operation.type.charAt(0).toUpperCase() + operation.type.slice(1)
       } added successfully`,
-      "success",
+      "success"
     );
   };
 
   const handleValueChange = (
     type: OperationItemType | AccountItemType,
-    value: string,
+    value: string
   ) => {
     setOperation((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -115,7 +113,7 @@ const OperationForm = ({
   const dynamicStyles = StyleSheet.create({
     screen_wrapper: {
       flex: 1,
-      backgroundColor: getOperationColor(operationType),
+      backgroundColor: getOperationColor(operation.type),
     },
   });
 
@@ -134,7 +132,7 @@ const OperationForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (
@@ -142,7 +140,7 @@ const OperationForm = ({
       <NewOperationHeader setOperation={setOperation} operation={operation} />
       <NewOperationBody
         handleValueChange={handleValueChange}
-        operationType={operationType}
+        operationType={operation.type}
         operation={operation}
       />
       <NewOperationFooter
