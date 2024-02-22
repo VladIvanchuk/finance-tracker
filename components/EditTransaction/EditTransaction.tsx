@@ -1,4 +1,4 @@
-import OperationForm from "@/components/NewOperation/OperationForm";
+import TransactionForm from "@/components/NewTransaction/TransactionForm";
 import { Transaction } from "@/schemas/Transaction";
 import { ITransaction } from "@/types/TransactionTypes";
 import React, { useState } from "react";
@@ -50,12 +50,14 @@ const getInitialData = (data: Transaction): ITransaction => {
   return baseData;
 };
 
-const EditOperation = ({ data }: { data: Transaction }) => {
-  const [operation, setOperation] = useState<ITransaction>(
+const EditTransaction = ({ data }: { data: Transaction }) => {
+  const [operation, setTransaction] = useState<ITransaction>(
     getInitialData(data)
   );
 
-  return <OperationForm operation={operation} setOperation={setOperation} />;
+  return (
+    <TransactionForm operation={operation} setTransaction={setTransaction} />
+  );
 };
 
-export default EditOperation;
+export default EditTransaction;

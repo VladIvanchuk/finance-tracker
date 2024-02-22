@@ -1,5 +1,5 @@
 import { Transaction } from "@/schemas/Transaction";
-import { OperationItemType } from "@/types/OperationTypes";
+import { TransactionItemType } from "@/types/TransactionTypes";
 import { ObjectId } from "bson";
 import React from "react";
 import { StyleSheet, View } from "react-native";
@@ -7,7 +7,7 @@ import TransferAccountsIcon from "../Icons/transferAccounts";
 import ThemedSelect from "../ui/ThemedSelect";
 
 interface TransferAccountsProps {
-  onChange: (value: string, type?: OperationItemType) => void;
+  onChange: (value: string, type?: TransactionItemType) => void;
   items?: { label: string; value: string | ObjectId }[];
   operation: Partial<Transaction>;
 }
@@ -33,7 +33,7 @@ const TransferAccounts = ({
         onChange={handleFromAccountChange}
         disabled={
           operation.type === "transfer"
-            ? operation.toAccountId?.toString()
+            ? operation.toAccount?._id.toString()
             : undefined
         }
       />
@@ -46,7 +46,7 @@ const TransferAccounts = ({
         onChange={handleToAccountChange}
         disabled={
           operation.type === "transfer"
-            ? operation.fromAccountId?.toString()
+            ? operation.fromAccount?._id.toString()
             : undefined
         }
       />

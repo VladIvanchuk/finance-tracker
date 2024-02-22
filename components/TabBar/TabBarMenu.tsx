@@ -10,7 +10,7 @@ import TabBarButton from "./TabBarButton";
 import { palette } from "@/constants/Colors";
 import { ExpenseIcon, IncomeIcon, TransferIcon } from "..";
 import { useRouter } from "expo-router";
-import { OperationType } from "@/types/OperationTypes";
+import { TransactionType } from "@/types/TransactionTypes";
 
 const { width } = Dimensions.get("window");
 
@@ -26,7 +26,7 @@ const TabBarMenu = () => {
     animateButtons(!isMenuVisible);
   };
 
-  const handleLinkPress = (path: string, type: OperationType) => {
+  const handleLinkPress = (path: string, type: TransactionType) => {
     router.navigate({ pathname: path, params: { type: type } });
     handleOverlayPress();
   };

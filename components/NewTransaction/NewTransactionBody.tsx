@@ -1,45 +1,45 @@
 import Colors from "@/constants/Colors";
-import { useOperationItems } from "@/hooks/useOperationItems";
+import { useTransactionItems } from "@/hooks/useTransactionItems";
 import { AccountItem, AccountItemType, IAccount } from "@/types/AccountTypes";
 import {
-  OperationItem,
-  OperationItemType,
-  OperationType,
-} from "@/types/OperationTypes";
+  TransactionItem,
+  TransactionItemType,
+  TransactionType,
+} from "@/types/TransactionTypes";
 import { ITransaction } from "@/types/TransactionTypes";
 import { FlatList, StyleSheet, View } from "react-native";
-import NewOperationBodyItem from "./NewOperationBodyItem";
+import NewTransactionBodyItem from "./NewTransactionBodyItem";
 
-const NewOperationBody = ({
+const NewTransactionBody = ({
   operationType,
   operation,
   handleValueChange,
 }: {
   handleValueChange: (
-    type: OperationItemType | AccountItemType,
+    type: TransactionItemType | AccountItemType,
     value: string
   ) => void;
-  operationType: OperationType | "account";
+  operationType: TransactionType | "account";
   operation: ITransaction | IAccount;
 }) => {
-  const renderItem = ({ item }: { item: OperationItem | AccountItem }) => (
-    <NewOperationBodyItem
+  const renderItem = ({ item }: { item: TransactionItem | AccountItem }) => (
+    <NewTransactionBodyItem
       id={item.id}
       type={item.type}
       items={item.items}
       operation={operation}
-      onChange={(value: string, type?: OperationItemType | AccountItemType) =>
+      onChange={(value: string, type?: TransactionItemType | AccountItemType) =>
         handleValueChange(type ?? item.type, value)
       }
     />
   );
 
-  const currentOperationItems = useOperationItems(operationType);
+  const currentTransactionItems = useTransactionItems(operationType);
 
   return (
     <View style={styles.body_container}>
       <FlatList
-        data={currentOperationItems}
+        data={currentTransactionItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.body_item_container}
@@ -48,7 +48,7 @@ const NewOperationBody = ({
   );
 };
 
-export default NewOperationBody;
+export default NewTransactionBody;
 
 const styles = StyleSheet.create({
   body_container: {

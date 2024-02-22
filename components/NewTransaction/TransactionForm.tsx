@@ -2,24 +2,24 @@ import ThemedToast from "@/components/ui/ThemedToast";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { AccountItemType } from "@/types/AccountTypes";
-import { OperationItemType } from "@/types/OperationTypes";
+import { TransactionItemType } from "@/types/TransactionTypes";
 import { ITransaction } from "@/types/TransactionTypes";
-import { getOperationColor } from "@/utils/defineOperationColor";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
 import ThemedAlert from "../ui/ThemedAlert";
-import NewOperationBody from "./NewOperationBody";
-import NewOperationFooter from "./NewOperationFooter";
-import NewOperationHeader from "./NewOperationHeader";
+import NewTransactionBody from "./NewTransactionBody";
+import NewTransactionFooter from "./NewTransactionFooter";
+import NewTransactionHeader from "./NewTransactionHeader";
+import { getTransactionColor } from "@/utils/getTransactionColor";
 
-const OperationForm = ({
+const TransactionForm = ({
   operation,
-  setOperation,
+  setTransaction,
 }: {
   operation: ITransaction;
-  setOperation: React.Dispatch<React.SetStateAction<ITransaction>>;
+  setTransaction: React.Dispatch<React.SetStateAction<ITransaction>>;
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
@@ -101,10 +101,10 @@ const OperationForm = ({
   };
 
   const handleValueChange = (
-    type: OperationItemType | AccountItemType,
+    type: TransactionItemType | AccountItemType,
     value: string
   ) => {
-    setOperation((prev) => {
+    setTransaction((prev) => {
       const key = type === "account" ? "accountId" : type;
       return { ...prev, [key]: value };
     });
@@ -113,7 +113,7 @@ const OperationForm = ({
   const dynamicStyles = StyleSheet.create({
     screen_wrapper: {
       flex: 1,
-      backgroundColor: getOperationColor(operation.type),
+      backgroundColor: getTransactionColor(operation.type),
     },
   });
 
@@ -137,13 +137,16 @@ const OperationForm = ({
 
   return (
     <View style={dynamicStyles.screen_wrapper}>
-      <NewOperationHeader setOperation={setOperation} operation={operation} />
-      <NewOperationBody
+      <NewTransactionHeader
+        setTransaction={setTransaction}
+        operation={operation}
+      />
+      <NewTransactionBody
         handleValueChange={handleValueChange}
         operationType={operation.type}
         operation={operation}
       />
-      <NewOperationFooter
+      <NewTransactionFooter
         onPress={handleContinue}
         isDisabled={!isFormValidated}
       />
@@ -162,4 +165,4 @@ const OperationForm = ({
   );
 };
 
-export default OperationForm;
+export default TransactionForm;

@@ -1,7 +1,7 @@
 import { palette } from "@/constants/Colors";
-import { OperationType } from "@/types/OperationTypes";
+import { TransactionType } from "@/types/TransactionTypes";
 
-export const getOperationColor = (type: OperationType) => {
+export const getTransactionColor = (type: TransactionType) => {
   switch (type) {
     case "expense":
       return palette.red[100];

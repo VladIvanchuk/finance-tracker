@@ -1,14 +1,14 @@
 import Colors from "@/constants/Colors";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
-import { OperationItemType } from "@/types/OperationTypes";
+import { TransactionItemType } from "@/types/TransactionTypes";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
-import NewOperationBody from "../NewOperation/NewOperationBody";
-import NewOperationFooter from "../NewOperation/NewOperationFooter";
-import NewOperationHeader from "../NewOperation/NewOperationHeader";
+import NewTransactionBody from "../NewTransaction/NewTransactionBody";
+import NewTransactionFooter from "../NewTransaction/NewTransactionFooter";
+import NewTransactionHeader from "../NewTransaction/NewTransactionHeader";
 import ThemedAlert from "../ui/ThemedAlert";
 import ThemedToast from "../ui/ThemedToast";
 import { useAccountActions } from "@/hooks/useAccountActions";
@@ -56,7 +56,7 @@ const AccountForm = ({
   };
 
   const handleValueChange = (
-    type: OperationItemType | AccountItemType,
+    type: TransactionItemType | AccountItemType,
     value: string
   ) => {
     setAccountData((prev) => {
@@ -92,16 +92,16 @@ const AccountForm = ({
 
   return (
     <View style={dynamicStyles.screen_wrapper}>
-      <NewOperationHeader
+      <NewTransactionHeader
         accountData={accountData}
         setAccountData={setAccountData}
       />
-      <NewOperationBody
+      <NewTransactionBody
         operationType="account"
         handleValueChange={handleValueChange}
         operation={accountData}
       />
-      <NewOperationFooter
+      <NewTransactionFooter
         onPress={handleContinue}
         isDisabled={!isFormValidated}
       />

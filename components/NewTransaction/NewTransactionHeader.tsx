@@ -14,16 +14,16 @@ import {
 } from "react-native";
 import ThemedActionSheet from "../ui/ThemedActionSheet";
 import ThemedText from "../ui/ThemedText";
-import { CurrencyType } from "@/types/OperationTypes";
+import { CurrencyType } from "@/types/TransactionTypes";
 
-const NewOperationHeader = ({
-  setOperation,
+const NewTransactionHeader = ({
+  setTransaction,
   operation,
   accountData,
   setAccountData,
 }: {
   operation?: ITransaction;
-  setOperation?: React.Dispatch<React.SetStateAction<ITransaction>>;
+  setTransaction?: React.Dispatch<React.SetStateAction<ITransaction>>;
   accountData?: IAccount;
   setAccountData?: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {
@@ -32,17 +32,17 @@ const NewOperationHeader = ({
   const handleChange = () => setShowPicker(!showPicker);
 
   useEffect(() => {
-    if (setOperation) {
-      setOperation((prev) => ({ ...prev, sum: parseFloat(number) }));
+    if (setTransaction) {
+      setTransaction((prev) => ({ ...prev, sum: parseFloat(number) }));
     }
     if (setAccountData) {
       setAccountData((prev) => ({ ...prev, balance: parseFloat(number) }));
     }
-  }, [number, setOperation]);
+  }, [number, setTransaction]);
 
   const handleChangeCurrency = (currency: CurrencyType) => {
-    if (setOperation) {
-      setOperation((prev) => ({ ...prev, currency: currency }));
+    if (setTransaction) {
+      setTransaction((prev) => ({ ...prev, currency: currency }));
     }
     if (setAccountData) {
       setAccountData((prev) => ({ ...prev, currency: currency }));
@@ -96,7 +96,7 @@ const NewOperationHeader = ({
   );
 };
 
-export default NewOperationHeader;
+export default NewTransactionHeader;
 
 const styles = StyleSheet.create({
   header_container: {

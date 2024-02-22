@@ -1,10 +1,10 @@
-import { OperationType } from "@/types/OperationTypes";
+import { TransactionType } from "@/types/TransactionTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
 
 export class Category extends Realm.Object<Category> {
   _id!: BSON.ObjectId;
   name!: string;
-  type!: OperationType;
+  type!: TransactionType;
   iconKey!: string;
 
   static schema: ObjectSchema = {

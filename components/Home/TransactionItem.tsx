@@ -1,7 +1,7 @@
 import Colors from "@/constants/Colors";
 import { useCategoryActions } from "@/hooks/useCategoryActions";
 import { IconNameType, TransactionData } from "@/types/TransactionTypes";
-import { getOperationColor } from "@/utils/defineOperationColor";
+import { getTransactionColor } from "@/utils/getTransactionColor";
 import { formatShortDate } from "@/utils/formatShortDate";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { Link } from "expo-router";
@@ -26,7 +26,7 @@ const TransactionItem = ({
   fromAccount,
   toAccount,
 }: TransactionData & TransactionItemProps) => {
-  const operationColor = getOperationColor(type);
+  const operationColor = getTransactionColor(type);
   const currencySymbol = getCurrencySymbol(currency);
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
@@ -66,7 +66,7 @@ const TransactionItem = ({
               {formattedSum} {currencySymbol}
             </ThemedText>
             <ThemedText style={styles.account}>
-              {useDate ? formatShortDate(date) : accountName}
+              {useDate ? formatShortDate(date.toISOString()) : accountName}
             </ThemedText>
           </View>
         </View>

@@ -1,5 +1,5 @@
 import { AccountType } from "@/types/AccountTypes";
-import { CurrencyType } from "@/types/OperationTypes";
+import { CurrencyType } from "@/types/TransactionTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
 import { Transaction } from "@/schemas/Transaction";
 

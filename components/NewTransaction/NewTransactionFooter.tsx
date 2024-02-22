@@ -3,7 +3,7 @@ import React from "react";
 import Colors, { palette } from "@/constants/Colors";
 import ThemedButton from "../ui/ThemedButton";
 
-const NewOperationFooter = ({
+const NewTransactionFooter = ({
   onPress,
   isDisabled,
 }: {
@@ -21,7 +21,7 @@ const NewOperationFooter = ({
   );
 };
 
-export default NewOperationFooter;
+export default NewTransactionFooter;
 
 const styles = StyleSheet.create({
   footer_container: {

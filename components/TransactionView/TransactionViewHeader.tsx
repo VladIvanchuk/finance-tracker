@@ -1,4 +1,4 @@
-import { getOperationColor } from "@/utils/defineOperationColor";
+import { getTransactionColor } from "@/utils/getTransactionColor";
 import { StyleSheet, View } from "react-native";
 import ThemedText from "@/components/ui/ThemedText";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
@@ -26,13 +26,15 @@ const TransactionViewHeader = ({
       <View
         style={[
           styles.header_container,
-          { backgroundColor: getOperationColor(type) },
+          { backgroundColor: getTransactionColor(type) },
         ]}
       >
         <ThemedText style={styles.sum}>
           {sum} {getCurrencySymbol(currency)}
         </ThemedText>
-        <ThemedText style={styles.date}>{formatFullDate(date)}</ThemedText>
+        <ThemedText style={styles.date}>
+          {formatFullDate(date.toISOString())}
+        </ThemedText>
         <View style={styles.info}>
           <View style={styles.info_item}>
             <ThemedText style={styles.info_title}>Type</ThemedText>

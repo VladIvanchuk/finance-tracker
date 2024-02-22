@@ -6,8 +6,8 @@ import ThemedText from "@/components/ui/ThemedText";
 import Colors from "@/constants/Colors";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
-import { OperationType } from "@/types/OperationTypes";
-import { getOperationColor } from "@/utils/defineOperationColor";
+import { TransactionType } from "@/types/TransactionTypes";
+import { getTransactionColor } from "@/utils/getTransactionColor";
 import { MaterialIcons } from "@expo/vector-icons";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
@@ -30,7 +30,9 @@ const TransactionView = () => {
   useLayoutEffect(() => {
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: getOperationColor(transaction?.type as OperationType),
+        backgroundColor: getTransactionColor(
+          transaction?.type as TransactionType
+        ),
       },
       headerRight: () => (
         <TouchableOpacity

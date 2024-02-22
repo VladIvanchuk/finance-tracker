@@ -1,5 +1,5 @@
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
-import { OperationItemType } from "@/types/OperationTypes";
+import { TransactionItemType } from "@/types/TransactionTypes";
 import { ITransaction } from "@/types/TransactionTypes";
 import { ObjectId } from "bson";
 import { router } from "expo-router";
@@ -10,20 +10,20 @@ import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
 import ChooseDate from "./ChooseDate";
 
-interface NewOperationBodyItemProps {
+interface NewTransactionBodyItemProps {
   id: string;
-  type: OperationItemType | AccountItemType;
+  type: TransactionItemType | AccountItemType;
   items?: { label: string; value: string | ObjectId }[];
-  onChange: (value: string, type?: OperationItemType) => void;
+  onChange: (value: string, type?: TransactionItemType) => void;
   operation: ITransaction | IAccount;
 }
 
-const NewOperationBodyItem = ({
+const NewTransactionBodyItem = ({
   type,
   onChange,
   items,
   operation,
-}: NewOperationBodyItemProps) => {
+}: NewTransactionBodyItemProps) => {
   if (operation.type === "transfer" && type === "transferAccounts") {
     return (
       <TransferAccounts
@@ -87,4 +87,4 @@ const NewOperationBodyItem = ({
   return null;
 };
 
-export default NewOperationBodyItem;
+export default NewTransactionBodyItem;

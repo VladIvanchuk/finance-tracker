@@ -1,10 +1,10 @@
-import { CurrencyType, OperationType } from "@/types/OperationTypes";
+import { CurrencyType, TransactionType } from "@/types/TransactionTypes";
 import Realm, { BSON, ObjectSchema } from "realm";
 import { Account } from "./Account";
 
 export class Transaction extends Realm.Object<Transaction> {
   _id!: BSON.ObjectId;
-  type!: OperationType;
+  type!: TransactionType;
   sum!: number;
   currency!: CurrencyType;
   description?: string;

@@ -3,7 +3,7 @@ import { currencies } from "@/data/currencies";
 import { Account } from "@/schemas/Account";
 import { Category } from "@/schemas/Category";
 import { AccountItem } from "@/types/AccountTypes";
-import { OperationItem, OperationType } from "@/types/OperationTypes";
+import { TransactionItem, TransactionType } from "@/types/TransactionTypes";
 import { useQuery } from "@realm/react";
 
 const mapToSelectItems = (items: string[]) =>
@@ -15,7 +15,7 @@ const mapToSelectItems = (items: string[]) =>
 const currencyItems = mapToSelectItems(currencies);
 const accountTypeItems = mapToSelectItems(accountTypes);
 
-export const operationFields: OperationItem[] = [
+export const operationFields: TransactionItem[] = [
   {
     id: "Description",
     type: "description",
@@ -58,7 +58,9 @@ export const accountFields: AccountItem[] = [
   },
 ];
 
-export const useOperationItems = (operationType: OperationType | "account") => {
+export const useTransactionItems = (
+  operationType: TransactionType | "account"
+) => {
   const accounts = useQuery(Account);
   const categories = useQuery(Category);
 
