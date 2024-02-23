@@ -5,13 +5,14 @@ import { useObject } from "@realm/react";
 import { ObjectId } from "bson";
 import { Category } from "@/schemas/Category";
 import { ICategory } from "@/types/CategoryTypes";
+import { getPrimaryKey } from "@/utils/getPrimaryKey";
 
 export const useCategoryActions = () => {
   const { realm } = useDatabase();
 
   if (!realm) {
     throw new Error(
-      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider.",
+      "No Realm instance found. Make sure your component is wrapped in a DatabaseProvider."
     );
   }
 
@@ -21,17 +22,14 @@ export const useCategoryActions = () => {
         realm.create(Category, accountData);
       });
     },
-    [realm],
+    [realm]
   );
 
   const getCategoryById = useCallback(
     (id: string | ObjectId): ICategory | null => {
-      const primaryKey = Array.isArray(id)
-        ? new ObjectId(id[0])
-        : new ObjectId(id);
-      return useObject(Category, primaryKey);
+      return useObject(Category, getPrimaryKey(id));
     },
-    [realm],
+    [realm]
   );
 
   return { createCategory, getCategoryById };

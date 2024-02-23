@@ -41,9 +41,9 @@ const RootLayoutNav = () => {
           }}
         />
         <Stack.Screen
-          name="editAccount"
+          name="addAccount"
           options={{
-            title: "Edit Account",
+            title: "Add Account",
             headerStyle: {
               backgroundColor: Colors.tintDark,
             },
@@ -56,9 +56,9 @@ const RootLayoutNav = () => {
           }}
         />
         <Stack.Screen
-          name="addAccount"
+          name="accountEdit/[id]"
           options={{
-            title: "Add Account",
+            title: "Edit Account",
             headerStyle: {
               backgroundColor: Colors.tintDark,
             },

@@ -8,6 +8,7 @@ import "react-native-get-random-values";
 import { BSON } from "realm";
 import { useDatabase } from "./useDatabase";
 import { Category } from "@/schemas/Category";
+import { getPrimaryKey } from "@/utils/getPrimaryKey";
 
 export const useTransactionActions = () => {
   const { realm } = useDatabase();
@@ -102,12 +103,9 @@ export const useTransactionActions = () => {
 
   const deleteTransaction = useCallback(
     (id: string | string[] | ObjectId) => {
-      const primaryKey = Array.isArray(id)
-        ? new ObjectId(id[0])
-        : new ObjectId(id);
       const toDelete = realm
         .objects(Transaction)
-        .filtered("_id == $0", primaryKey);
+        .filtered("_id == $0", getPrimaryKey(id));
 
       realm.write(() => {
         if (toDelete.length > 0) {
@@ -141,10 +139,7 @@ export const useTransactionActions = () => {
 
   const getTransactionById = useCallback(
     (id: string | string[] | ObjectId): Transaction | null => {
-      const primaryKey = Array.isArray(id)
-        ? new ObjectId(id[0])
-        : new ObjectId(id);
-      return realm.objectForPrimaryKey(Transaction, primaryKey);
+      return realm.objectForPrimaryKey(Transaction, getPrimaryKey(id));
     },
     [realm]
   );

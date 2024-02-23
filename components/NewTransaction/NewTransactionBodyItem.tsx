@@ -99,13 +99,49 @@ const NewTransactionBodyItem = ({
       }
       return null;
     case "name":
-      return <ThemedInput placeholder={`Account name`} onChange={onChange} />;
+      if ("name" in operation) {
+        return (
+          <ThemedInput
+            placeholder={`Account name`}
+            onChange={onChange}
+            defaultValue={operation.name}
+          />
+        );
+      }
+      return null;
     case "bankName":
-      return <ThemedInput placeholder={`Bank name`} onChange={onChange} />;
+      if ("bankName" in operation) {
+        return (
+          <ThemedInput
+            placeholder={`Bank name`}
+            onChange={onChange}
+            defaultValue={operation.bankName}
+          />
+        );
+      }
+      return null;
     case "accountNumber":
-      return <ThemedInput placeholder={`Account number`} onChange={onChange} />;
+      if ("accountNumber" in operation) {
+        return (
+          <ThemedInput
+            placeholder={`Account number`}
+            onChange={onChange}
+            defaultValue={operation.accountNumber}
+          />
+        );
+      }
+      return null;
     case "notes":
-      return <ThemedInput placeholder={`Notes`} onChange={onChange} />;
+      if ("notes" in operation) {
+        return (
+          <ThemedInput
+            placeholder={`Notes`}
+            onChange={onChange}
+            defaultValue={operation.notes}
+          />
+        );
+      }
+      return null;
     case "attachment":
       return <Attachment onChange={onChange} />;
     case "date":

@@ -1,5 +1,3 @@
-import { StyleSheet } from "react-native";
-import React, { ReactElement } from "react";
 import {
   AlertDialog,
   AlertDialogBackdrop,
@@ -9,12 +7,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   ButtonGroup,
-  ButtonText,
   CloseIcon,
   Heading,
   Icon,
   Text,
 } from "@gluestack-ui/themed";
+import React, { ReactElement } from "react";
 import ThemedButton from "./ThemedButton";
 
 type ThemedAlertType = "delete" | "exit" | "info";
@@ -100,5 +98,3 @@ const ThemedAlert = ({
 };
 
 export default ThemedAlert;
-
-const styles = StyleSheet.create({});
