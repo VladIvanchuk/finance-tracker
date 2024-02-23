@@ -32,7 +32,7 @@ const TransactionForm = ({
     (
       title: string,
       message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
+      action?: "warning" | "error" | "success" | "info" | "attention"
     ) => {
       toast.closeAll();
       toast.show({
@@ -48,7 +48,7 @@ const TransactionForm = ({
         ),
       });
     },
-    [toast],
+    [toast]
   );
 
   const handleContinue = () => {
@@ -60,7 +60,7 @@ const TransactionForm = ({
       showToast(
         "Invalid data",
         `Please enter a valid ${operation.type} sum.`,
-        "error",
+        "error"
       );
       setIsFormValidated(false);
       return;
@@ -73,7 +73,7 @@ const TransactionForm = ({
         showToast(
           "Invalid data",
           "Please select both source and destination accounts.",
-          "error",
+          "error"
         );
         setIsFormValidated(false);
         return;
@@ -98,14 +98,14 @@ const TransactionForm = ({
       "Success",
       `${
         operation.type.charAt(0).toUpperCase() + operation.type.slice(1)
-      } added successfully`,
-      "success",
+      } ${type === "create" ? "created" : "edited"} successfully`,
+      "success"
     );
   };
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string,
+    value: string
   ) => {
     setTransaction((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -135,7 +135,7 @@ const TransactionForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

@@ -14,9 +14,11 @@ import ThemedToast from "../ui/ThemedToast";
 import { useAccountActions } from "@/hooks/useAccountActions";
 
 const AccountForm = ({
+  type = "create",
   accountData,
   setAccountData,
 }: {
+  type?: "edit" | "create";
   accountData: IAccount;
   setAccountData: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {
@@ -24,13 +26,13 @@ const AccountForm = ({
   const [isFormValidated, setIsFormValidated] = useState(true);
   const popToTop = usePopToTop();
   const toast = useToast();
-  const { createAccount } = useAccountActions();
+  const { createAccount, editAccount } = useAccountActions();
 
   const showToast = useCallback(
     (
       title: string,
       message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
+      action?: "warning" | "error" | "success" | "info" | "attention"
     ) => {
       toast.closeAll();
       toast.show({
@@ -46,18 +48,22 @@ const AccountForm = ({
         ),
       });
     },
-    [toast],
+    [toast]
   );
 
   const handleContinue = () => {
-    createAccount(accountData);
+    type === "create" ? createAccount(accountData) : editAccount(accountData);
     popToTop();
-    showToast("Success", `Account added successfully`, "success");
+    showToast(
+      "Success",
+      `Account ${type === "create" ? "created" : "edited"} successfully`,
+      "success"
+    );
   };
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string,
+    value: string
   ) => {
     setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -87,7 +93,7 @@ const AccountForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

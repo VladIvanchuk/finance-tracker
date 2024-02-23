@@ -22,7 +22,11 @@ const AccountAdd = () => {
   const [accountData, setAccountData] = useState<IAccount>(accountInfo);
 
   return (
-    <AccountForm accountData={accountData} setAccountData={setAccountData} />
+    <AccountForm
+      type="edit"
+      accountData={accountData}
+      setAccountData={setAccountData}
+    />
   );
 };
 
