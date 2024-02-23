@@ -33,22 +33,13 @@ const NewTransactionBodyItem = ({
       />
     );
   }
-  let accountName;
-  let categoryName;
+  let account;
+  let category;
 
   switch (type) {
-    case "currency":
-      return (
-        <ThemedSelect
-          placeholder={`Select ${type}`}
-          items={items}
-          onChange={onChange}
-          defaultValue={operation.currency}
-        />
-      );
     case "categoryId":
       if ("category" in operation && operation.category) {
-        categoryName = operation.category.name;
+        category = operation.category;
       }
       return (
         <ThemedSelect
@@ -56,13 +47,14 @@ const NewTransactionBodyItem = ({
           items={items}
           onChange={onChange}
           addButtonAction={() => router.replace("/addAccount")}
-          defaultValue={categoryName}
+          selectedValue={category?._id.toString()}
+          initialLabel={category?.name.toString()}
         />
       );
 
     case "account":
       if ("account" in operation && operation.account) {
-        accountName = operation.account.name;
+        account = operation.account;
       }
 
       return (
@@ -71,7 +63,8 @@ const NewTransactionBodyItem = ({
           items={items}
           onChange={onChange}
           addButtonAction={() => router.replace("/addAccount")}
-          defaultValue={accountName}
+          selectedValue={account?._id.toString()}
+          initialLabel={account?.name.toString()}
         />
       );
     case "type":
@@ -81,7 +74,6 @@ const NewTransactionBodyItem = ({
             placeholder={`Select ${type}`}
             items={items}
             onChange={onChange}
-            addButtonAction={() => router.replace("/addAccount")}
             defaultValue={operation.type}
           />
         );

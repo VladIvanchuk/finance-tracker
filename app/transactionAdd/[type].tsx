@@ -1,9 +1,13 @@
 import TransactionForm from "@/components/NewTransaction/TransactionForm";
-import { CurrencyType, TransactionType } from "@/types/TransactionTypes";
-import { ITransaction } from "@/types/TransactionTypes";
+import {
+  CurrencyType,
+  ITransaction,
+  TransactionType,
+} from "@/types/TransactionTypes";
 import { getTransactionColor } from "@/utils/getTransactionColor";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
+import "react-native-get-random-values";
 import { BSON } from "realm";
 
 const getInitialData = (type: TransactionType): ITransaction => {
@@ -41,7 +45,7 @@ const AddTransaction = () => {
   const navigation = useNavigation();
   const { type } = useLocalSearchParams();
   const [operation, setTransaction] = useState<ITransaction>(
-    getInitialData(type as TransactionType)
+    getInitialData(type as TransactionType),
   );
 
   useLayoutEffect(() => {

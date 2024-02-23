@@ -16,7 +16,13 @@ const EditTransaction = () => {
     throw new Error("Transaction not found");
   }
 
-  const [operation, setTransaction] = useState<ITransaction>(transaction);
+  const [operation, setTransaction] = useState<ITransaction>({
+    ...transaction,
+    accountId: transaction.account?._id,
+    categoryId: transaction.category?._id,
+    fromAccountId: transaction.fromAccount?._id,
+    toAccountId: transaction.toAccount?._id,
+  });
 
   useLayoutEffect(() => {
     if (transaction) {
@@ -25,7 +31,7 @@ const EditTransaction = () => {
           transaction.type.charAt(0).toUpperCase() + transaction.type.slice(1),
         headerStyle: {
           backgroundColor: getTransactionColor(
-            transaction.type as TransactionType
+            transaction.type as TransactionType,
           ),
         },
       });

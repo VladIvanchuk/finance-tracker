@@ -56,7 +56,7 @@ const MonthPicker = () => {
   return (
     <View style={styles.wrapper}>
       <TouchableOpacity onPress={handlePrevMonth}>
-        <FontAwesome5 name="arrow-circle-left" size={26} color={Colors.text} />
+        <FontAwesome5 name="arrow-circle-left" size={24} color={Colors.text} />
       </TouchableOpacity>
       <TouchableOpacity onPress={handleChange} style={styles.container}>
         <ThemedText>
@@ -80,7 +80,7 @@ const MonthPicker = () => {
         />
       </TouchableOpacity>
       <TouchableOpacity onPress={handleNextMonth}>
-        <FontAwesome5 name="arrow-circle-right" size={26} color={Colors.text} />
+        <FontAwesome5 name="arrow-circle-right" size={24} color={Colors.text} />
       </TouchableOpacity>
     </View>
   );

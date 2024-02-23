@@ -1,5 +1,4 @@
 import { accountTypes } from "@/data/accountTypes";
-import { currencies } from "@/data/currencies";
 import { Account } from "@/schemas/Account";
 import { Category } from "@/schemas/Category";
 import { AccountItem } from "@/types/AccountTypes";
@@ -12,7 +11,6 @@ const mapToSelectItems = (items: string[]) =>
     value: item,
   }));
 
-const currencyItems = mapToSelectItems(currencies);
 const accountTypeItems = mapToSelectItems(accountTypes);
 
 export const operationFields: TransactionItem[] = [
@@ -35,11 +33,6 @@ export const accountFields: AccountItem[] = [
     type: "name",
   },
   {
-    id: "currency",
-    type: "currency",
-    items: currencyItems,
-  },
-  {
     id: "type",
     type: "type",
     items: accountTypeItems,
@@ -59,7 +52,7 @@ export const accountFields: AccountItem[] = [
 ];
 
 export const useTransactionItems = (
-  operationType: TransactionType | "account"
+  operationType: TransactionType | "account",
 ) => {
   const accounts = useQuery(Account);
   const categories = useQuery(Category);
@@ -107,7 +100,7 @@ export const useTransactionItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      }
+      },
     );
   }
 

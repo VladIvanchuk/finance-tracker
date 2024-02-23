@@ -1,14 +1,15 @@
-import { Account } from "@/schemas/Account";
 import { Transaction } from "@/schemas/Transaction";
 import { ITransaction } from "@/types/TransactionTypes";
 import { useQuery } from "@realm/react";
 import { ObjectId } from "bson";
 import { useCallback } from "react";
 import "react-native-get-random-values";
-import { BSON } from "realm";
 import { useDatabase } from "./useDatabase";
-import { Category } from "@/schemas/Category";
 import { getPrimaryKey } from "@/utils/getPrimaryKey";
+import {
+  handleIncomeExpenseOperation,
+  handleTransferOperation,
+} from "@/services/transactionCreateService";
 
 export const useTransactionActions = () => {
   const { realm } = useDatabase();
@@ -21,85 +22,41 @@ export const useTransactionActions = () => {
   const createTransaction = useCallback(
     (operation: ITransaction) => {
       realm.write(() => {
-        if (operation.type === "income" || operation.type === "expense") {
-          handleIncomeExpenseOperation(operation);
-        } else if (operation.type === "transfer") {
-          handleTransferOperation(operation);
-        } else {
-          throw new Error("Invalid operation type");
+        switch (operation.type) {
+          case "income":
+          case "expense":
+            handleIncomeExpenseOperation(realm, operation);
+            break;
+          case "transfer":
+            handleTransferOperation(realm, operation);
+            break;
+          default:
+            throw new Error("Invalid operation type");
         }
       });
     },
-    [realm]
+    [realm],
   );
 
-  function handleIncomeExpenseOperation(operation: ITransaction) {
-    const accountId = new BSON.ObjectId(operation.accountId);
-    const categoryId = new BSON.ObjectId(operation.categoryId);
-    const account = realm.objectForPrimaryKey<Account>("Account", accountId);
-    const category = realm.objectForPrimaryKey<Category>(
-      "Category",
-      categoryId
-    );
-    if (!account) {
-      throw new Error("Account not found");
-    }
-    if (!category) {
-      throw new Error("Category not found");
-    }
-
-    const transactionData = {
-      ...operation,
-      account: account,
-      category: category,
-    };
-
-    const transaction = realm.create(
-      "Transaction",
-      transactionData as Partial<Transaction>
-    );
-    account.transactions.push(transaction);
-    if (operation.type === "income") {
-      account.balance += operation.sum;
-    } else if (operation.type === "expense") {
-      account.balance -= operation.sum;
-    }
-  }
-
-  function handleTransferOperation(operation: ITransaction) {
-    const fromAccountId = new BSON.ObjectId(operation.fromAccountId);
-    const toAccountId = new BSON.ObjectId(operation.toAccountId);
-    const fromAccount = realm.objectForPrimaryKey<Account>(
-      "Account",
-      fromAccountId
-    );
-    const toAccount = realm.objectForPrimaryKey<Account>(
-      "Account",
-      toAccountId
-    );
-
-    if (!fromAccount || !toAccount) {
-      throw new Error("FromAccount or ToAccount not found");
-    }
-
-    const transactionData = {
-      ...operation,
-      fromAccount: fromAccount,
-      toAccount: toAccount,
-    };
-
-    const transaction = realm.create(
-      "Transaction",
-      transactionData as Partial<Transaction>
-    );
-    fromAccount.transactions.push(transaction);
-    toAccount.transactions.push(transaction);
-    if (fromAccount.balance < operation.sum) {
-      throw new Error("Insufficient balance in FromAccount");
-    }
-    fromAccount.balance -= operation.sum;
-    toAccount.balance += operation.sum;
-  }
+  const editTransaction = useCallback(
+    (updatedOperation: ITransaction) => {
+      deleteTransaction(updatedOperation._id);
+      realm.write(() => {
+        switch (updatedOperation.type) {
+          case "income":
+          case "expense":
+            handleIncomeExpenseOperation(realm, updatedOperation);
+            break;
+          case "transfer":
+            handleTransferOperation(realm, updatedOperation);
+            break;
+          default:
+            throw new Error("Invalid operation type");
+        }
+      });
+    },
+    [realm],
+  );
 
   const deleteTransaction = useCallback(
     (id: string | string[] | ObjectId) => {
@@ -134,14 +91,14 @@ export const useTransactionActions = () => {
         }
       });
     },
-    [realm]
+    [realm],
   );
 
   const getTransactionById = useCallback(
     (id: string | string[] | ObjectId): Transaction | null => {
       return realm.objectForPrimaryKey(Transaction, getPrimaryKey(id));
     },
-    [realm]
+    [realm],
   );
 
   const getTransactionsByMonth = useCallback(
@@ -155,11 +112,12 @@ export const useTransactionActions = () => {
 
       return Array.from(transactionsResults);
     },
-    [realm]
+    [realm],
   );
 
   return {
     createTransaction,
+    editTransaction,
     deleteTransaction,
     getTransactionById,
     getTransactions,

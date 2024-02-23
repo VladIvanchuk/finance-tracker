@@ -32,7 +32,7 @@ const TransactionView = () => {
     navigation.setOptions({
       headerStyle: {
         backgroundColor: getTransactionColor(
-          transaction?.type as TransactionType
+          transaction?.type as TransactionType,
         ),
       },
       headerRight: () => (

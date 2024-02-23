@@ -9,7 +9,7 @@ interface DatabaseContextValue {
 }
 
 export const DatabaseContext = createContext<DatabaseContextValue | undefined>(
-  undefined
+  undefined,
 );
 
 export const DatabaseProvider = ({ children }: { children: ReactNode }) => {

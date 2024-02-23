@@ -13,7 +13,7 @@ interface ChooseDateProps {
 
 const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
   const [selectedDate, setSelectedDate] = useState<Date>(
-    defaultValue ?? new Date()
+    defaultValue ?? new Date(),
   );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -34,7 +34,7 @@ const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
       setSelectedDate(date);
       onChange(format(date, "yyyy-MM-dd")); // Use ISO 8601 date format without time
     },
-    [hideDatePicker, onChange]
+    [hideDatePicker, onChange],
   );
 
   const handleDateChange = useCallback(
@@ -42,12 +42,12 @@ const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
       setSelectedDate(date);
       onChange(format(date, "yyyy-MM-dd")); // Use ISO 8601 date format without time
     },
-    [onChange]
+    [onChange],
   );
 
   const isActiveDate = useCallback(
     (date: Date) => isSameDay(date, selectedDate),
-    [selectedDate]
+    [selectedDate],
   );
 
   return (

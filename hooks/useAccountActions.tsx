@@ -16,14 +16,14 @@ export const useAccountActions = () => {
         realm.create<Account>("Account", accountData);
       });
     },
-    [realm]
+    [realm],
   );
 
   const getAccountById = useCallback(
     (id: string | string[] | ObjectId): Account | null => {
       return realm.objectForPrimaryKey(Account, getPrimaryKey(id));
     },
-    [realm]
+    [realm],
   );
 
   const deleteAccount = useCallback(
@@ -50,7 +50,7 @@ export const useAccountActions = () => {
         }
       });
     },
-    [realm]
+    [realm],
   );
 
   const getTotalBalance = useCallback(() => {
@@ -105,7 +105,7 @@ export const useAccountActions = () => {
         .filtered(
           "date >= $0 AND date < $1 AND type = 'income'",
           startOfMonth,
-          endOfMonth
+          endOfMonth,
         );
 
       transactions.forEach((transaction) => {
@@ -114,7 +114,7 @@ export const useAccountActions = () => {
 
       return totalIncome.toFixed(2);
     },
-    [realm]
+    [realm],
   );
 
   const getTotalExpenseByMonth = useCallback(
@@ -129,7 +129,7 @@ export const useAccountActions = () => {
         .filtered(
           "date >= $0 AND date < $1 AND type = 'expense'",
           startOfMonth,
-          endOfMonth
+          endOfMonth,
         );
 
       transactions.forEach((transaction) => {
@@ -138,7 +138,7 @@ export const useAccountActions = () => {
 
       return totalExpense.toFixed(2);
     },
-    [realm]
+    [realm],
   );
 
   return {

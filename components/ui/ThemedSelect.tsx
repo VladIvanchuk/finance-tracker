@@ -30,6 +30,8 @@ interface ThemedSelectProps {
   addButtonAction?: () => void;
   defaultValue?: string;
   disabled?: string;
+  selectedValue?: string;
+  initialLabel?: string;
 }
 
 const ThemedSelect = ({
@@ -40,12 +42,16 @@ const ThemedSelect = ({
   addButtonAction,
   defaultValue,
   disabled,
+  selectedValue,
+  initialLabel,
 }: ThemedSelectProps) => {
   return (
     <Select
       onValueChange={onChange}
       defaultValue={defaultValue}
       style={{ flex: 1 }}
+      selectedValue={selectedValue}
+      initialLabel={initialLabel}
     >
       <SelectTrigger variant="outline" size="xl" style={styles.input_container}>
         <SelectInput placeholder={placeholder} style={styles.input} />

@@ -11,7 +11,7 @@ interface MonthContextValue {
 }
 
 export const MonthContext = createContext<MonthContextValue | undefined>(
-  undefined
+  undefined,
 );
 
 export const MonthProvider = ({ children }: { children: ReactNode }) => {
