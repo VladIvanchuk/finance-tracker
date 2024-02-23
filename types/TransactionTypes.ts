@@ -1,4 +1,5 @@
 import { Account } from "@/schemas/Account";
+import { Category } from "@/schemas/Category";
 import { ObjectId } from "bson";
 import "react-native-get-random-values";
 import { BSON } from "realm";
@@ -43,7 +44,7 @@ export interface TransactionData {
   description?: string;
   attachment?: string;
   date: Date;
-  categoryId?: BSON.ObjectId;
+  category?: Category;
   account?: Account;
   fromAccount?: Account;
   toAccount?: Account;

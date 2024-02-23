@@ -27,7 +27,7 @@ const NewTransactionHeader = ({
   accountData?: IAccount;
   setAccountData?: React.Dispatch<React.SetStateAction<IAccount>>;
 }) => {
-  const [number, onChangeNumber] = useState("");
+  const [number, onChangeNumber] = useState(operation?.sum.toString() ?? "0");
   const [showPicker, setShowPicker] = useState(false);
   const handleChange = () => setShowPicker(!showPicker);
 

@@ -1,9 +1,8 @@
 import Colors from "@/constants/Colors";
-import { useCategoryActions } from "@/hooks/useCategoryActions";
 import { IconNameType, TransactionData } from "@/types/TransactionTypes";
-import { getTransactionColor } from "@/utils/getTransactionColor";
 import { formatShortDate } from "@/utils/formatShortDate";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
+import { getTransactionColor } from "@/utils/getTransactionColor";
 import { Link } from "expo-router";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
@@ -22,17 +21,15 @@ const TransactionItem = ({
   date,
   useDate,
   account,
-  categoryId,
+  category,
   fromAccount,
   toAccount,
 }: TransactionData & TransactionItemProps) => {
-  const operationColor = getTransactionColor(type);
+  const transactionColor = getTransactionColor(type);
   const currencySymbol = getCurrencySymbol(currency);
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
   const formattedSum = `${sign} ${sum.toFixed(2)}`;
-  const { getCategoryById } = useCategoryActions();
 
-  const category = categoryId ? getCategoryById(categoryId) : null;
   const icon = type === "transfer" ? "money-bill-transfer" : category?.iconKey;
   const name = type === "transfer" ? "Transfer" : category?.name;
   const accountName =
@@ -62,7 +59,7 @@ const TransactionItem = ({
             </ThemedText>
           </View>
           <View style={[styles.textContainer, styles.alignRight]}>
-            <ThemedText style={[styles.price, { color: operationColor }]}>
+            <ThemedText style={[styles.price, { color: transactionColor }]}>
               {formattedSum} {currencySymbol}
             </ThemedText>
             <ThemedText style={styles.account}>

@@ -33,6 +33,14 @@ const RootLayoutNav = () => {
           }}
         />
         <Stack.Screen
+          name="transactionEdit/[id]"
+          options={{
+            headerLeft: (props) => (
+              <HeaderBackButton {...props} onPress={popToTop} />
+            ),
+          }}
+        />
+        <Stack.Screen
           name="editAccount"
           options={{
             title: "Edit Account",

@@ -1,24 +1,24 @@
+import Colors from "@/constants/Colors";
+import { Input, InputField } from "@gluestack-ui/themed";
+import React from "react";
 import {
   KeyboardAvoidingView,
   KeyboardTypeOptions,
   StyleSheet,
-  Text,
-  View,
 } from "react-native";
-import React from "react";
-import Colors from "@/constants/Colors";
-import { Input, InputField } from "@gluestack-ui/themed";
 
 interface ThemedInputProps {
   placeholder?: string;
   onChange: (value: string) => void;
   keyboardType?: KeyboardTypeOptions;
+  defaultValue?: string;
 }
 
 const ThemedInput = ({
   placeholder,
   onChange,
   keyboardType,
+  defaultValue,
 }: ThemedInputProps) => {
   return (
     <KeyboardAvoidingView>
@@ -35,6 +35,7 @@ const ThemedInput = ({
           style={styles.input}
           onChangeText={onChange}
           keyboardType={keyboardType}
+          defaultValue={defaultValue}
         />
       </Input>
     </KeyboardAvoidingView>

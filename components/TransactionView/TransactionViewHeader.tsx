@@ -5,7 +5,6 @@ import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import Colors from "@/constants/Colors";
 import { formatFullDate } from "@/utils/formatFullDate";
 import { capitalizeFirstLetter } from "@/utils/capitalizeFirstLetter";
-import { useCategoryActions } from "@/hooks/useCategoryActions";
 import { TransactionData } from "@/types/TransactionTypes";
 
 interface TransactionViewHeaderProps {}
@@ -15,12 +14,11 @@ const TransactionViewHeader = ({
   sum,
   currency,
   date,
-  categoryId,
+  category,
   account,
+  fromAccount,
+  toAccount,
 }: TransactionViewHeaderProps & TransactionData) => {
-  const { getCategoryById } = useCategoryActions();
-  const category = categoryId ? getCategoryById(categoryId) : null;
-
   return (
     <>
       <View
@@ -48,10 +46,28 @@ const TransactionViewHeader = ({
               <ThemedText style={styles.info_text}>{category.name}</ThemedText>
             </View>
           )}
-          <View style={styles.info_item}>
-            <ThemedText style={styles.info_title}>Account</ThemedText>
-            <ThemedText style={styles.info_text}>{account?.name}</ThemedText>
-          </View>
+          {account && (
+            <View style={styles.info_item}>
+              <ThemedText style={styles.info_title}>Account</ThemedText>
+              <ThemedText style={styles.info_text}>{account?.name}</ThemedText>
+            </View>
+          )}
+          {fromAccount && (
+            <View style={styles.info_item}>
+              <ThemedText style={styles.info_title}>From</ThemedText>
+              <ThemedText style={styles.info_text}>
+                {fromAccount?.name}
+              </ThemedText>
+            </View>
+          )}
+          {toAccount && (
+            <View style={styles.info_item}>
+              <ThemedText style={styles.info_title}>To</ThemedText>
+              <ThemedText style={styles.info_text}>
+                {toAccount?.name}
+              </ThemedText>
+            </View>
+          )}
         </View>
       </View>
     </>

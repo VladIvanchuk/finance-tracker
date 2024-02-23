@@ -2,8 +2,8 @@ import ThemedToast from "@/components/ui/ThemedToast";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { AccountItemType } from "@/types/AccountTypes";
-import { TransactionItemType } from "@/types/TransactionTypes";
-import { ITransaction } from "@/types/TransactionTypes";
+import { ITransaction, TransactionItemType } from "@/types/TransactionTypes";
+import { getTransactionColor } from "@/utils/getTransactionColor";
 import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
@@ -12,12 +12,13 @@ import ThemedAlert from "../ui/ThemedAlert";
 import NewTransactionBody from "./NewTransactionBody";
 import NewTransactionFooter from "./NewTransactionFooter";
 import NewTransactionHeader from "./NewTransactionHeader";
-import { getTransactionColor } from "@/utils/getTransactionColor";
 
 const TransactionForm = ({
+  type = "create",
   operation,
   setTransaction,
 }: {
+  type?: "edit" | "create";
   operation: ITransaction;
   setTransaction: React.Dispatch<React.SetStateAction<ITransaction>>;
 }) => {
@@ -89,7 +90,7 @@ const TransactionForm = ({
         return;
       }
     }
-    createTransaction(operation);
+    type === "create" && createTransaction(operation);
     popToTop();
     showToast(
       "Success",

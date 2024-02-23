@@ -4,7 +4,7 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 import { useEffect } from "react";
 
-import RootLayoutNav from "@/components/Root/RootLayoutNav";
+import RootLayoutNav from "@/components/Nav/RootLayoutNav";
 
 export { ErrorBoundary } from "expo-router";
 

@@ -7,6 +7,7 @@ import { useCallback } from "react";
 import "react-native-get-random-values";
 import { BSON } from "realm";
 import { useDatabase } from "./useDatabase";
+import { Category } from "@/schemas/Category";
 
 export const useTransactionActions = () => {
   const { realm } = useDatabase();
@@ -19,69 +20,10 @@ export const useTransactionActions = () => {
   const createTransaction = useCallback(
     (operation: ITransaction) => {
       realm.write(() => {
-        let transactionData: Partial<Transaction>;
-
         if (operation.type === "income" || operation.type === "expense") {
-          const accountId = new BSON.ObjectId(operation.accountId);
-          const account = realm.objectForPrimaryKey<Account>(
-            "Account",
-            accountId
-          );
-          if (!account) {
-            throw new Error("Account not found");
-          }
-
-          transactionData = {
-            ...operation,
-            account: account ? account : undefined,
-            categoryId: operation.categoryId
-              ? new BSON.ObjectId(operation.categoryId)
-              : undefined,
-          };
-
-          const transaction = realm.create(
-            "Transaction",
-            transactionData as Partial<Transaction>
-          );
-          account.transactions.push(transaction);
-          if (operation.type === "income") {
-            account.balance += operation.sum;
-          } else if (operation.type === "expense") {
-            account.balance -= operation.sum;
-          }
+          handleIncomeExpenseOperation(operation);
         } else if (operation.type === "transfer") {
-          const fromAccountId = new BSON.ObjectId(operation.fromAccountId);
-          const toAccountId = new BSON.ObjectId(operation.toAccountId);
-          const fromAccount = realm.objectForPrimaryKey<Account>(
-            "Account",
-            fromAccountId
-          );
-          const toAccount = realm.objectForPrimaryKey<Account>(
-            "Account",
-            toAccountId
-          );
-
-          if (!fromAccount || !toAccount) {
-            throw new Error("FromAccount or ToAccount not found");
-          }
-
-          transactionData = {
-            ...operation,
-            fromAccount: fromAccount ? fromAccount : undefined,
-            toAccount: toAccount ? toAccount : undefined,
-          };
-
-          const transaction = realm.create(
-            "Transaction",
-            transactionData as Partial<Transaction>
-          );
-          fromAccount.transactions.push(transaction);
-          toAccount.transactions.push(transaction);
-          if (fromAccount.balance < operation.sum) {
-            throw new Error("Insufficient balance in FromAccount");
-          }
-          fromAccount.balance -= operation.sum;
-          toAccount.balance += operation.sum;
+          handleTransferOperation(operation);
         } else {
           throw new Error("Invalid operation type");
         }
@@ -89,6 +31,74 @@ export const useTransactionActions = () => {
     },
     [realm]
   );
+
+  function handleIncomeExpenseOperation(operation: ITransaction) {
+    const accountId = new BSON.ObjectId(operation.accountId);
+    const categoryId = new BSON.ObjectId(operation.categoryId);
+    const account = realm.objectForPrimaryKey<Account>("Account", accountId);
+    const category = realm.objectForPrimaryKey<Category>(
+      "Category",
+      categoryId
+    );
+    if (!account) {
+      throw new Error("Account not found");
+    }
+    if (!category) {
+      throw new Error("Category not found");
+    }
+
+    const transactionData = {
+      ...operation,
+      account: account,
+      category: category,
+    };
+
+    const transaction = realm.create(
+      "Transaction",
+      transactionData as Partial<Transaction>
+    );
+    account.transactions.push(transaction);
+    if (operation.type === "income") {
+      account.balance += operation.sum;
+    } else if (operation.type === "expense") {
+      account.balance -= operation.sum;
+    }
+  }
+
+  function handleTransferOperation(operation: ITransaction) {
+    const fromAccountId = new BSON.ObjectId(operation.fromAccountId);
+    const toAccountId = new BSON.ObjectId(operation.toAccountId);
+    const fromAccount = realm.objectForPrimaryKey<Account>(
+      "Account",
+      fromAccountId
+    );
+    const toAccount = realm.objectForPrimaryKey<Account>(
+      "Account",
+      toAccountId
+    );
+
+    if (!fromAccount || !toAccount) {
+      throw new Error("FromAccount or ToAccount not found");
+    }
+
+    const transactionData = {
+      ...operation,
+      fromAccount: fromAccount,
+      toAccount: toAccount,
+    };
+
+    const transaction = realm.create(
+      "Transaction",
+      transactionData as Partial<Transaction>
+    );
+    fromAccount.transactions.push(transaction);
+    toAccount.transactions.push(transaction);
+    if (fromAccount.balance < operation.sum) {
+      throw new Error("Insufficient balance in FromAccount");
+    }
+    fromAccount.balance -= operation.sum;
+    toAccount.balance += operation.sum;
+  }
 
   const deleteTransaction = useCallback(
     (id: string | string[] | ObjectId) => {

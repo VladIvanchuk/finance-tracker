@@ -9,7 +9,7 @@ import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { TransactionType } from "@/types/TransactionTypes";
 import { getTransactionColor } from "@/utils/getTransactionColor";
 import { MaterialIcons } from "@expo/vector-icons";
-import { useLocalSearchParams, useNavigation } from "expo-router";
+import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 
@@ -19,6 +19,7 @@ const TransactionView = () => {
   const popToTop = usePopToTop();
   const navigation = useNavigation();
   const { id } = useLocalSearchParams();
+  const router = useRouter();
 
   const transaction = getTransactionById(id);
 
@@ -53,12 +54,19 @@ const TransactionView = () => {
     );
   }
 
+  const handleEdit = (path: string) => {
+    router.navigate({ pathname: path, params: { id: transaction._id } });
+  };
+
   return (
     <View style={styles.container}>
       <TransactionViewHeader {...transaction} />
       <TransactionViewBody {...transaction} />
       <View style={styles.footer}>
-        <ThemedButton label="Edit" />
+        <ThemedButton
+          label="Edit"
+          onPress={() => handleEdit("/transactionEdit/[id]")}
+        />
       </View>
       <ThemedAlert
         visible={alertVisible}

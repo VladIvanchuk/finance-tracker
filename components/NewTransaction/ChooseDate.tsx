@@ -8,10 +8,13 @@ import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 interface ChooseDateProps {
   onChange: (value: string) => void;
+  defaultValue?: Date;
 }
 
-const ChooseDate = ({ onChange }: ChooseDateProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
+  const [selectedDate, setSelectedDate] = useState<Date>(
+    defaultValue ?? new Date()
+  );
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
   const today = useMemo(() => new Date(), []);

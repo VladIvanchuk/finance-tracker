@@ -1,5 +1,5 @@
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
-import { TransactionItemType } from "@/types/TransactionTypes";
+import { TransactionData, TransactionItemType } from "@/types/TransactionTypes";
 import { ITransaction } from "@/types/TransactionTypes";
 import { ObjectId } from "bson";
 import { router } from "expo-router";
@@ -15,7 +15,7 @@ interface NewTransactionBodyItemProps {
   type: TransactionItemType | AccountItemType;
   items?: { label: string; value: string | ObjectId }[];
   onChange: (value: string, type?: TransactionItemType) => void;
-  operation: ITransaction | IAccount;
+  operation: TransactionData | IAccount | ITransaction;
 }
 
 const NewTransactionBodyItem = ({
@@ -33,6 +33,8 @@ const NewTransactionBodyItem = ({
       />
     );
   }
+  let accountName;
+  let categoryName;
 
   switch (type) {
     case "currency":
@@ -45,34 +47,59 @@ const NewTransactionBodyItem = ({
         />
       );
     case "categoryId":
+      if ("category" in operation && operation.category) {
+        categoryName = operation.category.name;
+      }
       return (
         <ThemedSelect
           placeholder={`Select category`}
           items={items}
           onChange={onChange}
           addButtonAction={() => router.replace("/addAccount")}
+          defaultValue={categoryName}
         />
       );
+
     case "account":
-    case "type":
+      if ("account" in operation && operation.account) {
+        accountName = operation.account.name;
+      }
+
       return (
         <ThemedSelect
           placeholder={`Select ${type}`}
           items={items}
           onChange={onChange}
           addButtonAction={() => router.replace("/addAccount")}
+          defaultValue={accountName}
         />
       );
+    case "type":
+      if ("type" in operation) {
+        return (
+          <ThemedSelect
+            placeholder={`Select ${type}`}
+            items={items}
+            onChange={onChange}
+            addButtonAction={() => router.replace("/addAccount")}
+            defaultValue={operation.type}
+          />
+        );
+      }
+      return null;
     case "description":
-      return <ThemedInput placeholder={`Description`} onChange={onChange} />;
+      if ("description" in operation) {
+        return (
+          <ThemedInput
+            placeholder={`Description`}
+            onChange={onChange}
+            defaultValue={operation.description}
+          />
+        );
+      }
+      return null;
     case "name":
-      return (
-        <ThemedInput
-          placeholder={`Account name`}
-          onChange={onChange}
-          keyboardType="numeric"
-        />
-      );
+      return <ThemedInput placeholder={`Account name`} onChange={onChange} />;
     case "bankName":
       return <ThemedInput placeholder={`Bank name`} onChange={onChange} />;
     case "accountNumber":
@@ -82,7 +109,10 @@ const NewTransactionBodyItem = ({
     case "attachment":
       return <Attachment onChange={onChange} />;
     case "date":
-      return <ChooseDate onChange={onChange} />;
+      if ("date" in operation) {
+        return <ChooseDate onChange={onChange} defaultValue={operation.date} />;
+      }
+      return null;
   }
   return null;
 };

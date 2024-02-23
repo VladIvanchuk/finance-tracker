@@ -1,10 +1,9 @@
+import { Button, ButtonText, View } from "@gluestack-ui/themed";
 import React from "react";
-import { ButtonText, Button, View } from "@gluestack-ui/themed";
-import { Link } from "expo-router";
 
 interface ThemedButtonProps {
   label: string;
-  style?: {};
+  style?: object;
   size?: "xs" | "sm" | "md" | "lg" | "xl";
   bg?: string;
   onPress?: () => void;

@@ -8,7 +8,7 @@ const NewTransactionFooter = ({
   isDisabled,
 }: {
   onPress: () => void;
-  isDisabled: any;
+  isDisabled: boolean;
 }) => {
   return (
     <View style={styles.footer_container}>
