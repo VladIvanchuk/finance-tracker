@@ -51,7 +51,7 @@ export const accountFields: AccountItem[] = [
 
 export const useTransactionItems = (
   operationType: TransactionType | "account",
-  operation: ITransaction | IAccount
+  operation: ITransaction | IAccount,
 ) => {
   const accounts = useQuery(Account);
   const categories = useQuery(Category);
@@ -112,7 +112,7 @@ export const useTransactionItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      }
+      },
     );
   }
 

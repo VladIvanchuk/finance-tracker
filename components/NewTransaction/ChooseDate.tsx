@@ -32,7 +32,7 @@ const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
     (date: Date) => {
       hideDatePicker();
       setSelectedDate(date);
-      onChange(format(date, "yyyy-MM-dd")); // Use ISO 8601 date format without time
+      onChange(format(date, "yyyy-MM-dd"));
     },
     [hideDatePicker, onChange],
   );
@@ -40,7 +40,7 @@ const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
   const handleDateChange = useCallback(
     (date: Date) => {
       setSelectedDate(date);
-      onChange(format(date, "yyyy-MM-dd")); // Use ISO 8601 date format without time
+      onChange(format(date, "yyyy-MM-dd"));
     },
     [onChange],
   );
@@ -99,6 +99,7 @@ const ChooseDate = ({ onChange, defaultValue }: ChooseDateProps) => {
         onConfirm={handleConfirm}
         onCancel={hideDatePicker}
         date={selectedDate}
+        themeVariant="dark"
       />
     </View>
   );

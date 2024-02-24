@@ -17,7 +17,7 @@ const NewTransactionBody = ({
 }: {
   handleValueChange: (
     type: TransactionItemType | AccountItemType,
-    value: string
+    value: string,
   ) => void;
   operationType: TransactionType | "account";
   operation: ITransaction | IAccount;
