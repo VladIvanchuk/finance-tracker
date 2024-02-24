@@ -83,9 +83,6 @@ const AccountCard = ({
             <ActionsheetItem onPress={() => setAlertVisible(true)}>
               <ActionsheetItemText>Delete</ActionsheetItemText>
             </ActionsheetItem>
-            <ActionsheetItem>
-              <ActionsheetItemText>Hide</ActionsheetItemText>
-            </ActionsheetItem>
           </ScrollView>
         }
       />

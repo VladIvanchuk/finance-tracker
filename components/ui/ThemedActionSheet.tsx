@@ -21,7 +21,7 @@ const ThemedActionSheet = ({
   handleClose,
   showActionSheet,
   actionSheetItems,
-  maxHeight = 180,
+  maxHeight = 130,
   height,
 }: ThemedActionSheetProps) => {
   const contentStyle: StyleProp<ViewStyle> = {

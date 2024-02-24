@@ -4,7 +4,7 @@ import React from "react";
 const Statistics = () => {
   return (
     <View>
-      <Text>Statistics</Text>
+      <Text></Text>
     </View>
   );
 };
