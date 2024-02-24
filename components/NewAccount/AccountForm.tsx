@@ -1,5 +1,6 @@
 import Colors from "@/constants/Colors";
-import { usePopToTop } from "@/hooks/usePopToTop";
+import { useAccountActions } from "@/hooks/useAccountActions";
+import { useGoBack } from "@/hooks/useGoBack";
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
 import { TransactionItemType } from "@/types/TransactionTypes";
 import { useToast } from "@gluestack-ui/themed";
@@ -11,7 +12,6 @@ import NewTransactionFooter from "../NewTransaction/NewTransactionFooter";
 import NewTransactionHeader from "../NewTransaction/NewTransactionHeader";
 import ThemedAlert from "../ui/ThemedAlert";
 import ThemedToast from "../ui/ThemedToast";
-import { useAccountActions } from "@/hooks/useAccountActions";
 
 const AccountForm = ({
   type = "create",
@@ -24,7 +24,7 @@ const AccountForm = ({
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
-  const popToTop = usePopToTop();
+  const goBack = useGoBack();
   const toast = useToast();
   const { createAccount, editAccount } = useAccountActions();
 
@@ -52,8 +52,18 @@ const AccountForm = ({
   );
 
   const handleContinue = () => {
+    if (!accountData.name) {
+      showToast("Invalid data", "Please select an account name.", "error");
+      setIsFormValidated(false);
+      return;
+    }
+    if (!accountData.type) {
+      showToast("Invalid data", "Please select an account type.", "error");
+      setIsFormValidated(false);
+      return;
+    }
     type === "create" ? createAccount(accountData) : editAccount(accountData);
-    popToTop();
+    goBack();
     showToast(
       "Success",
       `Account ${type === "create" ? "created" : "edited"} successfully`,
@@ -119,7 +129,7 @@ const AccountForm = ({
         type="exit"
         action={() => {
           setAlertVisible(false);
-          popToTop();
+          goBack();
         }}
       />
     </View>

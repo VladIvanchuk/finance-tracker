@@ -17,7 +17,7 @@ const NewTransactionBody = ({
 }: {
   handleValueChange: (
     type: TransactionItemType | AccountItemType,
-    value: string,
+    value: string
   ) => void;
   operationType: TransactionType | "account";
   operation: ITransaction | IAccount;
@@ -34,7 +34,7 @@ const NewTransactionBody = ({
     />
   );
 
-  const currentTransactionItems = useTransactionItems(operationType);
+  const currentTransactionItems = useTransactionItems(operationType, operation);
 
   return (
     <View style={styles.body_container}>

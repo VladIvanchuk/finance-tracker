@@ -52,6 +52,7 @@ const Attachment = ({ onChange }: AttachmentProps) => {
       <ThemedActionSheet
         handleClose={handleChange}
         showActionSheet={showActionSheet}
+        maxHeight={180}
         actionSheetItems={
           <AttachmentItems
             handleClose={handleChange}

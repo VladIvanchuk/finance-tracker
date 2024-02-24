@@ -1,9 +1,8 @@
-import { StyleSheet, View, Text, Pressable, Alert } from "react-native";
-import React, { useState } from "react";
-import { Entypo } from "@expo/vector-icons";
-import { Ionicons } from "@expo/vector-icons";
 import { palette } from "@/constants/Colors";
+import { Entypo, Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import React, { useState } from "react";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 import ThemedAlert from "../ui/ThemedAlert";
 
 interface AttachmentItemsProps {

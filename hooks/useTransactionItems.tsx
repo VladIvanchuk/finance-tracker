@@ -1,8 +1,12 @@
 import { accountTypes } from "@/data/accountTypes";
 import { Account } from "@/schemas/Account";
 import { Category } from "@/schemas/Category";
-import { AccountItem } from "@/types/AccountTypes";
-import { TransactionItem, TransactionType } from "@/types/TransactionTypes";
+import { AccountItem, IAccount } from "@/types/AccountTypes";
+import {
+  ITransaction,
+  TransactionItem,
+  TransactionType,
+} from "@/types/TransactionTypes";
 import { useQuery } from "@realm/react";
 
 const mapToSelectItems = (items: string[]) =>
@@ -12,6 +16,8 @@ const mapToSelectItems = (items: string[]) =>
   }));
 
 const accountTypeItems = mapToSelectItems(accountTypes);
+
+type Item = TransactionItem | AccountItem;
 
 export const operationFields: TransactionItem[] = [
   {
@@ -38,14 +44,6 @@ export const accountFields: AccountItem[] = [
     items: accountTypeItems,
   },
   {
-    id: "bankName",
-    type: "bankName",
-  },
-  {
-    id: "accountNumber",
-    type: "accountNumber",
-  },
-  {
     id: "notes",
     type: "notes",
   },
@@ -53,6 +51,7 @@ export const accountFields: AccountItem[] = [
 
 export const useTransactionItems = (
   operationType: TransactionType | "account",
+  operation: ITransaction | IAccount
 ) => {
   const accounts = useQuery(Account);
   const categories = useQuery(Category);
@@ -76,8 +75,21 @@ export const useTransactionItems = (
       value: category._id.toString(),
     }));
 
-  const items =
+  let items: Item[] =
     operationType !== "account" ? [...operationFields] : [...accountFields];
+
+  if (operationType === "account" && operation.type !== "Cash") {
+    items = items.concat([
+      {
+        id: "bankName",
+        type: "bankName",
+      },
+      {
+        id: "accountNumber",
+        type: "accountNumber",
+      },
+    ]);
+  }
 
   if (operationType === "transfer") {
     items.splice(0, 0, {
@@ -100,7 +112,7 @@ export const useTransactionItems = (
         id: "account",
         type: "account",
         items: accountItems,
-      },
+      }
     );
   }
 
