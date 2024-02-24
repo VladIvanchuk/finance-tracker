@@ -4,7 +4,6 @@ import {
   ActionsheetContent,
   ActionsheetDragIndicator,
   ActionsheetDragIndicatorWrapper,
-  Box,
 } from "@gluestack-ui/themed";
 import React from "react";
 import { StyleProp, ViewStyle } from "react-native";
@@ -30,7 +29,7 @@ const ThemedActionSheet = ({
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } as any;
   return (
-    <Box>
+    <>
       <Actionsheet isOpen={showActionSheet} onClose={handleClose} zIndex={999}>
         <ActionsheetBackdrop />
         <ActionsheetContent zIndex={999} style={contentStyle}>
@@ -40,7 +39,7 @@ const ThemedActionSheet = ({
           {actionSheetItems}
         </ActionsheetContent>
       </Actionsheet>
-    </Box>
+    </>
   );
 };
 

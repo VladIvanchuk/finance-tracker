@@ -16,14 +16,14 @@ export const useAccountActions = () => {
         realm.create<Account>("Account", accountData);
       });
     },
-    [realm],
+    [realm]
   );
 
   const editAccount = useCallback(
     (accountData: IAccount) => {
       const existingAccount = realm.objectForPrimaryKey(
         Account,
-        getPrimaryKey(accountData._id),
+        getPrimaryKey(accountData._id)
       );
 
       realm.write(() => {
@@ -34,14 +34,14 @@ export const useAccountActions = () => {
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   const getAccountById = useCallback(
     (id: string | string[] | ObjectId): Account | null => {
       return realm.objectForPrimaryKey(Account, getPrimaryKey(id));
     },
-    [realm],
+    [realm]
   );
 
   const deleteAccount = useCallback(
@@ -68,95 +68,7 @@ export const useAccountActions = () => {
         }
       });
     },
-    [realm],
-  );
-
-  const getTotalBalance = useCallback(() => {
-    let totalBalance = 0;
-
-    const accounts = realm.objects<Account>("Account");
-
-    for (const account of accounts) {
-      totalBalance += account.balance;
-    }
-
-    return totalBalance.toFixed(2);
-  }, [realm]);
-
-  const getTotalIncome = useCallback(() => {
-    let totalIncome = 0;
-
-    const transactions = realm.objects<Transaction>("Transaction");
-
-    transactions.forEach((transaction) => {
-      if (transaction.type === "income") {
-        totalIncome += transaction.sum;
-      }
-    });
-
-    return totalIncome.toFixed(2);
-  }, [realm]);
-
-  const getTotalExpense = useCallback(() => {
-    let totalExpense = 0;
-
-    const transactions = realm.objects<Transaction>("Transaction");
-
-    transactions.forEach((transaction) => {
-      if (transaction.type === "expense") {
-        totalExpense += transaction.sum;
-      }
-    });
-
-    return totalExpense.toFixed(2);
-  }, [realm]);
-
-  const getTotalIncomeByMonth = useCallback(
-    (month: number, year: number) => {
-      let totalIncome = 0;
-
-      const startOfMonth = new Date(year, month, 1);
-      const endOfMonth = new Date(year, month + 1, 0);
-
-      const transactions = realm
-        .objects<Transaction>("Transaction")
-        .filtered(
-          "date >= $0 AND date < $1 AND type = 'income'",
-          startOfMonth,
-          endOfMonth,
-        );
-
-      transactions.forEach((transaction) => {
-        totalIncome += transaction.sum;
-      });
-
-      return totalIncome.toFixed(2);
-    },
-    [realm],
-  );
-
-  const getTotalExpenseByMonth = useCallback(
-    (month: number, year: number) => {
-      let totalExpense = 0;
-
-      const startOfMonth = new Date(year, month, 1);
-      const endOfMonth = new Date(year, month + 1, 0);
-
-      const transactions = realm
-        .objects<Transaction>("Transaction")
-        .filtered(
-          "date >= $0 AND date < $1 AND type = 'expense'",
-          startOfMonth,
-          endOfMonth,
-        );
-
-      transactions.forEach((transaction) => {
-        totalExpense += transaction.sum;
-      });
-
-      return totalExpense.toFixed(2);
-    },
-    [realm],
+    [realm]
   );
 
   return {
@@ -164,10 +76,5 @@ export const useAccountActions = () => {
     editAccount,
     getAccountById,
     deleteAccount,
-    getTotalBalance,
-    getTotalIncome,
-    getTotalExpense,
-    getTotalIncomeByMonth,
-    getTotalExpenseByMonth,
   };
 };

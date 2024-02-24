@@ -26,12 +26,8 @@ const AccountCard = ({
 
   const { deleteAccount } = useAccountActions();
 
-  const handleOpen = () => {
-    setIsOpen(true);
-  };
-  const handleClose = () => {
-    setIsOpen(false);
-  };
+  const handleOpen = () => setIsOpen(true);
+  const handleClose = () => setIsOpen(false);
 
   const handleEdit = () => {
     router.navigate({ pathname: "/accountEdit/[id]", params: { id: _id } });

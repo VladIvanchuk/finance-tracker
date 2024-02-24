@@ -35,7 +35,7 @@ export const useTransactionActions = () => {
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   const editTransaction = useCallback(
@@ -55,7 +55,7 @@ export const useTransactionActions = () => {
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   const deleteTransaction = useCallback(
@@ -91,14 +91,14 @@ export const useTransactionActions = () => {
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   const getTransactionById = useCallback(
     (id: string | string[] | ObjectId): Transaction | null => {
       return realm.objectForPrimaryKey(Transaction, getPrimaryKey(id));
     },
-    [realm],
+    [realm]
   );
 
   const getTransactionsByMonth = useCallback(
@@ -112,7 +112,7 @@ export const useTransactionActions = () => {
 
       return Array.from(transactionsResults);
     },
-    [realm],
+    [realm]
   );
 
   return {

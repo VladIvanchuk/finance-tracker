@@ -1,22 +1,29 @@
 import Colors, { palette } from "@/constants/Colors";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ExpenseIcon from "../Icons/expense";
 import IncomeIcon from "../Icons/income";
 import ThemedText from "../ui/ThemedText";
-import { useAccountActions } from "@/hooks/useAccountActions";
 import { useDatabase } from "@/hooks/useDatabase";
 import { Transaction } from "@/schemas/Transaction";
 import { useMonthContext } from "@/context/MonthContext";
+import { useRouter } from "expo-router";
+import { useStatisticsAction } from "@/hooks/useStatisticsAction";
 
 const Activity = () => {
   const { selectedMonth, selectedYear } = useMonthContext();
+  const router = useRouter();
 
-  const { getTotalExpenseByMonth, getTotalIncomeByMonth } = useAccountActions();
+  const { getTotalExpenseByMonth, getTotalIncomeByMonth } =
+    useStatisticsAction();
   const [totalIncome, setTotalIncome] = useState("");
   const [totalExpense, setTotalExpense] = useState("");
 
   const { realm } = useDatabase();
+
+  const handleLinkPress = (type: "income" | "expense") => {
+    router.navigate({ pathname: "/stats", params: { type: type } });
+  };
 
   useEffect(() => {
     const updateBalance = () => {
@@ -42,7 +49,10 @@ const Activity = () => {
 
   return (
     <View style={styles.activity}>
-      <View style={styles.activity_item}>
+      <TouchableOpacity
+        onPress={() => handleLinkPress("income")}
+        style={styles.activity_item}
+      >
         <View
           style={[
             styles.activity_item_icon,
@@ -59,8 +69,11 @@ const Activity = () => {
           </ThemedText>
           <ThemedText style={styles.activity_sum}>{totalIncome} ₴</ThemedText>
         </View>
-      </View>
-      <View style={styles.activity_item}>
+      </TouchableOpacity>
+      <TouchableOpacity
+        onPress={() => handleLinkPress("expense")}
+        style={styles.activity_item}
+      >
         <View
           style={[
             styles.activity_item_icon,
@@ -77,7 +90,7 @@ const Activity = () => {
           </ThemedText>
           <ThemedText style={styles.activity_sum}>{totalExpense} ₴</ThemedText>
         </View>
-      </View>
+      </TouchableOpacity>
     </View>
   );
 };

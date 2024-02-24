@@ -1,5 +1,5 @@
 import Colors from "@/constants/Colors";
-import { useAccountActions } from "@/hooks/useAccountActions";
+import { useStatisticsAction } from "@/hooks/useStatisticsAction";
 import { useDatabase } from "@/hooks/useDatabase";
 import { Transaction } from "@/schemas/Transaction";
 import React, { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ const { width } = Dimensions.get("window");
 const TotalBalance = ({ scrollY }: { scrollY: Animated.Value }) => {
   const [totalBalance, setTotalBalance] = useState("");
 
-  const { getTotalBalance } = useAccountActions();
+  const { getTotalBalance } = useStatisticsAction();
 
   const { realm } = useDatabase();
 

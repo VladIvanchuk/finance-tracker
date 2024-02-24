@@ -1,12 +1,16 @@
-import { StyleSheet, TouchableOpacity, View } from "react-native";
-import React from "react";
-import ThemedText from "../ui/ThemedText";
-import { FontAwesome } from "@expo/vector-icons";
 import Colors from "@/constants/Colors";
-import { Ionicons } from "@expo/vector-icons";
-import { Link } from "expo-router";
+import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
+import React from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import ThemedText from "../ui/ThemedText";
 
 const AccountsHeader = () => {
+  const router = useRouter();
+
+  const handleLinkPress = () => {
+    router.navigate({ pathname: "/addAccount" });
+  };
   return (
     <View style={styles.header_container}>
       <TouchableOpacity style={styles.button}>
@@ -18,10 +22,8 @@ const AccountsHeader = () => {
           style={{ marginTop: 1 }}
         />
       </TouchableOpacity>
-      <TouchableOpacity>
-        <Link href="/addAccount">
-          <Ionicons name="add-circle" size={32} color={Colors.text} />
-        </Link>
+      <TouchableOpacity onPress={handleLinkPress}>
+        <Ionicons name="add-circle" size={32} color={Colors.text} />
       </TouchableOpacity>
     </View>
   );
