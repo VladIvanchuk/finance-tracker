@@ -5,6 +5,16 @@ import { useDatabase } from "./useDatabase";
 import { StatisticType } from "@/types/StatisticsTypes";
 import { getStartDateForPeriod } from "@/services/transactionCreateService";
 import { Account } from "@/schemas/Account";
+import { Category } from "@/schemas/Category";
+
+interface CategorySumEntry {
+  category: Category;
+  sum: number;
+}
+
+type AccumulatorType = {
+  [categoryId: string]: CategorySumEntry;
+};
 
 export const useStatisticsAction = () => {
   const { realm } = useDatabase();
@@ -29,6 +39,42 @@ export const useStatisticsAction = () => {
       }
     },
     [realm]
+  );
+  const getCategoriesWithAmountsByPeriodAndType = useCallback(
+    (
+      period: string,
+      type: StatisticType
+    ): Array<{ category: Category; sum: number }> | null => {
+      const transactions = getTransactionsByPeriodAndType(period, type);
+      if (!transactions) {
+        return null;
+      }
+
+      const categorySums = transactions.reduce<AccumulatorType>(
+        (acc, transaction) => {
+          if (transaction.category) {
+            const categoryId = transaction.category._id.toString();
+            if (categoryId) {
+              if (!acc[categoryId]) {
+                acc[categoryId] = { category: transaction.category, sum: 0 };
+              }
+              acc[categoryId].sum += transaction.sum;
+            }
+          }
+          return acc;
+        },
+        {}
+      );
+
+      // Convert the aggregated object into an array of CategorySumEntry
+      const result = Object.keys(categorySums).map((key) => ({
+        category: categorySums[key].category,
+        sum: categorySums[key].sum,
+      }));
+
+      return result;
+    },
+    [getTransactionsByPeriodAndType]
   );
 
   const getTotalBalance = useCallback(() => {
@@ -121,6 +167,7 @@ export const useStatisticsAction = () => {
 
   return {
     getTransactionsByPeriodAndType,
+    getCategoriesWithAmountsByPeriodAndType,
     getTotalBalance,
     getTotalIncome,
     getTotalExpense,

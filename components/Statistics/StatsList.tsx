@@ -9,12 +9,17 @@ import { StyleSheet, View } from "react-native";
 import TransactionItem from "../Home/TransactionItem";
 import StatsFilter from "./StatsFilter";
 import StatsSort from "./StatsSort";
+import { Category } from "@/schemas/Category";
+import CategoryItem from "./CategoryItem";
+import { StatisticType } from "@/types/StatisticsTypes";
 
 interface StatsListProps {
   transactions: Realm.Results<Transaction> | null;
+  categories: Array<{ category: Category; sum: number }> | null;
+  type: StatisticType;
 }
 
-const StatsList = ({ transactions }: StatsListProps) => {
+const StatsList = ({ transactions, categories, type }: StatsListProps) => {
   const [selectedFilter, setSelectedFilter] = useState(filterItems[0].value);
   const sortItems =
     selectedFilter === "Categories"
@@ -43,6 +48,19 @@ const StatsList = ({ transactions }: StatsListProps) => {
       })
     : transactions;
 
+  const sortedCategories = categories
+    ? [...categories].sort((a, b) => {
+        switch (selectedSort) {
+          case "lowest to highest":
+            return a.sum - b.sum;
+          case "highest to lowest":
+            return b.sum - a.sum;
+          default:
+            return 0;
+        }
+      })
+    : categories;
+
   return (
     <View style={styles.container}>
       <View style={styles.list_header}>
@@ -57,13 +75,20 @@ const StatsList = ({ transactions }: StatsListProps) => {
         />
       </View>
       <View style={styles.list_container}>
-        {selectedFilter === "Transactions" &&
-          sortedTransactions?.map((transaction) => (
-            <TransactionItem
-              key={transaction._id.toString()}
-              {...transaction}
-            />
-          ))}
+        {selectedFilter === "Transactions"
+          ? sortedTransactions?.map((transaction) => (
+              <TransactionItem
+                key={transaction._id.toString()}
+                {...transaction}
+              />
+            ))
+          : sortedCategories?.map((category) => (
+              <CategoryItem
+                key={category.category._id.toString()}
+                {...category}
+                type={type}
+              />
+            ))}
       </View>
     </View>
   );

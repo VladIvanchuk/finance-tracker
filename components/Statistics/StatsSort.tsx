@@ -24,8 +24,6 @@ const StatsSort = ({
   sortItems,
   selectedSort,
 }: StatsSortProps) => {
-  console.log(selectedSort);
-
   return (
     <Select onValueChange={setSelectedSort} defaultValue={selectedSort}>
       <SelectTrigger variant="outline" size="md" style={styles.container}>

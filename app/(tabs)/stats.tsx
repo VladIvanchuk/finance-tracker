@@ -4,6 +4,7 @@ import StatsList from "@/components/Statistics/StatsList";
 import StatsSwitch from "@/components/Statistics/StatsSwitch";
 import { periods } from "@/data/statisticPeriods";
 import { useStatisticsAction } from "@/hooks/useStatisticsAction";
+import { Category } from "@/schemas/Category";
 import { Transaction } from "@/schemas/Transaction";
 import { StatisticType } from "@/types/StatisticsTypes";
 import { useLocalSearchParams } from "expo-router";
@@ -18,8 +19,19 @@ const Statistics = () => {
   );
   const [transactions, setTransactions] =
     useState<Realm.Results<Transaction> | null>(null);
+  const [categories, setCategories] = useState<Array<{
+    category: Category;
+    sum: number;
+  }> | null>([]);
 
-  const { getTransactionsByPeriodAndType } = useStatisticsAction();
+  const {
+    getTransactionsByPeriodAndType,
+    getCategoriesWithAmountsByPeriodAndType,
+  } = useStatisticsAction();
+
+  useEffect(() => {
+    setSelectedType((type as StatisticType) ?? "income");
+  }, [type]);
 
   useEffect(() => {
     const updateTransactions = () => {
@@ -30,7 +42,16 @@ const Statistics = () => {
       setTransactions(fetchedTransactions);
     };
 
+    const updateCategoriesWithSums = () => {
+      const fetchedCategoriesWithSums = getCategoriesWithAmountsByPeriodAndType(
+        selectedPeriod,
+        selectedType
+      );
+      setCategories(fetchedCategoriesWithSums);
+    };
+
     updateTransactions();
+    updateCategoriesWithSums();
 
     const fetchedTransactions = getTransactionsByPeriodAndType(
       selectedPeriod,
@@ -48,7 +69,12 @@ const Statistics = () => {
         fetchedTransactions.removeListener(updateTransactions);
       }
     };
-  }, [selectedPeriod, selectedType, getTransactionsByPeriodAndType]);
+  }, [
+    selectedPeriod,
+    selectedType,
+    getTransactionsByPeriodAndType,
+    getCategoriesWithAmountsByPeriodAndType,
+  ]);
 
   return (
     <View style={styles.page_wrapper}>
@@ -64,7 +90,11 @@ const Statistics = () => {
           selectedType={selectedType}
           setSelectedType={setSelectedType}
         />
-        <StatsList transactions={transactions} />
+        <StatsList
+          transactions={transactions}
+          categories={categories}
+          type={selectedType}
+        />
       </ScrollView>
     </View>
   );

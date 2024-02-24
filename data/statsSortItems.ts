@@ -8,22 +8,22 @@ export const transactionsSortItems = [
     value: "old to new",
   },
   {
-    label: "Amount: from lowest to highest",
-    value: "lowest to highest",
-  },
-  {
     label: "Amount: from highest to lowest",
     value: "highest to lowest",
+  },
+  {
+    label: "Amount: from lowest to highest",
+    value: "lowest to highest",
   },
 ];
 export const categoriesSortItems = [
   {
-    label: "Amount: from lowest to highest",
-    value: "lowest to highest",
-  },
-  {
     label: "Amount: from highest to lowest",
     value: "highest to lowest",
+  },
+  {
+    label: "Amount: from lowest to highest",
+    value: "lowest to highest",
   },
 ];
 export const filterItems = [
