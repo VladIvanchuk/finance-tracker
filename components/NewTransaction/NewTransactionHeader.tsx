@@ -73,6 +73,8 @@ const NewTransactionHeader = ({
           placeholder="0"
           keyboardType="numeric"
           placeholderTextColor={Colors.text}
+          onFocus={() => onChangeNumber("")}
+          onBlur={() => !number && onChangeNumber("0")}
         />
         <TouchableOpacity onPress={handleChange}>
           <ThemedText style={{ fontWeight: "bold", fontSize: 64 }}>

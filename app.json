@@ -1,8 +1,9 @@
 {
   "expo": {
-    "name": "finance-tracker",
+    "name": "Finance Tracker",
     "slug": "finance-tracker",
     "version": "1.0.1",
+    "runtimeVersion": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
