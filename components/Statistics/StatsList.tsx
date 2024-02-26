@@ -80,6 +80,7 @@ const StatsList = ({ transactions, categories, type }: StatsListProps) => {
               <TransactionItem
                 key={transaction._id.toString()}
                 {...transaction}
+                useDate
               />
             ))
           : sortedCategories?.map((category) => (

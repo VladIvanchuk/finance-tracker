@@ -8,7 +8,7 @@ import Realm from "realm";
 
 export function handleIncomeExpenseOperation(
   realm: Realm,
-  operation: ITransaction
+  operation: ITransaction,
 ) {
   const account = getAccount(realm, operation.accountId);
   const category = getCategory(realm, operation.categoryId);
@@ -21,7 +21,7 @@ export function handleIncomeExpenseOperation(
 
   const transaction = realm.create(
     "Transaction",
-    transactionData as Partial<Transaction>
+    transactionData as Partial<Transaction>,
   );
   account.transactions.push(transaction);
   updateAccountBalance(account, operation);
@@ -43,7 +43,7 @@ export function handleTransferOperation(realm: Realm, operation: ITransaction) {
 
   const transaction = realm.create(
     "Transaction",
-    transactionData as Partial<Transaction>
+    transactionData as Partial<Transaction>,
   );
   fromAccount.transactions.push(transaction);
   toAccount.transactions.push(transaction);
@@ -80,7 +80,10 @@ function transferFunds(fromAccount: Account, toAccount: Account, sum: number) {
   fromAccount.balance -= sum;
   toAccount.balance += sum;
 }
-export function getStartDateForPeriod(period: string): Date {
+export function getStartDateForPeriod(
+  period: string,
+  earliestTransactionDate?: Date,
+): Date {
   const now = new Date();
   switch (period) {
     case "1W":
@@ -99,8 +102,9 @@ export function getStartDateForPeriod(period: string): Date {
       now.setFullYear(now.getFullYear() - 1);
       break;
     case "All":
-      now.setFullYear(now.getFullYear() - 100);
-      break;
+      return earliestTransactionDate
+        ? new Date(earliestTransactionDate)
+        : new Date(now.setFullYear(now.getFullYear() - 100));
     default:
       throw new Error(`Unsupported period: ${period}`);
   }

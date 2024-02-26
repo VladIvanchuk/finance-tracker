@@ -3,10 +3,11 @@ import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
 import { periods } from "@/data/statisticPeriods";
+import { Period } from "@/types/StatisticsTypes";
 
 interface StatsHeaderProps {
-  selectedPeriod: string;
-  setSelectedPeriod: React.Dispatch<React.SetStateAction<string>>;
+  selectedPeriod: Period;
+  setSelectedPeriod: React.Dispatch<React.SetStateAction<Period>>;
 }
 
 const StatsHeader = ({
@@ -18,7 +19,7 @@ const StatsHeader = ({
       {periods.map((period) => (
         <TouchableOpacity
           key={period}
-          onPress={() => setSelectedPeriod(period)}
+          onPress={() => setSelectedPeriod(period as Period)}
           style={[
             styles.header_item,
             selectedPeriod === period && { backgroundColor: Colors.tint },

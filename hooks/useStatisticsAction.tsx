@@ -1,11 +1,23 @@
+import { daysOfWeek } from "@/data/daysOfWeek";
+import { Account } from "@/schemas/Account";
+import { Category } from "@/schemas/Category";
 import { Transaction } from "@/schemas/Transaction";
+import {
+  calculateTotalDays,
+  handleTransactionsForOtherPeriods,
+  handleTransactionsForWeek,
+  initializeGroupedDataForOtherPeriods,
+} from "@/services/staristicServices";
+import { getStartDateForPeriod } from "@/services/transactionCreateService";
+import {
+  ChartData,
+  GroupedData,
+  Period,
+  StatisticType,
+} from "@/types/StatisticsTypes";
 import { useCallback } from "react";
 import "react-native-get-random-values";
 import { useDatabase } from "./useDatabase";
-import { StatisticType } from "@/types/StatisticsTypes";
-import { getStartDateForPeriod } from "@/services/transactionCreateService";
-import { Account } from "@/schemas/Account";
-import { Category } from "@/schemas/Category";
 
 interface CategorySumEntry {
   category: Category;
@@ -22,7 +34,7 @@ export const useStatisticsAction = () => {
   const getTransactionsByPeriodAndType = useCallback(
     (
       period: string,
-      type: StatisticType
+      type: StatisticType,
     ): Realm.Results<Transaction> | null => {
       const startDate = getStartDateForPeriod(period);
       const endDate = new Date();
@@ -34,16 +46,16 @@ export const useStatisticsAction = () => {
           .filtered(
             `type == "${type}" AND date >= $0 AND date <= $1`,
             startDate,
-            endDate
+            endDate,
           );
       }
     },
-    [realm]
+    [realm],
   );
   const getCategoriesWithAmountsByPeriodAndType = useCallback(
     (
       period: string,
-      type: StatisticType
+      type: StatisticType,
     ): Array<{ category: Category; sum: number }> | null => {
       const transactions = getTransactionsByPeriodAndType(period, type);
       if (!transactions) {
@@ -63,10 +75,9 @@ export const useStatisticsAction = () => {
           }
           return acc;
         },
-        {}
+        {},
       );
 
-      // Convert the aggregated object into an array of CategorySumEntry
       const result = Object.keys(categorySums).map((key) => ({
         category: categorySums[key].category,
         sum: categorySums[key].sum,
@@ -74,7 +85,63 @@ export const useStatisticsAction = () => {
 
       return result;
     },
-    [getTransactionsByPeriodAndType]
+    [getTransactionsByPeriodAndType],
+  );
+
+  const getChartData = useCallback(
+    (period: Period, type: StatisticType): ChartData | null => {
+      const transactions = getTransactionsByPeriodAndType(period, type);
+      if (!transactions || transactions.length === 0) return null;
+
+      const earliestTransactionDate = transactions.reduce(
+        (earliest, transaction) =>
+          transaction.date < earliest ? transaction.date : earliest,
+        transactions[0].date,
+      );
+
+      const startDate = getStartDateForPeriod(
+        period,
+        period === "All" ? earliestTransactionDate : undefined,
+      );
+      const endDate = new Date();
+
+      let labels: string[] = [];
+      let groupedData: GroupedData = {};
+
+      if (period === "1W") {
+        groupedData = handleTransactionsForWeek(transactions, period);
+        labels = daysOfWeek;
+      } else {
+        const totalDays = calculateTotalDays(startDate, endDate);
+        [labels, groupedData] = initializeGroupedDataForOtherPeriods(
+          startDate,
+          totalDays,
+          period,
+        );
+        groupedData = handleTransactionsForOtherPeriods(
+          transactions,
+          startDate,
+          labels,
+          groupedData,
+          Math.ceil(totalDays / 6),
+        );
+      }
+
+      const chartData: ChartData = {
+        labels,
+        datasets: [
+          {
+            data: labels.map((label) => {
+              const value = groupedData[label];
+              return typeof value === "number" ? value : 0;
+            }),
+          },
+        ],
+      };
+
+      return chartData;
+    },
+    [],
   );
 
   const getTotalBalance = useCallback(() => {
@@ -129,7 +196,7 @@ export const useStatisticsAction = () => {
         .filtered(
           "date >= $0 AND date < $1 AND type = 'income'",
           startOfMonth,
-          endOfMonth
+          endOfMonth,
         );
 
       transactions.forEach((transaction) => {
@@ -138,7 +205,7 @@ export const useStatisticsAction = () => {
 
       return totalIncome.toFixed(2);
     },
-    [realm]
+    [realm],
   );
 
   const getTotalExpenseByMonth = useCallback(
@@ -153,7 +220,7 @@ export const useStatisticsAction = () => {
         .filtered(
           "date >= $0 AND date < $1 AND type = 'expense'",
           startOfMonth,
-          endOfMonth
+          endOfMonth,
         );
 
       transactions.forEach((transaction) => {
@@ -162,12 +229,13 @@ export const useStatisticsAction = () => {
 
       return totalExpense.toFixed(2);
     },
-    [realm]
+    [realm],
   );
 
   return {
     getTransactionsByPeriodAndType,
     getCategoriesWithAmountsByPeriodAndType,
+    getChartData,
     getTotalBalance,
     getTotalIncome,
     getTotalExpense,
