@@ -47,7 +47,7 @@ const NewTransactionBodyItem = ({
           placeholder={`Select category`}
           items={items}
           onChange={onChange}
-          addButtonAction={() => router.replace("/addAccount")}
+          addButtonAction={() => router.replace("/categories")}
           selectedValue={category?._id.toString()}
           initialLabel={category?.name.toString()}
         />

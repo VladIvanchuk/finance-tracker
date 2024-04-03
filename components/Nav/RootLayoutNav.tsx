@@ -79,6 +79,18 @@ const RootLayoutNav = () => {
             ),
           }}
         />
+        <Stack.Screen
+          name="categories"
+          options={{
+            title: "Categories",
+            headerStyle: {
+              backgroundColor: Colors.background,
+            },
+            headerLeft: (props) => (
+              <HeaderBackButton {...props} onPress={popToTop} />
+            ),
+          }}
+        />
       </Stack>
       <ThemedAlert
         visible={alertVisible}

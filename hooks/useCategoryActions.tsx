@@ -6,6 +6,7 @@ import { ObjectId } from "bson";
 import { Category } from "@/schemas/Category";
 import { ICategory } from "@/types/CategoryTypes";
 import { getPrimaryKey } from "@/utils/getPrimaryKey";
+import { TransactionType } from "@/types/TransactionTypes";
 
 export const useCategoryActions = () => {
   const { realm } = useDatabase();
@@ -32,5 +33,13 @@ export const useCategoryActions = () => {
     [realm],
   );
 
-  return { createCategory, getCategoryById };
+  const getCategoriesByType = useCallback(
+    (type: TransactionType): ICategory[] => {
+      const categories = realm.objects(Category).filtered("type == $0", type);
+      return Array.from(categories);
+    },
+    [realm],
+  );
+
+  return { createCategory, getCategoryById, getCategoriesByType };
 };

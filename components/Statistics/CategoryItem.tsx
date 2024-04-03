@@ -1,6 +1,5 @@
 import Colors from "@/constants/Colors";
-import { Category } from "@/schemas/Category";
-import { StatisticType } from "@/types/StatisticsTypes";
+import { ICategory } from "@/types/CategoryTypes";
 import { IconNameType } from "@/types/TransactionTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { getTransactionColor } from "@/utils/getTransactionColor";
@@ -9,29 +8,29 @@ import { StyleSheet, View } from "react-native";
 import TransactionIcon from "../Home/TransactionIcon";
 import ThemedText from "../ui/ThemedText";
 
-interface CategoryItemProps {
-  category: Category;
-  sum: number;
-  type: StatisticType;
+interface CategoryItemProps extends ICategory {
+  sum?: number;
 }
 
-const CategoryItem = ({ category, sum, type }: CategoryItemProps) => {
+const CategoryItem = ({ sum, type, iconKey, name }: CategoryItemProps) => {
   const transactionColor = getTransactionColor(type);
   const currencySymbol = getCurrencySymbol("UAH");
   const sign = type === "income" ? "+" : type === "expense" ? "-" : "";
-  const formattedSum = `${sign} ${sum.toFixed(2)}`;
+  const formattedSum = `${sign} ${sum?.toFixed(2)}`;
 
   return (
     <View style={styles.container}>
-      <TransactionIcon iconName={category.iconKey as IconNameType} />
+      <TransactionIcon iconName={iconKey as IconNameType} />
       <View style={styles.infoContainer}>
         <View style={styles.textContainer}>
-          <ThemedText style={styles.name}>{category.name}</ThemedText>
+          <ThemedText style={styles.name}>{name}</ThemedText>
         </View>
         <View style={[styles.textContainer, styles.alignRight]}>
-          <ThemedText style={[styles.price, { color: transactionColor }]}>
-            {formattedSum} {currencySymbol}
-          </ThemedText>
+          {sum && (
+            <ThemedText style={[styles.price, { color: transactionColor }]}>
+              {formattedSum} {currencySymbol}
+            </ThemedText>
+          )}
         </View>
       </View>
     </View>

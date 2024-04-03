@@ -105,7 +105,7 @@ const TransactionForm = ({
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string,
+    value: string | boolean,
   ) => {
     setTransaction((prev) => {
       const key = type === "account" ? "accountId" : type;
