@@ -12,14 +12,21 @@ import StatsSort from "./StatsSort";
 import { Category } from "@/schemas/Category";
 import CategoryItem from "./CategoryItem";
 import { StatisticType } from "@/types/StatisticsTypes";
+import { Spinner } from "@gluestack-ui/themed";
 
 interface StatsListProps {
   transactions: Realm.Results<Transaction> | null;
   categories: Array<{ category: Category; sum: number }> | null;
   type: StatisticType;
+  isLoading: boolean;
 }
 
-const StatsList = ({ transactions, categories, type }: StatsListProps) => {
+const StatsList = ({
+  transactions,
+  categories,
+  type,
+  isLoading,
+}: StatsListProps) => {
   const [selectedFilter, setSelectedFilter] = useState(filterItems[0].value);
   const sortItems =
     selectedFilter === "Categories"
@@ -60,6 +67,10 @@ const StatsList = ({ transactions, categories, type }: StatsListProps) => {
         }
       })
     : categories;
+
+  if (isLoading) {
+    return <Spinner size="large" />;
+  }
 
   return (
     <View style={styles.container}>

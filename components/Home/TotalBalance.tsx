@@ -5,6 +5,7 @@ import { Transaction } from "@/schemas/Transaction";
 import React, { useEffect, useState } from "react";
 import { Animated, Dimensions, StyleSheet } from "react-native";
 import ThemedText from "../ui/ThemedText";
+import { Account } from "@/schemas/Account";
 
 const { width } = Dimensions.get("window");
 
@@ -23,10 +24,14 @@ const TotalBalance = ({ scrollY }: { scrollY: Animated.Value }) => {
     const transactions = realm.objects<Transaction>("Transaction");
     transactions.addListener(updateBalance);
 
+    const accounts = realm.objects<Account>("Account");
+    accounts.addListener(updateBalance);
+
     updateBalance();
 
     return () => {
       transactions.removeListener(updateBalance);
+      accounts.removeListener(updateBalance);
     };
   }, [realm, getTotalBalance]);
 

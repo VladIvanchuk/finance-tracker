@@ -24,7 +24,8 @@ const Statistics = () => {
     sum: number;
   }> | null>([]);
   const [chartData, setChartData] = useState<ChartData | null>(null);
-
+  const [isChartDataLoading, setIsChartDataLoading] = useState(true);
+  const [isTransactionsLoading, setIsTransactionsLoading] = useState(true);
   const {
     getTransactionsByPeriodAndType,
     getCategoriesWithAmountsByPeriodAndType,
@@ -42,8 +43,14 @@ const Statistics = () => {
         selectedType,
       );
       setTransactions(fetchedTransactions);
+
+      setIsChartDataLoading(true);
+      const fetchedChartData = getChartData(selectedPeriod, selectedType);
+      setChartData(fetchedChartData);
+
+      setIsTransactionsLoading(false);
+      setIsChartDataLoading(false);
     };
-    updateTransactions();
 
     const fetchedTransactions = getTransactionsByPeriodAndType(
       selectedPeriod,
@@ -55,6 +62,7 @@ const Statistics = () => {
         updateTransactions();
       });
     }
+    updateTransactions();
 
     return () => {
       if (fetchedTransactions) {
@@ -85,12 +93,13 @@ const Statistics = () => {
         />
       </View>
       <ScrollView style={styles.page_container} nestedScrollEnabled={false}>
-        <StatsChart chartData={chartData} />
+        <StatsChart chartData={chartData} isLoading={isChartDataLoading} />
         <StatsSwitch
           selectedType={selectedType}
           setSelectedType={setSelectedType}
         />
         <StatsList
+          isLoading={isTransactionsLoading}
           transactions={transactions}
           categories={categories}
           type={selectedType}
