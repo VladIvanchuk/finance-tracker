@@ -14,6 +14,7 @@ export class Account extends Realm.Object<Account> {
   bankName?: string;
   accountNumber?: string;
   notes?: string;
+  disregard?: boolean;
 
   static schema: ObjectSchema = {
     name: "Account",
@@ -28,6 +29,7 @@ export class Account extends Realm.Object<Account> {
       bankName: "string?",
       accountNumber: "string?",
       notes: "string?",
+      disregard: "bool?",
     },
     primaryKey: "_id",
   };

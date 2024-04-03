@@ -28,6 +28,8 @@ const AccountForm = ({
   const toast = useToast();
   const { createAccount, editAccount } = useAccountActions();
 
+  console.log(accountData);
+
   const showToast = useCallback(
     (
       title: string,
@@ -73,7 +75,7 @@ const AccountForm = ({
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string,
+    value: string | boolean,
   ) => {
     setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;

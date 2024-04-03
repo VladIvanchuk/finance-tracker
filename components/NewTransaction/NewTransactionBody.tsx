@@ -17,7 +17,7 @@ const NewTransactionBody = ({
 }: {
   handleValueChange: (
     type: TransactionItemType | AccountItemType,
-    value: string,
+    value: string | boolean,
   ) => void;
   operationType: TransactionType | "account";
   operation: ITransaction | IAccount;
@@ -28,9 +28,10 @@ const NewTransactionBody = ({
       type={item.type}
       items={item.items}
       operation={operation}
-      onChange={(value: string, type?: TransactionItemType | AccountItemType) =>
-        handleValueChange(type ?? item.type, value)
-      }
+      onChange={(
+        value: string | boolean,
+        type?: TransactionItemType | AccountItemType,
+      ) => handleValueChange(type ?? item.type, value)}
     />
   );
 

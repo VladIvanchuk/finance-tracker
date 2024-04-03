@@ -78,17 +78,23 @@ export const useTransactionItems = (
   let items: Item[] =
     operationType !== "account" ? [...operationFields] : [...accountFields];
 
-  if (operationType === "account" && operation.type !== "Cash") {
-    items = items.concat([
-      {
-        id: "bankName",
-        type: "bankName",
-      },
-      {
-        id: "accountNumber",
-        type: "accountNumber",
-      },
-    ]);
+  if (operationType === "account") {
+    if (operation.type !== "Cash") {
+      items = items.concat([
+        {
+          id: "bankName",
+          type: "bankName",
+        },
+        {
+          id: "accountNumber",
+          type: "accountNumber",
+        },
+      ]);
+    }
+    items.push({
+      id: "disregard",
+      type: "disregard",
+    });
   }
 
   if (operationType === "transfer") {

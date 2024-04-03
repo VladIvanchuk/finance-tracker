@@ -147,7 +147,9 @@ export const useStatisticsAction = () => {
   const getTotalBalance = useCallback(() => {
     let totalBalance = 0;
 
-    const accounts = realm.objects<Account>("Account");
+    const accounts = realm
+      .objects<Account>("Account")
+      .filtered("disregard != true");
 
     for (const account of accounts) {
       totalBalance += account.balance;
@@ -159,7 +161,9 @@ export const useStatisticsAction = () => {
   const getTotalIncome = useCallback(() => {
     let totalIncome = 0;
 
-    const transactions = realm.objects<Transaction>("Transaction");
+    const transactions = realm
+      .objects<Transaction>("Transaction")
+      .filtered("account.disregard != true AND type = 'income'");
 
     transactions.forEach((transaction) => {
       if (transaction.type === "income") {
@@ -173,7 +177,9 @@ export const useStatisticsAction = () => {
   const getTotalExpense = useCallback(() => {
     let totalExpense = 0;
 
-    const transactions = realm.objects<Transaction>("Transaction");
+    const transactions = realm
+      .objects<Transaction>("Transaction")
+      .filtered("account.disregard != true AND type = 'expense'");
 
     transactions.forEach((transaction) => {
       if (transaction.type === "expense") {
@@ -194,6 +200,7 @@ export const useStatisticsAction = () => {
       const transactions = realm
         .objects<Transaction>("Transaction")
         .filtered(
+          "account.disregard != true AND type = 'income'",
           "date >= $0 AND date < $1 AND type = 'income'",
           startOfMonth,
           endOfMonth,
@@ -218,6 +225,7 @@ export const useStatisticsAction = () => {
       const transactions = realm
         .objects<Transaction>("Transaction")
         .filtered(
+          "account.disregard != true AND type = 'expense'",
           "date >= $0 AND date < $1 AND type = 'expense'",
           startOfMonth,
           endOfMonth,

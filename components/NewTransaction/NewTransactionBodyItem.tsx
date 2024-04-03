@@ -9,12 +9,13 @@ import ThemedSelect from "../ui/ThemedSelect";
 import Attachment from "./Attachment";
 import TransferAccounts from "./TransferAccounts";
 import ChooseDate from "./ChooseDate";
+import ThemedCheckbox from "../ui/ThemedCheckbox";
 
 interface NewTransactionBodyItemProps {
   id: string;
   type: TransactionItemType | AccountItemType;
   items?: { label: string; value: string | ObjectId }[];
-  onChange: (value: string, type?: TransactionItemType) => void;
+  onChange: (value: string | boolean, type?: TransactionItemType) => void;
   operation: TransactionData | IAccount | ITransaction;
 }
 
@@ -130,6 +131,18 @@ const NewTransactionBodyItem = ({
             placeholder={`Notes`}
             onChange={onChange}
             defaultValue={operation.notes}
+          />
+        );
+      }
+      return null;
+    case "disregard":
+      if ("disregard" in operation) {
+        return (
+          <ThemedCheckbox
+            label={`Ignore in the total balance`}
+            onChange={onChange}
+            value={"string"}
+            defaultIsChecked={operation.disregard}
           />
         );
       }

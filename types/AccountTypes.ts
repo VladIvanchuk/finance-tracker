@@ -24,6 +24,7 @@ export interface IAccount {
   bankName?: string;
   accountNumber?: string;
   notes?: string;
+  disregard?: boolean;
 }
 
 export type AccountItemType =
@@ -32,7 +33,8 @@ export type AccountItemType =
   | "currency"
   | "bankName"
   | "accountNumber"
-  | "notes";
+  | "notes"
+  | "disregard";
 
 export interface AccountItem {
   id: string;
