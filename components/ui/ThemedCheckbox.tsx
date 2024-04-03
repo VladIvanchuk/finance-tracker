@@ -1,3 +1,4 @@
+import { palette } from "@/constants/Colors";
 import {
   Checkbox,
   CheckboxIndicator,

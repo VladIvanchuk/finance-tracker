@@ -1,12 +1,16 @@
 import CategoriesList from "@/components/Categories/CategoriesList";
+import CreateCategory from "@/components/Categories/CreateCategory";
 import StatsSwitch from "@/components/Statistics/StatsSwitch";
 import ThemedButton from "@/components/ui/ThemedButton";
+import ThemedModal from "@/components/ui/ThemedModal";
 import { StatisticType } from "@/types/StatisticsTypes";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 const Categories = () => {
   const [selectedType, setSelectedType] = useState<StatisticType>("income");
+  const [showModal, setShowModal] = useState(false);
+  const ref = React.useRef(null);
 
   return (
     <View style={styles.container}>
@@ -17,9 +21,17 @@ const Categories = () => {
         />
       </View>
       <CategoriesList type={selectedType} />
-      <View style={styles.footer}>
-        <ThemedButton label="Add new" />
+      <View style={styles.footer} ref={ref}>
+        <ThemedButton label="Add new" onPress={() => setShowModal(true)} />
       </View>
+      <ThemedModal
+        showModal={showModal}
+        setShowModal={setShowModal}
+        ref={ref}
+        title="New category"
+      >
+        <CreateCategory />
+      </ThemedModal>
     </View>
   );
 };

@@ -1,11 +1,10 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import {
   Toast,
   ToastDescription,
   ToastTitle,
   VStack,
 } from "@gluestack-ui/themed";
+import React from "react";
 
 interface ThemedToastProps {
   title: string;
@@ -27,5 +26,3 @@ const ThemedToast = ({ title, message, action, id }: ThemedToastProps) => {
 };
 
 export default ThemedToast;
-
-const styles = StyleSheet.create({});
