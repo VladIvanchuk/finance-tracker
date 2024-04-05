@@ -1,6 +1,7 @@
 import { palette } from "@/constants/Colors";
 import {
   AntDesign,
+  Entypo,
   FontAwesome5,
   FontAwesome6,
   Ionicons,
@@ -110,5 +111,65 @@ export const iconConfig = {
     name: "heart",
     color: palette.red[100],
     backgroundColor: palette.red[20],
+  },
+  fastFood: {
+    component: Ionicons,
+    name: "fast-food",
+    color: palette.yellow[100],
+    backgroundColor: palette.yellow[20],
+  },
+  phone: {
+    component: MaterialIcons,
+    name: "phone-android",
+    color: palette.blue[100],
+    backgroundColor: palette.blue[20],
+  },
+  laptop: {
+    component: Entypo,
+    name: "laptop",
+    color: palette.violet[100],
+    backgroundColor: palette.violet[20],
+  },
+  beer: {
+    component: Ionicons,
+    name: "beer",
+    color: palette.yellow[100],
+    backgroundColor: palette.yellow[20],
+  },
+  plane: {
+    component: FontAwesome6,
+    name: "plane",
+    color: palette.violet[100],
+    backgroundColor: palette.violet[20],
+  },
+  flower: {
+    component: Entypo,
+    name: "flower",
+    color: palette.green[100],
+    backgroundColor: palette.green[20],
+  },
+  pets: {
+    component: MaterialIcons,
+    name: "pets",
+    color: palette.blue[100],
+    backgroundColor: palette.blue[20],
+  },
+  book: {
+    component: FontAwesome6,
+    name: "book",
+    color: palette.yellow[100],
+    backgroundColor: palette.yellow[20],
+  },
+  diamond: {
+    component: Ionicons,
+    name: "diamond",
+    color: palette.red[100],
+    backgroundColor: palette.red[20],
+  },
+  game: {
+    component: Ionicons,
+    name: "game-controller",
+    color: palette.yellow[100],
+    backgroundColor: palette.yellow[20],
   },
 };
