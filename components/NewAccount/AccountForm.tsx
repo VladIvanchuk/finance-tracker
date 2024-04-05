@@ -1,9 +1,9 @@
 import Colors from "@/constants/Colors";
 import { useAccountActions } from "@/hooks/useAccountActions";
 import { useGoBack } from "@/hooks/useGoBack";
+import useThemedToast from "@/hooks/useThemedToast";
 import { AccountItemType, IAccount } from "@/types/AccountTypes";
 import { TransactionItemType } from "@/types/TransactionTypes";
-import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
@@ -11,7 +11,6 @@ import NewTransactionBody from "../NewTransaction/NewTransactionBody";
 import NewTransactionFooter from "../NewTransaction/NewTransactionFooter";
 import NewTransactionHeader from "../NewTransaction/NewTransactionHeader";
 import ThemedAlert from "../ui/ThemedAlert";
-import ThemedToast from "../ui/ThemedToast";
 
 const AccountForm = ({
   type = "create",
@@ -25,33 +24,11 @@ const AccountForm = ({
   const [alertVisible, setAlertVisible] = useState(false);
   const [isFormValidated, setIsFormValidated] = useState(true);
   const goBack = useGoBack();
-  const toast = useToast();
   const { createAccount, editAccount } = useAccountActions();
 
   console.log(accountData);
 
-  const showToast = useCallback(
-    (
-      title: string,
-      message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
-    ) => {
-      toast.closeAll();
-      toast.show({
-        placement: "top",
-        onCloseComplete: () => setIsFormValidated(true),
-        render: ({ id }) => (
-          <ThemedToast
-            id={id}
-            title={title}
-            message={message}
-            action={action}
-          />
-        ),
-      });
-    },
-    [toast],
-  );
+  const showToast = useThemedToast(() => setIsFormValidated(true));
 
   const handleContinue = () => {
     if (!accountData.name) {
@@ -69,13 +46,13 @@ const AccountForm = ({
     showToast(
       "Success",
       `Account ${type === "create" ? "created" : "edited"} successfully`,
-      "success",
+      "success"
     );
   };
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string | boolean,
+    value: string | boolean
   ) => {
     setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -105,7 +82,7 @@ const AccountForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

@@ -1,46 +1,55 @@
-import Colors, { palette } from "@/constants/Colors";
+import Colors from "@/constants/Colors";
+import { iconConfig } from "@/data/iconConfig";
+import { IconNameType } from "@/types/TransactionTypes";
 import React, { useState } from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import ThemedActionSheet from "../ui/ThemedActionSheet";
 import ThemedInput from "../ui/ThemedInput";
 import ThemedText from "../ui/ThemedText";
+import IconsList from "./IconsList";
 
-const CreateCategory = () => {
-  const [selectedColor, setSelectedColor] = useState<string | null>(null);
+interface CreateCategoryProps {
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  setIconKey: React.Dispatch<React.SetStateAction<IconNameType | null>>;
+  iconKey: IconNameType | null;
+}
 
-  const colorOptions = [
-    { color: palette.blue[100], id: "blue" },
-    { color: palette.green[100], id: "green" },
-    { color: palette.red[100], id: "red" },
-    { color: palette.violet[100], id: "violet" },
-    { color: palette.yellow[100], id: "yellow" },
-  ];
+const CreateCategory = ({
+  setName,
+  setIconKey,
+  iconKey,
+}: CreateCategoryProps) => {
+  const [showActionSheet, setShowActionSheet] = useState(false);
+  const handleChange = () => setShowActionSheet(!showActionSheet);
+  const icon = iconConfig[iconKey as IconNameType];
+  const IconComponent = icon ? icon.component : null;
 
   return (
     <View style={styles.container}>
-      <ThemedInput
-        onChange={() => console.log(true)}
-        placeholder="Category name"
+      <ThemedInput onChange={setName} placeholder="Category name" />
+      {!IconComponent ? (
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => setShowActionSheet(true)}
+        >
+          <ThemedText style={styles.text}>Select icon</ThemedText>
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity
+          style={styles.icon}
+          onPress={() => setShowActionSheet(true)}
+        >
+          <IconComponent name={icon.name} size={28} color={icon.color} />
+        </TouchableOpacity>
+      )}
+      <ThemedActionSheet
+        handleClose={handleChange}
+        showActionSheet={showActionSheet}
+        maxHeight={500}
+        actionSheetItems={
+          <IconsList setIconKey={setIconKey} handleChange={handleChange} />
+        }
       />
-      <TouchableOpacity style={styles.icon}>
-        <ThemedText style={styles.text}>Select icon</ThemedText>
-      </TouchableOpacity>
-      <ThemedText style={styles.text}>Select color</ThemedText>
-      <View style={styles.colors}>
-        {colorOptions.map((option) => (
-          <TouchableOpacity
-            key={option.id}
-            onPress={() => setSelectedColor(option.id)}
-          >
-            <View
-              style={[
-                styles.color,
-                { backgroundColor: option.color },
-                selectedColor === option.id && styles.selectedColor,
-              ]}
-            />
-          </TouchableOpacity>
-        ))}
-      </View>
     </View>
   );
 };

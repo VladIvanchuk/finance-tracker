@@ -3,14 +3,46 @@ import CreateCategory from "@/components/Categories/CreateCategory";
 import StatsSwitch from "@/components/Statistics/StatsSwitch";
 import ThemedButton from "@/components/ui/ThemedButton";
 import ThemedModal from "@/components/ui/ThemedModal";
+import { useCategoryActions } from "@/hooks/useCategoryActions";
+import useThemedToast from "@/hooks/useThemedToast";
 import { StatisticType } from "@/types/StatisticsTypes";
+import { IconNameType } from "@/types/TransactionTypes";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
+import { BSON } from "realm";
 
 const Categories = () => {
   const [selectedType, setSelectedType] = useState<StatisticType>("income");
   const [showModal, setShowModal] = useState(false);
+  const [name, setName] = useState("");
+  const [iconKey, setIconKey] = useState<IconNameType | null>(null);
   const ref = React.useRef(null);
+  const showToast = useThemedToast();
+  const { createCategory } = useCategoryActions();
+
+  const handleSubmit = () => {
+    if (name === "") {
+      showToast("Invalid data", "Please select an category name.", "error");
+      return;
+    }
+    if (!iconKey) {
+      showToast("Invalid data", "Please select an category icon.", "error");
+      return;
+    }
+    const newCategory = {
+      _id: new BSON.ObjectId(),
+      name,
+      type: selectedType,
+      iconKey,
+    };
+    createCategory(newCategory);
+    showToast("Success", `Category created successfully`, "success");
+    setShowModal(false);
+  };
+  const handleCancel = () => {
+    setName("");
+    setIconKey(null);
+  };
 
   return (
     <View style={styles.container}>
@@ -29,8 +61,14 @@ const Categories = () => {
         setShowModal={setShowModal}
         ref={ref}
         title="New category"
+        handleSubmit={handleSubmit}
+        handleCancel={handleCancel}
       >
-        <CreateCategory />
+        <CreateCategory
+          setName={setName}
+          setIconKey={setIconKey}
+          iconKey={iconKey}
+        />
       </ThemedModal>
     </View>
   );

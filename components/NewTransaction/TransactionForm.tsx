@@ -1,10 +1,9 @@
-import ThemedToast from "@/components/ui/ThemedToast";
 import { usePopToTop } from "@/hooks/usePopToTop";
+import useThemedToast from "@/hooks/useThemedToast";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { AccountItemType } from "@/types/AccountTypes";
 import { ITransaction, TransactionItemType } from "@/types/TransactionTypes";
 import { getTransactionColor } from "@/utils/getTransactionColor";
-import { useToast } from "@gluestack-ui/themed";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler, StyleSheet, View } from "react-native";
@@ -26,30 +25,8 @@ const TransactionForm = ({
   const [isFormValidated, setIsFormValidated] = useState(true);
   const { createTransaction, editTransaction } = useTransactionActions();
   const popToTop = usePopToTop();
-  const toast = useToast();
 
-  const showToast = useCallback(
-    (
-      title: string,
-      message: string,
-      action?: "warning" | "error" | "success" | "info" | "attention",
-    ) => {
-      toast.closeAll();
-      toast.show({
-        placement: "top",
-        onCloseComplete: () => setIsFormValidated(true),
-        render: ({ id }) => (
-          <ThemedToast
-            id={id}
-            title={title}
-            message={message}
-            action={action}
-          />
-        ),
-      });
-    },
-    [toast],
-  );
+  const showToast = useThemedToast(() => setIsFormValidated(true));
 
   const handleContinue = () => {
     if (
@@ -60,7 +37,7 @@ const TransactionForm = ({
       showToast(
         "Invalid data",
         `Please enter a valid ${operation.type} sum.`,
-        "error",
+        "error"
       );
       setIsFormValidated(false);
       return;
@@ -73,7 +50,7 @@ const TransactionForm = ({
         showToast(
           "Invalid data",
           "Please select both source and destination accounts.",
-          "error",
+          "error"
         );
         setIsFormValidated(false);
         return;
@@ -99,13 +76,13 @@ const TransactionForm = ({
       `${
         operation.type.charAt(0).toUpperCase() + operation.type.slice(1)
       } ${type === "create" ? "created" : "edited"} successfully`,
-      "success",
+      "success"
     );
   };
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string | boolean,
+    value: string | boolean
   ) => {
     setTransaction((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -135,7 +112,7 @@ const TransactionForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

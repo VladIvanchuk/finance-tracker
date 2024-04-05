@@ -20,6 +20,8 @@ interface ThemedModalProps {
   ref: React.MutableRefObject<null>;
   title: string;
   children: React.ReactNode;
+  handleSubmit: () => void;
+  handleCancel: () => void;
 }
 
 const ThemedModal = ({
@@ -28,6 +30,8 @@ const ThemedModal = ({
   ref,
   title,
   children,
+  handleSubmit,
+  handleCancel,
 }: ThemedModalProps) => {
   return (
     <Modal
@@ -53,7 +57,7 @@ const ThemedModal = ({
             action="secondary"
             mr="$3"
             onPress={() => {
-              setShowModal(false);
+              handleCancel();
             }}
           >
             <ButtonText>Cancel</ButtonText>
@@ -63,7 +67,7 @@ const ThemedModal = ({
             action="positive"
             borderWidth="$0"
             onPress={() => {
-              setShowModal(false);
+              handleSubmit();
             }}
           >
             <ButtonText>Create</ButtonText>
