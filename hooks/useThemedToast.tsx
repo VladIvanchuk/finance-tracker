@@ -8,7 +8,7 @@ const useThemedToast = (onCloseComplete?: () => void) => {
   const showToast = (
     title: string,
     message: string,
-    action?: "warning" | "error" | "success" | "info" | "attention"
+    action?: "warning" | "error" | "success" | "info" | "attention",
   ) => {
     toast.closeAll();
     toast.show({

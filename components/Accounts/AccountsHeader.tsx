@@ -1,5 +1,5 @@
 import Colors from "@/constants/Colors";
-import { FontAwesome, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useRouter } from "expo-router";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
@@ -12,20 +12,14 @@ const AccountsHeader = () => {
     router.navigate({ pathname: "/addAccount" });
   };
   return (
-    <View style={styles.header_container}>
-      <TouchableOpacity style={styles.button}>
-        <ThemedText style={styles.button_text}>All accounts</ThemedText>
-        <FontAwesome
-          name="arrow-right"
-          size={14}
-          color={Colors.text}
-          style={{ marginTop: 1 }}
-        />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={handleLinkPress}>
+    <TouchableOpacity style={styles.header_container} onPress={handleLinkPress}>
+      <View style={styles.button}>
+        <ThemedText style={styles.button_text}>Add account</ThemedText>
+      </View>
+      <View>
         <Ionicons name="add-circle" size={32} color={Colors.text} />
-      </TouchableOpacity>
-    </View>
+      </View>
+    </TouchableOpacity>
   );
 };
 
