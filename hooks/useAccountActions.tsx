@@ -16,14 +16,14 @@ export const useAccountActions = () => {
         realm.create<Account>("Account", accountData);
       });
     },
-    [realm],
+    [realm]
   );
 
   const editAccount = useCallback(
     (accountData: IAccount) => {
       const existingAccount = realm.objectForPrimaryKey(
         Account,
-        getPrimaryKey(accountData._id),
+        getPrimaryKey(accountData._id)
       );
 
       realm.write(() => {
@@ -34,14 +34,14 @@ export const useAccountActions = () => {
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   const getAccountById = useCallback(
     (id: string | string[] | ObjectId): Account | null => {
       return realm.objectForPrimaryKey(Account, getPrimaryKey(id));
     },
-    [realm],
+    [realm]
   );
 
   const deleteAccount = useCallback(
@@ -68,7 +68,7 @@ export const useAccountActions = () => {
         }
       });
     },
-    [realm],
+    [realm]
   );
 
   return {

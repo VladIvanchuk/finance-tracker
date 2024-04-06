@@ -25,9 +25,6 @@ const AccountForm = ({
   const [isFormValidated, setIsFormValidated] = useState(true);
   const goBack = useGoBack();
   const { createAccount, editAccount } = useAccountActions();
-
-  console.log(accountData);
-
   const showToast = useThemedToast(() => setIsFormValidated(true));
 
   const handleContinue = () => {
@@ -46,13 +43,13 @@ const AccountForm = ({
     showToast(
       "Success",
       `Account ${type === "create" ? "created" : "edited"} successfully`,
-      "success",
+      "success"
     );
   };
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
-    value: string | boolean,
+    value: string | boolean
   ) => {
     setAccountData((prev) => {
       const key = type === "account" ? "accountId" : type;
@@ -82,7 +79,7 @@ const AccountForm = ({
 
       return () =>
         BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
+    }, [])
   );
 
   return (

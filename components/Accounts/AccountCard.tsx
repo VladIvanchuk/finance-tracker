@@ -2,7 +2,7 @@ import Colors, { palette } from "@/constants/Colors";
 import { AccountData } from "@/types/AccountTypes";
 import { getCurrencySymbol } from "@/utils/getCurrencySymbol";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
 import ThemedActionSheet from "../ui/ThemedActionSheet";
@@ -10,6 +10,8 @@ import { ActionsheetItem, ActionsheetItemText } from "@gluestack-ui/themed";
 import { useRouter } from "expo-router";
 import { useAccountActions } from "@/hooks/useAccountActions";
 import ThemedAlert from "../ui/ThemedAlert";
+import { baseCurrency } from "@/data/baseCurrency";
+import useCurrencies from "@/hooks/useCurrencies";
 
 const AccountCard = ({
   _id,
@@ -22,9 +24,23 @@ const AccountCard = ({
 }: AccountData) => {
   const [alertVisible, setAlertVisible] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [convertedBalance, setConvertedBalance] = useState<number | null>(null);
   const router = useRouter();
 
   const { deleteAccount } = useAccountActions();
+  const { convertToBaseCurrency } = useCurrencies();
+
+  useEffect(() => {
+    if (currency !== baseCurrency) {
+      convertToBaseCurrency(balance, currency).then((convertedBalance) => {
+        if (convertedBalance !== undefined) {
+          setConvertedBalance(convertedBalance);
+        }
+      });
+    } else {
+      setConvertedBalance(null);
+    }
+  }, [balance, currency, convertToBaseCurrency]);
 
   const handleOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -58,6 +74,12 @@ const AccountCard = ({
           <ThemedText style={styles.card_sum}>
             {balance.toFixed(2)} {getCurrencySymbol(currency)}
           </ThemedText>
+          {convertedBalance && (
+            <ThemedText style={styles.card_sum_conversion}>
+              ≈ {convertedBalance.toFixed(2)}
+              {getCurrencySymbol(baseCurrency)}
+            </ThemedText>
+          )}
         </View>
         <View style={[styles.body_text, { alignItems: "flex-end" }]}>
           <ThemedText style={styles.bank_name}>{bankName}</ThemedText>
@@ -123,4 +145,5 @@ const styles = StyleSheet.create({
   card_body: { flex: 1, flexDirection: "row", alignItems: "flex-end" },
   body_text: { flex: 1, gap: 2, justifyContent: "flex-end" },
   card_sum: { fontSize: 24, fontWeight: "600" },
+  card_sum_conversion: { fontSize: 16, fontWeight: "400", opacity: 0.6 },
 });
