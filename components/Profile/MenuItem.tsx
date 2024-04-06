@@ -2,15 +2,23 @@ import Colors from "@/constants/Colors";
 import React from "react";
 import { StyleSheet, TouchableOpacity } from "react-native";
 import ThemedText from "../ui/ThemedText";
+import { useRouter } from "expo-router";
 
 interface MenuItemProps {
   label: string;
   icon: React.ReactNode;
+  href: string;
 }
 
-const MenuItem = ({ label, icon }: MenuItemProps) => {
+const MenuItem = ({ label, icon, href }: MenuItemProps) => {
+  const router = useRouter();
+
+  const handleLinkPress = () => {
+    router.navigate({ pathname: href });
+  };
+
   return (
-    <TouchableOpacity style={styles.container}>
+    <TouchableOpacity style={styles.container} onPress={handleLinkPress}>
       {icon}
       <ThemedText style={styles.text}>{label}</ThemedText>
     </TouchableOpacity>

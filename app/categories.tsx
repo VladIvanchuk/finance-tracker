@@ -16,7 +16,6 @@ const Categories = () => {
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
   const [iconKey, setIconKey] = useState<IconNameType | null>(null);
-  const ref = React.useRef(null);
   const showToast = useThemedToast();
   const { createCategory } = useCategoryActions();
 
@@ -53,13 +52,12 @@ const Categories = () => {
         />
       </View>
       <CategoriesList type={selectedType} />
-      <View style={styles.footer} ref={ref}>
+      <View style={styles.footer}>
         <ThemedButton label="Add new" onPress={() => setShowModal(true)} />
       </View>
       <ThemedModal
         showModal={showModal}
         setShowModal={setShowModal}
-        ref={ref}
         title="New category"
         handleSubmit={handleSubmit}
         handleCancel={handleCancel}

@@ -17,7 +17,6 @@ import React from "react";
 interface ThemedModalProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
-  ref: React.MutableRefObject<null>;
   title: string;
   children: React.ReactNode;
   handleSubmit: () => void;
@@ -27,19 +26,19 @@ interface ThemedModalProps {
 const ThemedModal = ({
   showModal,
   setShowModal,
-  ref,
   title,
   children,
   handleSubmit,
   handleCancel,
 }: ThemedModalProps) => {
+  const internalRef = React.useRef(null);
   return (
     <Modal
       isOpen={showModal}
       onClose={() => {
         setShowModal(false);
       }}
-      finalFocusRef={ref}
+      finalFocusRef={internalRef}
     >
       <ModalBackdrop />
       <ModalContent style={{ shadowColor: "transparent", elevation: 0 }}>

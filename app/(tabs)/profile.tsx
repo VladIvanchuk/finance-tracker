@@ -6,7 +6,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 const Profile = () => {
-  const isAuthorized = false;
+  const isAuthorized = true;
 
   return (
     <View style={styles.container}>
@@ -39,15 +39,18 @@ const Profile = () => {
       <View style={styles.menu}>
         {isAuthorized && (
           <MenuItem
+            href=""
             label="Edit Profile"
             icon={<MaterialIcons name="edit" size={24} color={Colors.text} />}
           />
         )}
         <MenuItem
+          href="/categories"
           label="Categories"
           icon={<Entypo name="list" size={28} color={Colors.text} />}
         />
-        <MenuItem
+        {/* <MenuItem
+          href="/currencies"
           label="Currency"
           icon={
             <MaterialIcons
@@ -56,14 +59,16 @@ const Profile = () => {
               color={Colors.text}
             />
           }
-        />
+        /> */}
         {isAuthorized ? (
           <MenuItem
+            href=""
             label="Log out"
             icon={<Entypo name="log-out" size={28} color={Colors.text} />}
           />
         ) : (
           <MenuItem
+            href=""
             label="Log in"
             icon={<Entypo name="login" size={28} color={Colors.text} />}
           />
