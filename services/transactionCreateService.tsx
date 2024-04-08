@@ -8,7 +8,7 @@ import Realm from "realm";
 
 export function handleIncomeExpenseOperation(
   realm: Realm,
-  operation: ITransaction
+  operation: ITransaction,
 ) {
   const account = getAccount(realm, operation.accountId);
   const category = getCategory(realm, operation.categoryId);
@@ -21,7 +21,7 @@ export function handleIncomeExpenseOperation(
 
   const transaction = realm.create(
     "Transaction",
-    transactionData as Partial<Transaction>
+    transactionData as Partial<Transaction>,
   );
   account.transactions.push(transaction);
   updateAccountBalance(account, operation);
@@ -43,7 +43,7 @@ export function handleTransferOperation(realm: Realm, operation: ITransaction) {
 
   const transaction = realm.create(
     "Transaction",
-    transactionData as Partial<Transaction>
+    transactionData as Partial<Transaction>,
   );
   fromAccount.transactions.push(transaction);
   toAccount.transactions.push(transaction);
@@ -82,7 +82,7 @@ function transferFunds(fromAccount: Account, toAccount: Account, sum: number) {
 }
 export function getStartDateForPeriod(
   period: string,
-  earliestTransactionDate?: Date
+  earliestTransactionDate?: Date,
 ): Date {
   const now = new Date();
   switch (period) {

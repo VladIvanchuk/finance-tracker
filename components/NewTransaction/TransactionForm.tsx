@@ -1,12 +1,10 @@
 import { usePopToTop } from "@/hooks/usePopToTop";
-import useThemedToast from "@/hooks/useThemedToast";
-import { useTransactionActions } from "@/hooks/useTransactionActions";
+import { useTransactionForm } from "@/hooks/useTransactionForm";
 import { AccountItemType } from "@/types/AccountTypes";
 import { ITransaction, TransactionItemType } from "@/types/TransactionTypes";
 import { getTransactionColor } from "@/utils/getTransactionColor";
-import { useFocusEffect } from "expo-router";
-import React, { useCallback, useEffect, useState } from "react";
-import { BackHandler, StyleSheet, View } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, View } from "react-native";
 import ThemedAlert from "../ui/ThemedAlert";
 import NewTransactionBody from "./NewTransactionBody";
 import NewTransactionFooter from "./NewTransactionFooter";
@@ -22,63 +20,17 @@ const TransactionForm = ({
   setTransaction: React.Dispatch<React.SetStateAction<ITransaction>>;
 }) => {
   const [alertVisible, setAlertVisible] = useState(false);
-  const [isFormValidated, setIsFormValidated] = useState(true);
-  const { createTransaction, editTransaction } = useTransactionActions();
+  const [currencyAlertVisible, setCurrencyAlertVisible] = useState(false);
   const popToTop = usePopToTop();
 
-  const showToast = useThemedToast(() => setIsFormValidated(true));
-
-  const handleContinue = () => {
-    if (
-      !operation.sum ||
-      isNaN(Number(operation.sum)) ||
-      Number(operation.sum) <= 0
-    ) {
-      showToast(
-        "Invalid data",
-        `Please enter a valid ${operation.type} sum.`,
-        "error",
-      );
-      setIsFormValidated(false);
-      return;
-    }
-    if (operation.type === "transfer") {
-      if (
-        operation.fromAccountId === undefined ||
-        operation.toAccountId === undefined
-      ) {
-        showToast(
-          "Invalid data",
-          "Please select both source and destination accounts.",
-          "error",
-        );
-        setIsFormValidated(false);
-        return;
-      }
-    } else {
-      if (!operation.categoryId) {
-        showToast("Invalid data", "Please select a category.", "error");
-        setIsFormValidated(false);
-        return;
-      }
-      if (operation.accountId === undefined) {
-        showToast("Invalid data", "Please select an account.", "error");
-        setIsFormValidated(false);
-        return;
-      }
-    }
-    type === "create"
-      ? createTransaction(operation)
-      : editTransaction(operation);
-    popToTop();
-    showToast(
-      "Success",
-      `${
-        operation.type.charAt(0).toUpperCase() + operation.type.slice(1)
-      } ${type === "create" ? "created" : "edited"} successfully`,
-      "success",
-    );
-  };
+  const { handleContinue, convertCurrency, isFormValidated, accountCurrency } =
+    useTransactionForm({
+      operation,
+      setTransaction,
+      type,
+      setCurrencyAlertVisible,
+      setAlertVisible,
+    });
 
   const handleValueChange = (
     type: TransactionItemType | AccountItemType,
@@ -96,24 +48,6 @@ const TransactionForm = ({
       backgroundColor: getTransactionColor(operation.type),
     },
   });
-
-  useEffect(() => {
-    setIsFormValidated(true);
-  }, [operation]);
-
-  useFocusEffect(
-    useCallback(() => {
-      const onBackPress = () => {
-        setAlertVisible(true);
-        return true;
-      };
-
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
-
-      return () =>
-        BackHandler.removeEventListener("hardwareBackPress", onBackPress);
-    }, []),
-  );
 
   return (
     <View style={dynamicStyles.screen_wrapper}>
@@ -139,6 +73,17 @@ const TransactionForm = ({
         action={() => {
           setAlertVisible(false);
           popToTop();
+        }}
+      />
+      <ThemedAlert
+        visible={currencyAlertVisible}
+        title="Currency conversion"
+        message={`You are trying to add a ${operation.currency} transaction to a ${accountCurrency} account. The amount will be converted automatically.`}
+        onClose={() => setCurrencyAlertVisible(false)}
+        type="confirm"
+        action={() => {
+          convertCurrency();
+          setCurrencyAlertVisible(false);
         }}
       />
     </View>

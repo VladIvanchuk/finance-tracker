@@ -74,7 +74,7 @@ const AccountCard = ({
           <ThemedText style={styles.card_sum}>
             {balance.toFixed(2)} {getCurrencySymbol(currency)}
           </ThemedText>
-          {convertedBalance && (
+          {convertedBalance !== null && balance !== 0 && (
             <ThemedText style={styles.card_sum_conversion}>
               ≈ {convertedBalance.toFixed(2)}
               {getCurrencySymbol(baseCurrency)}

@@ -16,15 +16,50 @@ const useCurrencies = () => {
 
   const convertToBaseCurrency = async (
     amount: number,
-    currency: CurrencyType
+    currency: CurrencyType,
   ): Promise<number | null> => {
     if (currency === baseCurrency) return null;
 
     const rate = await fetchCurrencyRate(currency);
+
     return rate ? amount * rate : null;
   };
 
-  return { convertToBaseCurrency };
+  const convertCurrencies = async (
+    amount: number,
+    fromCurrency: CurrencyType,
+    toCurrency: CurrencyType,
+  ): Promise<number | null> => {
+    try {
+      if (fromCurrency === "UAH") {
+        const toCurrencyRateToUah = await fetchCurrencyRate(toCurrency);
+        if (toCurrencyRateToUah) {
+          return amount / toCurrencyRateToUah;
+        } else {
+          return null;
+        }
+      } else if (toCurrency === "UAH") {
+        return await convertToBaseCurrency(amount, fromCurrency);
+      } else {
+        const fromCurrencyRateToUah = await fetchCurrencyRate(fromCurrency);
+        const toCurrencyRateToUah = await fetchCurrencyRate(toCurrency);
+
+        if (fromCurrencyRateToUah && toCurrencyRateToUah) {
+          const amountInUah = amount * fromCurrencyRateToUah;
+          const convertedAmount = amountInUah / toCurrencyRateToUah;
+
+          return convertedAmount;
+        } else {
+          return null;
+        }
+      }
+    } catch (error) {
+      console.error("Error converting currencies:", error);
+      return null;
+    }
+  };
+
+  return { convertToBaseCurrency, convertCurrencies };
 };
 
 export default useCurrencies;

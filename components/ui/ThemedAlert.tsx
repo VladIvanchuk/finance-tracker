@@ -15,7 +15,7 @@ import {
 import React, { ReactElement } from "react";
 import ThemedButton from "./ThemedButton";
 
-type ThemedAlertType = "delete" | "exit" | "info";
+type ThemedAlertType = "delete" | "exit" | "info" | "confirm";
 
 interface ThemedAlertProps {
   visible: boolean;
@@ -47,6 +47,17 @@ const ThemedAlert = ({
     switch (type) {
       case "info":
         return <ThemedButton action="secondary" onPress={onClose} label="Ok" />;
+      case "confirm":
+        return (
+          <>
+            <ThemedButton action="secondary" onPress={onClose} label="Cancel" />
+            <ThemedButton
+              action="positive"
+              onPress={handleAction}
+              label="Confirm"
+            />
+          </>
+        );
       case "exit":
         return (
           <>
