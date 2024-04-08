@@ -28,7 +28,7 @@ const TransactionViewHeader = ({
         ]}
       >
         <ThemedText style={styles.sum}>
-          {sum} {getCurrencySymbol(currency)}
+          {sum.toFixed(2)} {getCurrencySymbol(currency)}
         </ThemedText>
         <ThemedText style={styles.date}>
           {formatFullDate(date.toISOString())}

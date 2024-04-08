@@ -18,18 +18,37 @@ import {
 import { useCallback } from "react";
 import "react-native-get-random-values";
 import { useDatabase } from "./useDatabase";
+import useCurrencies from "./useCurrencies";
+import { baseCurrency } from "@/data/baseCurrency";
+import { TransactionType } from "@/types/TransactionTypes";
 
-interface CategorySumEntry {
+interface CategorySum {
   category: Category;
   sum: number;
 }
 
-type AccumulatorType = {
-  [categoryId: string]: CategorySumEntry;
-};
+interface CategorySums {
+  [key: string]: CategorySum;
+}
 
 export const useStatisticsAction = () => {
   const { realm } = useDatabase();
+
+  const { convertToBaseCurrency } = useCurrencies();
+
+  const convertCurrency = useCallback(
+    async (amount: number, account?: Account) => {
+      if (account && account.currency !== baseCurrency) {
+        const convertedAmount = await convertToBaseCurrency(
+          amount,
+          account.currency,
+        );
+        return convertedAmount ? convertedAmount : 0;
+      }
+      return amount;
+    },
+    [convertToBaseCurrency, baseCurrency],
+  );
 
   const getTransactionsByPeriodAndType = useCallback(
     (
@@ -52,51 +71,61 @@ export const useStatisticsAction = () => {
     },
     [realm],
   );
-  const getCategoriesWithAmountsByPeriodAndType = useCallback(
-    (
+  const getCategoriesAmountsByPeriodAndType = useCallback(
+    async (
       period: string,
       type: StatisticType,
-    ): Array<{ category: Category; sum: number }> | null => {
+    ): Promise<Array<{ category: Category; sum: number }> | null> => {
       const transactions = getTransactionsByPeriodAndType(period, type);
-      if (!transactions) {
-        return null;
-      }
+      if (!transactions || transactions.length === 0) return null;
 
-      const categorySums = transactions.reduce<AccumulatorType>(
+      const convertedTransactions = await Promise.all(
+        transactions.map(async (transaction) => ({
+          ...transaction,
+          sum: await convertCurrency(transaction.sum, transaction.account),
+        })),
+      );
+
+      const categorySums = convertedTransactions.reduce<CategorySums>(
         (acc, transaction) => {
           if (transaction.category) {
             const categoryId = transaction.category._id.toString();
-            if (categoryId) {
-              if (!acc[categoryId]) {
-                acc[categoryId] = { category: transaction.category, sum: 0 };
-              }
-              acc[categoryId].sum += transaction.sum;
+            if (!acc[categoryId]) {
+              acc[categoryId] = { category: transaction.category, sum: 0 };
             }
+            acc[categoryId].sum += transaction.sum;
           }
           return acc;
         },
         {},
       );
 
-      const result = Object.keys(categorySums).map((key) => ({
-        category: categorySums[key].category,
-        sum: categorySums[key].sum,
+      const result = Object.values(categorySums).map((entry) => ({
+        category: entry.category,
+        sum: entry.sum,
       }));
 
       return result;
     },
-    [getTransactionsByPeriodAndType],
+    [getTransactionsByPeriodAndType, convertCurrency],
   );
 
   const getChartData = useCallback(
-    (period: Period, type: StatisticType): ChartData | null => {
+    async (period: Period, type: StatisticType): Promise<ChartData | null> => {
       const transactions = getTransactionsByPeriodAndType(period, type);
       if (!transactions || transactions.length === 0) return null;
 
-      const earliestTransactionDate = transactions.reduce(
+      const convertedTransactions = await Promise.all(
+        transactions.map(async (transaction) => ({
+          ...transaction,
+          sum: await convertCurrency(transaction.sum, transaction.account),
+        })),
+      );
+
+      const earliestTransactionDate = convertedTransactions.reduce(
         (earliest, transaction) =>
           transaction.date < earliest ? transaction.date : earliest,
-        transactions[0].date,
+        convertedTransactions[0].date,
       );
 
       const startDate = getStartDateForPeriod(
@@ -109,7 +138,10 @@ export const useStatisticsAction = () => {
       let groupedData: GroupedData = {};
 
       if (period === "1W") {
-        groupedData = handleTransactionsForWeek(transactions, period);
+        groupedData = handleTransactionsForWeek(
+          convertedTransactions as Transaction[],
+          period,
+        );
         labels = daysOfWeek;
       } else {
         const totalDays = calculateTotalDays(startDate, endDate);
@@ -119,7 +151,7 @@ export const useStatisticsAction = () => {
           period,
         );
         groupedData = handleTransactionsForOtherPeriods(
-          transactions,
+          convertedTransactions as Transaction[],
           startDate,
           labels,
           groupedData,
@@ -144,109 +176,68 @@ export const useStatisticsAction = () => {
     [],
   );
 
-  const getTotalBalance = useCallback(() => {
-    let totalBalance = 0;
-
+  const getTotalBalance = useCallback(async () => {
     const accounts = realm
       .objects<Account>("Account")
       .filtered("disregard != true");
-
+    let totalBalance = 0;
     for (const account of accounts) {
-      totalBalance += account.balance;
+      totalBalance += await convertCurrency(account.balance, account);
     }
-
     return totalBalance.toFixed(2);
-  }, [realm]);
+  }, [realm, convertCurrency]);
 
-  const getTotalIncome = useCallback(() => {
-    let totalIncome = 0;
-
-    const transactions = realm
-      .objects<Transaction>("Transaction")
-      .filtered("account.disregard != true AND type = 'income'");
-
-    transactions.forEach((transaction) => {
-      if (transaction.type === "income") {
-        totalIncome += transaction.sum;
-      }
-    });
-
-    return totalIncome.toFixed(2);
-  }, [realm]);
-
-  const getTotalExpense = useCallback(() => {
-    let totalExpense = 0;
-
-    const transactions = realm
-      .objects<Transaction>("Transaction")
-      .filtered("account.disregard != true AND type = 'expense'");
-
-    transactions.forEach((transaction) => {
-      if (transaction.type === "expense") {
-        totalExpense += transaction.sum;
-      }
-    });
-
-    return totalExpense.toFixed(2);
-  }, [realm]);
-
-  const getTotalIncomeByMonth = useCallback(
-    (month: number, year: number) => {
-      let totalIncome = 0;
-
+  const getMonthlyTransactions = useCallback(
+    (type: TransactionType, month: number, year: number) => {
       const startOfMonth = new Date(year, month, 1);
       const endOfMonth = new Date(year, month + 1, 0);
-
-      const transactions = realm
+      return realm
         .objects<Transaction>("Transaction")
         .filtered(
-          "account.disregard != true AND type = 'income'",
-          "date >= $0 AND date < $1 AND type = 'income'",
+          "type = $0 AND date >= $1 AND date <= $2 AND account.disregard != true",
+          type,
           startOfMonth,
           endOfMonth,
         );
-
-      transactions.forEach((transaction) => {
-        totalIncome += transaction.sum;
-      });
-
-      return totalIncome.toFixed(2);
     },
     [realm],
   );
 
-  const getTotalExpenseByMonth = useCallback(
-    (month: number, year: number) => {
-      let totalExpense = 0;
-
-      const startOfMonth = new Date(year, month, 1);
-      const endOfMonth = new Date(year, month + 1, 0);
-
-      const transactions = realm
-        .objects<Transaction>("Transaction")
-        .filtered(
-          "account.disregard != true AND type = 'expense'",
-          "date >= $0 AND date < $1 AND type = 'expense'",
-          startOfMonth,
-          endOfMonth,
+  const getTotalIncomeByMonth = useCallback(
+    async (month: number, year: number) => {
+      let totalIncome = 0;
+      const transactions = getMonthlyTransactions("income", month, year);
+      for (const transaction of transactions) {
+        totalIncome += await convertCurrency(
+          transaction.sum,
+          transaction.account,
         );
+      }
+      return totalIncome.toFixed(2);
+    },
+    [getMonthlyTransactions, convertCurrency],
+  );
 
-      transactions.forEach((transaction) => {
-        totalExpense += transaction.sum;
-      });
-
+  const getTotalExpenseByMonth = useCallback(
+    async (month: number, year: number) => {
+      let totalExpense = 0;
+      const transactions = getMonthlyTransactions("expense", month, year);
+      for (const transaction of transactions) {
+        totalExpense += await convertCurrency(
+          transaction.sum,
+          transaction.account,
+        );
+      }
       return totalExpense.toFixed(2);
     },
-    [realm],
+    [getMonthlyTransactions, convertCurrency],
   );
 
   return {
     getTransactionsByPeriodAndType,
-    getCategoriesWithAmountsByPeriodAndType,
+    getCategoriesAmountsByPeriodAndType,
     getChartData,
     getTotalBalance,
-    getTotalIncome,
-    getTotalExpense,
     getTotalIncomeByMonth,
     getTotalExpenseByMonth,
   };

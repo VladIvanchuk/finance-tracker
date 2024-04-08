@@ -13,7 +13,7 @@ const initializeGroupedDataForWeek = (labels: string[]): GroupedData =>
   }, {});
 
 export const handleTransactionsForWeek = (
-  transactions: Realm.Results<Transaction>,
+  transactions: Transaction[],
   period: Period,
 ): GroupedData => {
   const groupedData = initializeGroupedDataForWeek(daysOfWeek);
@@ -48,7 +48,7 @@ export const initializeGroupedDataForOtherPeriods = (
 };
 
 export const handleTransactionsForOtherPeriods = (
-  transactions: Realm.Results<Transaction>,
+  transactions: Transaction[],
   startDate: Date,
   labels: string[],
   groupedData: GroupedData,

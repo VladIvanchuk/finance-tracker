@@ -17,14 +17,15 @@ const TotalBalance = ({ scrollY }: { scrollY: Animated.Value }) => {
   const { realm } = useDatabase();
 
   useEffect(() => {
-    const updateBalance = () => {
-      setTotalBalance(getTotalBalance());
+    const updateBalance = async () => {
+      const balance = await getTotalBalance();
+      setTotalBalance(balance);
     };
 
     const transactions = realm.objects<Transaction>("Transaction");
-    transactions.addListener(updateBalance);
-
     const accounts = realm.objects<Account>("Account");
+
+    transactions.addListener(updateBalance);
     accounts.addListener(updateBalance);
 
     updateBalance();

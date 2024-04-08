@@ -28,7 +28,7 @@ const Statistics = () => {
   const [isTransactionsLoading, setIsTransactionsLoading] = useState(true);
   const {
     getTransactionsByPeriodAndType,
-    getCategoriesWithAmountsByPeriodAndType,
+    getCategoriesAmountsByPeriodAndType,
     getChartData,
   } = useStatisticsAction();
 
@@ -37,7 +37,7 @@ const Statistics = () => {
   }, [type]);
 
   useEffect(() => {
-    const updateTransactions = () => {
+    const updateTransactions = async () => {
       const fetchedTransactions = getTransactionsByPeriodAndType(
         selectedPeriod,
         selectedType,
@@ -45,7 +45,7 @@ const Statistics = () => {
       setTransactions(fetchedTransactions);
 
       setIsChartDataLoading(true);
-      const fetchedChartData = getChartData(selectedPeriod, selectedType);
+      const fetchedChartData = await getChartData(selectedPeriod, selectedType);
       setChartData(fetchedChartData);
 
       setIsTransactionsLoading(false);
@@ -72,16 +72,22 @@ const Statistics = () => {
   }, [selectedPeriod, selectedType]);
 
   useEffect(() => {
-    const fetchedCategories = getCategoriesWithAmountsByPeriodAndType(
-      selectedPeriod,
-      selectedType,
-    );
-    setCategories(fetchedCategories);
+    const fetchCategories = async () => {
+      const fetchedCategories = await getCategoriesAmountsByPeriodAndType(
+        selectedPeriod,
+        selectedType,
+      );
+      setCategories(fetchedCategories);
+    };
+    fetchCategories();
   }, [selectedPeriod, selectedType]);
 
   useEffect(() => {
-    const fetchedChartData = getChartData(selectedPeriod, selectedType);
-    setChartData(fetchedChartData);
+    const fetchChartData = async () => {
+      const fetchedChartData = await getChartData(selectedPeriod, selectedType);
+      setChartData(fetchedChartData);
+    };
+    fetchChartData();
   }, [selectedPeriod, selectedType]);
 
   return (

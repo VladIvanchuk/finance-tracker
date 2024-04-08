@@ -52,7 +52,7 @@ const StatsChart = ({
         height={220}
         withInnerLines={false}
         withOuterLines={false}
-        yAxisSuffix="$"
+        yAxisSuffix="₴"
         chartConfig={{
           backgroundGradientFrom: Colors.tabBarColor,
           backgroundGradientTo: Colors.tabBarColor,

@@ -11,14 +11,15 @@ import { useRouter } from "expo-router";
 import { useStatisticsAction } from "@/hooks/useStatisticsAction";
 
 const Activity = () => {
-  const { selectedMonth, selectedYear } = useMonthContext();
-  const router = useRouter();
-
-  const { getTotalExpenseByMonth, getTotalIncomeByMonth } =
-    useStatisticsAction();
   const [totalIncome, setTotalIncome] = useState("");
   const [totalExpense, setTotalExpense] = useState("");
 
+  const { selectedMonth, selectedYear } = useMonthContext();
+
+  const { getTotalExpenseByMonth, getTotalIncomeByMonth } =
+    useStatisticsAction();
+
+  const router = useRouter();
   const { realm } = useDatabase();
 
   const handleLinkPress = (type: "income" | "expense") => {
@@ -26,9 +27,11 @@ const Activity = () => {
   };
 
   useEffect(() => {
-    const updateBalance = () => {
-      setTotalExpense(getTotalExpenseByMonth(selectedMonth, selectedYear));
-      setTotalIncome(getTotalIncomeByMonth(selectedMonth, selectedYear));
+    const updateBalance = async () => {
+      const income = await getTotalIncomeByMonth(selectedMonth, selectedYear);
+      const expense = await getTotalExpenseByMonth(selectedMonth, selectedYear);
+      setTotalIncome(income);
+      setTotalExpense(expense);
     };
 
     const transactions = realm.objects<Transaction>("Transaction");
