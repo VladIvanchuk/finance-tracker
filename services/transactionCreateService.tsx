@@ -31,10 +31,6 @@ export function handleTransferOperation(realm: Realm, operation: ITransaction) {
   const fromAccount = getAccount(realm, operation.fromAccountId);
   const toAccount = getAccount(realm, operation.toAccountId);
 
-  if (fromAccount.balance < operation.sum) {
-    throw new Error("Insufficient balance in FromAccount");
-  }
-
   const transactionData = {
     ...operation,
     fromAccount: fromAccount,

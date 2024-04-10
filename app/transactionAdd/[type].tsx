@@ -1,3 +1,4 @@
+import "react-native-get-random-values";
 import TransactionForm from "@/components/NewTransaction/TransactionForm";
 import {
   CurrencyType,
@@ -7,7 +8,6 @@ import {
 import { getTransactionColor } from "@/utils/getTransactionColor";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
-import "react-native-get-random-values";
 import { BSON } from "realm";
 
 const getInitialData = (type: TransactionType): ITransaction => {

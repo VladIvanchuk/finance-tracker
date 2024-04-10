@@ -2,7 +2,7 @@ import useCurrencies from "@/hooks/useCurrencies";
 import { usePopToTop } from "@/hooks/usePopToTop";
 import useThemedToast from "@/hooks/useThemedToast";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
-import { ITransaction } from "@/types/TransactionTypes";
+import { CurrencyType, ITransaction } from "@/types/TransactionTypes";
 import { useFocusEffect } from "expo-router";
 import React, { useCallback, useEffect, useState } from "react";
 import { BackHandler } from "react-native";
@@ -31,9 +31,13 @@ export const useTransactionForm = ({
   const popToTop = usePopToTop();
   const { getAccountById } = useAccountActions();
 
-  const accountCurrency = operation.accountId
-    ? getAccountById(operation.accountId)?.currency
-    : null;
+  let accountCurrency: CurrencyType | null = null;
+
+  if (operation.accountId) {
+    accountCurrency = getAccountById(operation.accountId)?.currency ?? null;
+  } else if (operation.toAccountId) {
+    accountCurrency = getAccountById(operation.toAccountId)?.currency ?? null;
+  }
 
   const executeTransaction = () => {
     const transactionMethod =
@@ -51,6 +55,11 @@ export const useTransactionForm = ({
     const amount = operation.sum;
     const fromCurrency = operation.currency;
     const toCurrency = accountCurrency;
+
+    if (operation.type === "transfer") {
+      setShouldExecute(true);
+      return;
+    }
 
     if (!amount || !fromCurrency || !toCurrency) {
       return;
@@ -97,6 +106,18 @@ export const useTransactionForm = ({
       return;
     }
     if (operation.type === "transfer") {
+      if (operation.fromAccountId) {
+        const sourceAccount = getAccountById(operation.fromAccountId);
+        if (sourceAccount && sourceAccount.balance < operation.sum) {
+          showToast(
+            "Insufficient balance",
+            "Insufficient balance in source account.",
+            "error",
+          );
+          setIsFormValidated(false);
+          return;
+        }
+      }
       if (
         operation.fromAccountId === undefined ||
         operation.toAccountId === undefined
