@@ -94,7 +94,7 @@ const RootLayoutNav = () => {
         <Stack.Screen
           name="login"
           options={{
-            title: "Sign in",
+            title: "Sign In",
             headerStyle: {
               backgroundColor: Colors.background,
             },
@@ -106,7 +106,7 @@ const RootLayoutNav = () => {
         <Stack.Screen
           name="register"
           options={{
-            title: "Sign up",
+            title: "Sign Up",
             headerStyle: {
               backgroundColor: Colors.background,
             },
