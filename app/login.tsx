@@ -20,10 +20,12 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (result.operation === "logIn" && result.error) {
-      showToast("Authentication error:", result.error.message, "error");
-    } else if (result.success) {
-      showToast("Login successful", "You are logged in now", "success");
+    if (result.operation === "logIn") {
+      if (result.error) {
+        showToast("Authentication error:", result.error.message, "error");
+      } else if (result.success) {
+        showToast("Login successful", "You are logged in now", "success");
+      }
     }
   }, [result]);
 

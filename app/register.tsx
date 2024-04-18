@@ -26,10 +26,16 @@ const Register = () => {
   }, [result, logIn, email, password]);
 
   useEffect(() => {
-    if (result.operation === "register" && result.error) {
-      showToast("Registration error:", result.error.message, "error");
-    } else if (result.success) {
-      showToast("Registration successful", "You are logged in now", "success");
+    if (result.operation === "register") {
+      if (result.error) {
+        showToast("Registration error:", result.error.message, "error");
+      } else if (result.success) {
+        showToast(
+          "Registration successful",
+          "You are logged in now",
+          "success"
+        );
+      }
     }
   }, [result]);
 
