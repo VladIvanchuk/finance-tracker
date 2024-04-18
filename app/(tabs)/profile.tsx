@@ -1,14 +1,17 @@
 import MenuItem from "@/components/Profile/MenuItem";
 import ThemedText from "@/components/ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
-import { app, logout } from "@/services/authService";
+import useThemedToast from "@/hooks/useThemedToast";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { useAuth, useUser } from "@realm/react";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 const Profile = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
-  const user = app.currentUser!;
+  const user = useUser();
+  const { logOut } = useAuth();
+  const showToast = useThemedToast();
 
   useEffect(() => {
     if (user && user.identities[0].providerType !== "anon-user") {
@@ -16,10 +19,24 @@ const Profile = () => {
     }
   }, [user]);
 
-  const handleLogout = async () => {
-    await logout();
-    setIsAuthorized(false);
+  const handleLogout = () => {
+    try {
+      if (!user) {
+        showToast("No user is currently logged in.", "", "info");
+        return;
+      }
+      logOut();
+      showToast("Logged out successfully", "You are logged out now", "success");
+    } catch (error) {
+      console.error("Logout error:", error);
+      showToast(
+        "Logout failed:",
+        error instanceof Error ? error.message : String(error),
+        "error",
+      );
+    }
   };
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>

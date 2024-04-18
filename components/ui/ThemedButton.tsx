@@ -1,4 +1,4 @@
-import { Button, ButtonText, View } from "@gluestack-ui/themed";
+import { Button, ButtonSpinner, ButtonText, View } from "@gluestack-ui/themed";
 import React from "react";
 
 interface ThemedButtonProps {
@@ -9,6 +9,7 @@ interface ThemedButtonProps {
   onPress?: () => void;
   isDisabled?: boolean;
   action?: "primary" | "secondary" | "positive" | "negative" | "default";
+  isLoading?: boolean;
 }
 
 const ThemedButton = ({
@@ -17,7 +18,8 @@ const ThemedButton = ({
   size,
   bg,
   onPress,
-  isDisabled,
+  isDisabled = false,
+  isLoading = false,
   action,
 }: ThemedButtonProps) => {
   const backgroundColor = action || bg ? bg : "$blue600";
@@ -28,13 +30,14 @@ const ThemedButton = ({
         size={size ?? "md"}
         variant="solid"
         action={action}
-        isDisabled={isDisabled}
+        isDisabled={isLoading ?? isDisabled}
         isFocusVisible={false}
         borderRadius="$xl"
         onPress={onPress}
         {...(backgroundColor && { bg: backgroundColor })}
       >
-        <ButtonText>{label}</ButtonText>
+        {isLoading && <ButtonSpinner mr="$1" />}
+        <ButtonText>{isLoading ? "Please wait..." : label}</ButtonText>
       </Button>
     </View>
   );

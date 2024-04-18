@@ -3,29 +3,38 @@ import ThemedInput from "@/components/ui/ThemedInput";
 import ThemedText from "@/components/ui/ThemedText";
 import Colors from "@/constants/Colors";
 import useThemedToast from "@/hooks/useThemedToast";
-import { register } from "@/services/authService";
-import { Link, useRouter } from "expo-router";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { AuthOperationName, useEmailPasswordAuth } from "@realm/react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 const Register = () => {
+  const { register, result, logIn } = useEmailPasswordAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const showToast = useThemedToast();
 
-  const handleRegister = async () => {
-    try {
-      await register(email, password);
-      showToast("Registration successful", "You are logged in now", "success");
-      router.navigate({ pathname: "profile" });
-    } catch (error) {
-      showToast(
-        "Registration error:",
-        error instanceof Error ? error.message : String(error),
-        "error",
-      );
+  const handleRegister = () => {
+    register({ email, password });
+  };
+
+  useEffect(() => {
+    if (result.success && result.operation === AuthOperationName.Register) {
+      logIn({ email, password });
     }
+  }, [result, logIn, email, password]);
+
+  useEffect(() => {
+    if (result.operation === "register" && result.error) {
+      showToast("Registration error:", result.error.message, "error");
+    } else if (result.success) {
+      showToast("Registration successful", "You are logged in now", "success");
+    }
+  }, [result]);
+
+  const navigateToLogin = () => {
+    router.navigate({ pathname: "login" });
   };
 
   return (
@@ -36,12 +45,16 @@ const Register = () => {
         onChange={(e) => setPassword(e)}
         placeholder="Password"
       />
-      <ThemedButton label="Sign Up" onPress={handleRegister} />
+      <ThemedButton
+        isLoading={result.pending}
+        label="Sign Up"
+        onPress={handleRegister}
+      />
       <View style={styles.footer}>
         <ThemedText>Already have an account?</ThemedText>
-        <Link style={styles.link} href="/login">
-          Sign In
-        </Link>
+        <TouchableOpacity onPress={navigateToLogin}>
+          <ThemedText style={styles.link}>Sign In</ThemedText>
+        </TouchableOpacity>
       </View>
     </View>
   );

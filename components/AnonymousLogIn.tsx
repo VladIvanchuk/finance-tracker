@@ -1,15 +1,16 @@
 import Colors from "@/constants/Colors";
 import { useAuth } from "@realm/react";
 import React, { useEffect } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
-import ThemedText from "./ui/ThemedText";
+import { ActivityIndicator, Text, View } from "react-native";
 
 export const AnonymousLogIn = () => {
   const { logInWithAnonymous, result } = useAuth();
 
   useEffect(() => {
-    logInWithAnonymous();
-  }, []);
+    if (!result.pending) {
+      logInWithAnonymous();
+    }
+  }, [result.pending]);
 
   return (
     <View
@@ -20,7 +21,6 @@ export const AnonymousLogIn = () => {
         justifyContent: "center",
       }}
     >
-      {!result.error && <ThemedText>Please wait</ThemedText>}
       <View>
         {result.pending && <ActivityIndicator />}
         {result.error && <Text>{result.error.message}</Text>}

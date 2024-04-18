@@ -3,7 +3,7 @@ import { theme } from "@/constants/theme";
 import { DatabaseProvider } from "@/context/DatabaseContext";
 import { MonthProvider } from "@/context/MonthContext";
 import schemas from "@/schemas/schemas";
-import { appId } from "@/services/authService";
+import { appId } from "@/services/realmService";
 import { config } from "@gluestack-ui/config";
 import { GluestackUIProvider } from "@gluestack-ui/themed";
 import { ThemeProvider } from "@react-navigation/native";

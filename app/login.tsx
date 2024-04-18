@@ -3,29 +3,32 @@ import ThemedInput from "@/components/ui/ThemedInput";
 import ThemedText from "@/components/ui/ThemedText";
 import Colors from "@/constants/Colors";
 import useThemedToast from "@/hooks/useThemedToast";
-import { login } from "@/services/authService";
-import { Link, useRouter } from "expo-router";
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { useEmailPasswordAuth } from "@realm/react";
+import { useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 
 const Login = () => {
+  const { logIn, result } = useEmailPasswordAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
   const showToast = useThemedToast();
 
-  const handleLogin = async () => {
-    try {
-      await login(email, password);
+  const handleLogin = () => {
+    logIn({ email, password });
+  };
+
+  useEffect(() => {
+    if (result.operation === "logIn" && result.error) {
+      showToast("Authentication error:", result.error.message, "error");
+    } else if (result.success) {
       showToast("Login successful", "You are logged in now", "success");
-      router.navigate({ pathname: "profile" });
-    } catch (error) {
-      showToast(
-        "Authentication error:",
-        error instanceof Error ? error.message : String(error),
-        "error",
-      );
     }
+  }, [result]);
+
+  const navigateToRegister = () => {
+    router.navigate({ pathname: "register" });
   };
 
   return (
@@ -36,12 +39,16 @@ const Login = () => {
         onChange={(e) => setPassword(e)}
         placeholder="Password"
       />
-      <ThemedButton label="Sign In" onPress={handleLogin} />
+      <ThemedButton
+        isLoading={result.pending}
+        label="Sign In"
+        onPress={handleLogin}
+      />
       <View style={styles.footer}>
         <ThemedText>Don&apos;t have an account?</ThemedText>
-        <Link style={styles.link} href="/register">
-          Sign Up
-        </Link>
+        <TouchableOpacity onPress={navigateToRegister}>
+          <ThemedText style={styles.link}> Sign Up</ThemedText>
+        </TouchableOpacity>
       </View>
     </View>
   );
