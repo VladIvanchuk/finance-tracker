@@ -15,6 +15,7 @@ export type AccountType =
 
 export interface IAccount {
   _id: BSON.ObjectId;
+  owner_id: string;
   createdAt: Date;
   name: string;
   type: AccountType;

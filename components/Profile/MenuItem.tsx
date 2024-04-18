@@ -7,10 +7,11 @@ import { useRouter } from "expo-router";
 interface MenuItemProps {
   label: string;
   icon: React.ReactNode;
-  href: string;
+  href?: string;
+  onPress?: () => void;
 }
 
-const MenuItem = ({ label, icon, href }: MenuItemProps) => {
+const MenuItem = ({ label, icon, href, onPress }: MenuItemProps) => {
   const router = useRouter();
 
   const handleLinkPress = () => {
@@ -18,7 +19,10 @@ const MenuItem = ({ label, icon, href }: MenuItemProps) => {
   };
 
   return (
-    <TouchableOpacity style={styles.container} onPress={handleLinkPress}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress ?? handleLinkPress}
+    >
       {icon}
       <ThemedText style={styles.text}>{label}</ThemedText>
     </TouchableOpacity>

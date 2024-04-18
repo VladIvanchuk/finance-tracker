@@ -24,6 +24,7 @@ export type IconNameType =
 
 export interface ITransaction {
   _id: BSON.ObjectId;
+  owner_id: string;
   type: TransactionType;
   sum: number;
   currency: CurrencyType;
@@ -38,6 +39,7 @@ export interface ITransaction {
 
 export interface TransactionData {
   _id: BSON.ObjectId;
+  owner_id: string;
   type: TransactionType;
   sum: number;
   currency: CurrencyType;
@@ -56,6 +58,7 @@ export type CurrencyType = "USD" | "EUR" | "UAH";
 
 export interface BaseTransaction {
   _id: BSON.ObjectId;
+  owner_id: string;
   type: TransactionType;
   sum: number;
   currency: CurrencyType;

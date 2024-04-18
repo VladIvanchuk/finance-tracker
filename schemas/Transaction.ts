@@ -5,6 +5,7 @@ import { Category } from "./Category";
 
 export class Transaction extends Realm.Object<Transaction> {
   _id!: BSON.ObjectId;
+  owner_id!: string;
   type!: TransactionType;
   sum!: number;
   currency!: CurrencyType;
@@ -18,8 +19,10 @@ export class Transaction extends Realm.Object<Transaction> {
 
   static schema: ObjectSchema = {
     name: "Transaction",
+    primaryKey: "_id",
     properties: {
       _id: "objectId",
+      owner_id: "string",
       type: "string",
       sum: "double",
       currency: "string",
@@ -31,6 +34,5 @@ export class Transaction extends Realm.Object<Transaction> {
       fromAccount: "Account?",
       toAccount: "Account?",
     },
-    primaryKey: "_id",
   };
 }

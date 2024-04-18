@@ -1,22 +1,35 @@
 import MenuItem from "@/components/Profile/MenuItem";
 import ThemedText from "@/components/ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
+import { app, logout } from "@/services/authService";
 import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 
 const Profile = () => {
-  const isAuthorized = true;
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const user = app.currentUser!;
 
+  useEffect(() => {
+    if (user && user.identities[0].providerType !== "anon-user") {
+      setIsAuthorized(user.isLoggedIn ?? false);
+    }
+  }, [user]);
+
+  const handleLogout = async () => {
+    await logout();
+    setIsAuthorized(false);
+  };
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         {isAuthorized ? (
           <>
-            <View style={styles.headerPhoto}></View>
             <View style={styles.headerText}>
-              <ThemedText style={styles.headerTitle}>Username</ThemedText>
-              <ThemedText style={styles.headerName}>Vlad Ivanchuk</ThemedText>
+              <ThemedText style={styles.headerWarning}>Hello</ThemedText>
+              <ThemedText style={styles.headerName}>
+                {user.profile.email}
+              </ThemedText>
             </View>
           </>
         ) : (
@@ -49,26 +62,15 @@ const Profile = () => {
           label="Categories"
           icon={<Entypo name="list" size={28} color={Colors.text} />}
         />
-        {/* <MenuItem
-          href="/currencies"
-          label="Currency"
-          icon={
-            <MaterialIcons
-              name="currency-exchange"
-              size={28}
-              color={Colors.text}
-            />
-          }
-        /> */}
         {isAuthorized ? (
           <MenuItem
-            href=""
+            onPress={handleLogout}
             label="Log out"
             icon={<Entypo name="log-out" size={28} color={Colors.text} />}
           />
         ) : (
           <MenuItem
-            href=""
+            href="/login"
             label="Log in"
             icon={<Entypo name="login" size={28} color={Colors.text} />}
           />

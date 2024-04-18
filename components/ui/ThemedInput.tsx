@@ -12,6 +12,7 @@ interface ThemedInputProps {
   onChange: (value: string) => void;
   keyboardType?: KeyboardTypeOptions;
   defaultValue?: string;
+  type?: "text" | "password";
 }
 
 const ThemedInput = ({
@@ -19,6 +20,7 @@ const ThemedInput = ({
   onChange,
   keyboardType,
   defaultValue,
+  type,
 }: ThemedInputProps) => {
   return (
     <KeyboardAvoidingView>
@@ -31,6 +33,7 @@ const ThemedInput = ({
         style={styles.input_container}
       >
         <InputField
+          type={type}
           placeholder={placeholder}
           style={styles.input}
           onChangeText={onChange}

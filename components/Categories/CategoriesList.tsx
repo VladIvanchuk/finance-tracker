@@ -1,8 +1,9 @@
 import { useCategoryActions } from "@/hooks/useCategoryActions";
 import { TransactionType } from "@/types/TransactionTypes";
 import React from "react";
-import { FlatList, StyleSheet, Text } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
 import CategoryItem from "../Statistics/CategoryItem";
+import ThemedText from "../ui/ThemedText";
 
 interface CategoriesListProps {
   type: TransactionType;
@@ -19,7 +20,7 @@ const CategoriesList = ({ type }: CategoriesListProps) => {
         <CategoryItem key={item._id.toString()} {...item} />
       )}
       keyExtractor={(item) => item._id.toString()}
-      ListEmptyComponent={<Text>No categories found.</Text>}
+      ListEmptyComponent={<ThemedText>No categories found.</ThemedText>}
       contentContainerStyle={styles.listContainer}
     />
   );

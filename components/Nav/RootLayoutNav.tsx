@@ -91,6 +91,30 @@ const RootLayoutNav = () => {
             ),
           }}
         />
+        <Stack.Screen
+          name="login"
+          options={{
+            title: "Sign in",
+            headerStyle: {
+              backgroundColor: Colors.background,
+            },
+            headerLeft: (props) => (
+              <HeaderBackButton {...props} onPress={popToTop} />
+            ),
+          }}
+        />
+        <Stack.Screen
+          name="register"
+          options={{
+            title: "Sign up",
+            headerStyle: {
+              backgroundColor: Colors.background,
+            },
+            headerLeft: (props) => (
+              <HeaderBackButton {...props} onPress={popToTop} />
+            ),
+          }}
+        />
       </Stack>
       <ThemedAlert
         visible={alertVisible}

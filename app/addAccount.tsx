@@ -3,10 +3,13 @@ import AccountForm from "@/components/NewAccount/AccountForm";
 import { IAccount } from "@/types/AccountTypes";
 import React, { useState } from "react";
 import { BSON } from "realm";
+import { useUser } from "@realm/react";
 
 const addAccount = () => {
+  const user = useUser()!;
   const [accountData, setAccountData] = useState<IAccount>({
     _id: new BSON.ObjectId(),
+    owner_id: user.id,
     createdAt: new Date(),
     name: "",
     type: "",

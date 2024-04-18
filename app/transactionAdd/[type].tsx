@@ -9,10 +9,15 @@ import { getTransactionColor } from "@/utils/getTransactionColor";
 import { useLocalSearchParams, useNavigation } from "expo-router";
 import React, { useLayoutEffect, useState } from "react";
 import { BSON } from "realm";
+import { useUser } from "@realm/react";
 
-const getInitialData = (type: TransactionType): ITransaction => {
+const getInitialData = (
+  type: TransactionType,
+  userId: string,
+): ITransaction => {
   const baseData = {
     _id: new BSON.ObjectId(),
+    owner_id: userId,
     sum: 0,
     description: "",
     currency: "UAH" as CurrencyType,
@@ -42,10 +47,11 @@ const getInitialData = (type: TransactionType): ITransaction => {
 };
 
 const AddTransaction = () => {
+  const userId = useUser().id!;
   const navigation = useNavigation();
   const { type } = useLocalSearchParams();
   const [operation, setTransaction] = useState<ITransaction>(
-    getInitialData(type as TransactionType),
+    getInitialData(type as TransactionType, userId),
   );
 
   useLayoutEffect(() => {

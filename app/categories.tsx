@@ -7,11 +7,13 @@ import { useCategoryActions } from "@/hooks/useCategoryActions";
 import useThemedToast from "@/hooks/useThemedToast";
 import { StatisticType } from "@/types/StatisticsTypes";
 import { IconNameType } from "@/types/TransactionTypes";
+import { useUser } from "@realm/react";
 import React, { useState } from "react";
 import { StyleSheet, View } from "react-native";
 import { BSON } from "realm";
 
 const Categories = () => {
+  const user = useUser()!;
   const [selectedType, setSelectedType] = useState<StatisticType>("income");
   const [showModal, setShowModal] = useState(false);
   const [name, setName] = useState("");
@@ -30,6 +32,7 @@ const Categories = () => {
     }
     const newCategory = {
       _id: new BSON.ObjectId(),
+      owner_id: user.id,
       name,
       type: selectedType,
       iconKey,

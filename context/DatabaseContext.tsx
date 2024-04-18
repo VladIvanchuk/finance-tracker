@@ -1,6 +1,7 @@
+import { useSubscriptions } from "@/hooks/useSubscriptions";
 import { initializeDefaultCategories } from "@/services/databaseInitialization";
-import { useRealm } from "@realm/react";
-import React, { createContext, ReactNode, useEffect } from "react";
+import { useRealm, useUser } from "@realm/react";
+import React, { ReactNode, createContext, useEffect } from "react";
 import "react-native-get-random-values";
 import Realm from "realm";
 
@@ -14,10 +15,13 @@ export const DatabaseContext = createContext<DatabaseContextValue | undefined>(
 
 export const DatabaseProvider = ({ children }: { children: ReactNode }) => {
   const realm = useRealm();
+  const user = useUser()!;
+
+  useSubscriptions(realm);
 
   useEffect(() => {
     if (realm) {
-      initializeDefaultCategories(realm);
+      initializeDefaultCategories(realm, user.id);
     }
   }, [realm]);
 

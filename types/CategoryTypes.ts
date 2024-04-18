@@ -4,6 +4,7 @@ import { TransactionType } from "./TransactionTypes";
 
 export interface ICategory {
   _id: BSON.ObjectId;
+  owner_id: string;
   name: string;
   type: TransactionType;
   iconKey: string;
