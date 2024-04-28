@@ -1,4 +1,4 @@
-rootProject.name = 'finance-tracker'
+rootProject.name = 'SkyWallet'
 
 dependencyResolutionManagement {
   versionCatalogs {
