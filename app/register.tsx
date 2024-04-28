@@ -33,7 +33,7 @@ const Register = () => {
         showToast(
           "Registration successful",
           "You are logged in now",
-          "success"
+          "success",
         );
       }
     }

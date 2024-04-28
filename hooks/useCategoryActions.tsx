@@ -27,7 +27,7 @@ export const useCategoryActions = () => {
   );
 
   const getCategoryById = useCallback(
-    (id: string | ObjectId): ICategory | null => {
+    (id: string | string[] | ObjectId): ICategory | null => {
       return useObject(Category, getPrimaryKey(id));
     },
     [realm],

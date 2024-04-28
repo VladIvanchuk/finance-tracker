@@ -108,7 +108,6 @@ const Statistics = () => {
           isLoading={isTransactionsLoading}
           transactions={transactions}
           categories={categories}
-          type={selectedType}
         />
       </ScrollView>
     </View>

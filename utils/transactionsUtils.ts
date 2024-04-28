@@ -5,7 +5,7 @@ type TransactionGroups = {
 };
 
 export const groupTransactionsByDate = (
-  transactions: Transaction[]
+  transactions: Transaction[],
 ): TransactionGroups => {
   return transactions.reduce((groups: TransactionGroups, transaction) => {
     const dateKey = transaction.date.toISOString().split("T")[0];

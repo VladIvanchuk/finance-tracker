@@ -80,6 +80,15 @@ const RootLayoutNav = () => {
           }}
         />
         <Stack.Screen
+          name="categoryStatistic/[id]"
+          options={{
+            title: "Category Statistics",
+            headerLeft: (props) => (
+              <HeaderBackButton {...props} onPress={popToTop} />
+            ),
+          }}
+        />
+        <Stack.Screen
           name="categories"
           options={{
             title: "Categories",

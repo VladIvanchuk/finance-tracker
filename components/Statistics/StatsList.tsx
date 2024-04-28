@@ -5,10 +5,10 @@ import {
 } from "@/data/statsSortItems";
 import { Transaction } from "@/schemas/Transaction";
 import { ICategory } from "@/types/CategoryTypes";
-import { StatisticType } from "@/types/StatisticsTypes";
 import { Spinner } from "@gluestack-ui/themed";
+import { Link } from "expo-router";
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
 import TransactionItem from "../Home/TransactionItem";
 import CategoryItem from "./CategoryItem";
 import StatsFilter from "./StatsFilter";
@@ -17,7 +17,6 @@ import StatsSort from "./StatsSort";
 interface StatsListProps {
   transactions: Realm.Results<Transaction> | null;
   categories: Array<{ category: ICategory; sum: number }> | null;
-  type: StatisticType;
   isLoading: boolean;
 }
 
@@ -90,11 +89,18 @@ const StatsList = ({ transactions, categories, isLoading }: StatsListProps) => {
               />
             ))
           : sortedCategories?.map((category) => (
-              <CategoryItem
+              <Link
                 key={category.category._id.toString()}
-                {...category.category}
-                {...category}
-              />
+                href={{
+                  pathname: "/categoryStatistic/[id]",
+                  params: { id: category.category._id.toString() },
+                }}
+                asChild
+              >
+                <TouchableOpacity>
+                  <CategoryItem {...category.category} {...category} />
+                </TouchableOpacity>
+              </Link>
             ))}
       </View>
     </View>

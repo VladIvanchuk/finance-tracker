@@ -21,6 +21,7 @@ import { useDatabase } from "./useDatabase";
 import useCurrencies from "./useCurrencies";
 import { baseCurrency } from "@/data/baseCurrency";
 import { TransactionType } from "@/types/TransactionTypes";
+import { BSON } from "realm";
 
 interface CategorySum {
   category: Category;
@@ -54,16 +55,38 @@ export const useStatisticsAction = () => {
     (
       period: string,
       type: StatisticType,
+      categoryId?: string,
     ): Realm.Results<Transaction> | null => {
       const startDate = getStartDateForPeriod(period);
       const endDate = new Date();
+
+      let query = `type == "${type}"`;
+      let objectId;
+      if (categoryId) {
+        objectId = new BSON.ObjectId(categoryId);
+        query += ` AND category._id == $0`;
+      }
+
       if (period === "All") {
-        return realm.objects(Transaction).filtered(`type == "${type}"`);
+        if (categoryId) {
+          return realm.objects(Transaction).filtered(query, objectId);
+        }
+        return realm.objects(Transaction).filtered(query);
       } else {
+        if (categoryId) {
+          return realm
+            .objects(Transaction)
+            .filtered(
+              `${query} AND date >= $1 AND date <= $2`,
+              objectId,
+              startDate,
+              endDate,
+            );
+        }
         return realm
           .objects(Transaction)
           .filtered(
-            `type == "${type}" AND date >= $0 AND date <= $1`,
+            `${query} AND date >= $0 AND date <= $1`,
             startDate,
             endDate,
           );
@@ -71,6 +94,7 @@ export const useStatisticsAction = () => {
     },
     [realm],
   );
+
   const getCategoriesAmountsByPeriodAndType = useCallback(
     async (
       period: string,
@@ -111,8 +135,17 @@ export const useStatisticsAction = () => {
   );
 
   const getChartData = useCallback(
-    async (period: Period, type: StatisticType): Promise<ChartData | null> => {
-      const transactions = getTransactionsByPeriodAndType(period, type);
+    async (
+      period: Period,
+      type: StatisticType,
+      categoryId?: string,
+    ): Promise<ChartData | null> => {
+      const transactions = getTransactionsByPeriodAndType(
+        period,
+        type,
+        categoryId,
+      );
+
       if (!transactions || transactions.length === 0) return null;
 
       const convertedTransactions = await Promise.all(

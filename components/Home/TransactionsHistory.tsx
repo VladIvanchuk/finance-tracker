@@ -56,7 +56,7 @@ const TransactionsHistory = () => {
                     key={transaction._id.toString()}
                     {...transaction}
                   />
-                ) : null
+                ) : null,
               )}
             </View>
           ))}
