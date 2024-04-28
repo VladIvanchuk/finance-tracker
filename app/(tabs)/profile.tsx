@@ -2,7 +2,7 @@ import MenuItem from "@/components/Profile/MenuItem";
 import ThemedText from "@/components/ui/ThemedText";
 import Colors, { palette } from "@/constants/Colors";
 import useThemedToast from "@/hooks/useThemedToast";
-import { AntDesign, Entypo, MaterialIcons } from "@expo/vector-icons";
+import { AntDesign, Entypo } from "@expo/vector-icons";
 import { useAuth, useUser } from "@realm/react";
 import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
@@ -32,7 +32,7 @@ const Profile = () => {
       showToast(
         "Logout failed:",
         error instanceof Error ? error.message : String(error),
-        "error",
+        "error"
       );
     }
   };
@@ -67,13 +67,6 @@ const Profile = () => {
         )}
       </View>
       <View style={styles.menu}>
-        {isAuthorized && (
-          <MenuItem
-            href=""
-            label="Edit Profile"
-            icon={<MaterialIcons name="edit" size={24} color={Colors.text} />}
-          />
-        )}
         <MenuItem
           href="/categories"
           label="Categories"
