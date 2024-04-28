@@ -4,15 +4,13 @@ import React, { useEffect, useState } from "react";
 import { StyleSheet, View } from "react-native";
 import ThemedText from "../ui/ThemedText";
 import TransactionItem from "./TransactionItem";
-
 import { useMonthContext } from "@/context/MonthContext";
 import { useDatabase } from "@/hooks/useDatabase";
 import { useTransactionActions } from "@/hooks/useTransactionActions";
 import { Transaction } from "@/schemas/Transaction";
-import { ITransaction } from "@/types/TransactionTypes";
 
 interface GroupedTransactions {
-  [key: string]: ITransaction[];
+  [key: string]: Transaction[];
 }
 
 const TransactionsHistory = () => {
@@ -52,12 +50,14 @@ const TransactionsHistory = () => {
               <ThemedText style={styles.items_header}>
                 {formatShortDate(dateKey)}
               </ThemedText>
-              {groupedTransactions[dateKey].map((transaction) => (
-                <TransactionItem
-                  key={transaction._id.toString()}
-                  {...transaction}
-                />
-              ))}
+              {groupedTransactions[dateKey].map((transaction) =>
+                transaction.isValid() ? (
+                  <TransactionItem
+                    key={transaction._id.toString()}
+                    {...transaction}
+                  />
+                ) : null
+              )}
             </View>
           ))}
       </View>
