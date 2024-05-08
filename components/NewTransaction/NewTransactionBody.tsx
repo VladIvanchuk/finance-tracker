@@ -2,12 +2,14 @@ import Colors from "@/constants/Colors";
 import { useTransactionItems } from "@/hooks/useTransactionItems";
 import { AccountItem, AccountItemType, IAccount } from "@/types/AccountTypes";
 import {
+  ITransaction,
   TransactionItem,
   TransactionItemType,
   TransactionType,
 } from "@/types/TransactionTypes";
-import { ITransaction } from "@/types/TransactionTypes";
-import { FlatList, StyleSheet, View } from "react-native";
+import { FlatList, StyleSheet } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
 import NewTransactionBodyItem from "./NewTransactionBodyItem";
 
 const NewTransactionBody = ({
@@ -17,7 +19,7 @@ const NewTransactionBody = ({
 }: {
   handleValueChange: (
     type: TransactionItemType | AccountItemType,
-    value: string | boolean,
+    value: string | boolean
   ) => void;
   operationType: TransactionType | "account";
   operation: ITransaction | IAccount;
@@ -30,7 +32,7 @@ const NewTransactionBody = ({
       operation={operation}
       onChange={(
         value: string | boolean,
-        type?: TransactionItemType | AccountItemType,
+        type?: TransactionItemType | AccountItemType
       ) => handleValueChange(type ?? item.type, value)}
     />
   );
@@ -38,14 +40,21 @@ const NewTransactionBody = ({
   const currentTransactionItems = useTransactionItems(operationType, operation);
 
   return (
-    <View style={styles.body_container}>
+    <KeyboardAwareScrollView
+      style={styles.body_container}
+      resetScrollToCoords={{ x: 0, y: 0 }}
+      scrollEnabled={false}
+      enableOnAndroid={true}
+    >
       <FlatList
         data={currentTransactionItems}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={styles.body_item_container}
+        contentContainerStyle={{
+          ...styles.body_item_container,
+        }}
       />
-    </View>
+    </KeyboardAwareScrollView>
   );
 };
 
